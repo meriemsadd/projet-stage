@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {/*users = جدول فيه المستخدمين (admins... المشاركين... إلى بغيتي مستقبلا)*/
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
@@ -21,13 +21,13 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('password_reset_tokens', function (Blueprint $table) {
+        Schema::create('password_reset_tokens', function (Blueprint $table) {/*password_reset_tokens = إعادة تعيين كلمة المرور*/
             $table->string('email')->primary();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
 
-        Schema::create('sessions', function (Blueprint $table) {
+        Schema::create('sessions', function (Blueprint $table) {/*كيتعلقو بـ التخزين المؤقت ديال Laravel (cache)*/
             $table->string('id')->primary();
             $table->foreignId('user_id')->nullable()->index();
             $table->string('ip_address', 45)->nullable();

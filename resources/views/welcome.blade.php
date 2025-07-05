@@ -9,7 +9,7 @@
     </head>
     <body>
         <h1>welcommmmme im meryyy مرحبا</h1>
-        <h2>مرحبا بيك {{ $name }}</h2>
+        <h2>مرحبا بيك {{ $name }} f laravel</h2>
         <p>clickkk hereee </p>
         <a href="/mimiya" class="btn">
             find meeeeee

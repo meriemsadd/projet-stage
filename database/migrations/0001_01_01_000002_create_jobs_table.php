@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    /*هادو كيتعلقو بـ Tasks background (إرسال الإيميلات، QR code, etc.)
+
+مفيدين إلا درتي مثلا: ترسلي دعوات بزاف دفعة وحدة*/
     public function up(): void
     {
         Schema::create('jobs', function (Blueprint $table) {
