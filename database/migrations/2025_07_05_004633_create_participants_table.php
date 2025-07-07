@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('nom');
             $table->string('prenom');
             $table->string("profession");
-            $table->foreinId('evenement_id')->constrained('evenements')/*kayrbt jdwl dyl participants m3a jdwl dyl evenemts*/->onDelete('cascade');/*l id dyal levnet li bha y7drlo*/
+            $table->foreignId('evenement_id')->constrained('evenements')/*kayrbt jdwl dyl participants m3a jdwl dyl evenemts*/->onDelete('cascade');/*l id dyal levnet li bha y7drlo*/
             $table->timestamps();
         });
     }
