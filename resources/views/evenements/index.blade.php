@@ -1,0 +1,54 @@
+<!-- resources/views/evenements/index.blade.php -->
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Liste des événements</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-4">
+
+    <h1>Liste des événements</h1>
+
+    <a href="{{ route('evenements.create') }}" class="btn btn-primary mb-3">Créer un nouvel événement</a>
+
+    @if($evenements->isEmpty())
+        <p>Aucun événement disponible.</p>
+    @else
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Lieu</th>
+                    <th>Date</th>
+                    <th>Heure</th>
+                    <th>Catégorie</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($evenements as $evenement)
+                    <tr>
+                        <td>{{ $evenement->titre }}</td>
+                        <td>{{ $evenement->lieu }}</td>
+                        <td>{{ $evenement->date->format('d/m/Y') }}</td>
+                        <td>{{ $evenement->heure }}</td>
+                        <td>{{ $evenement->categorie }}</td>
+                        <td>
+                            <a href="{{ route('evenements.show', $evenement->id) }}" class="btn btn-info btn-sm">Voir</a>
+                            <a href="{{ route('evenements.edit', $evenement->id) }}" class="btn btn-warning btn-sm">Modifier</a>
+                            <form action="{{ route('evenements.destroy', $evenement->id) }}" method="POST" style="display:inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" onclick="return confirm('Confirmer la suppression ?')" class="btn btn-danger btn-sm">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endif
+
+</body>
+</html>
