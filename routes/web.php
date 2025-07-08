@@ -1,15 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\controllers\welcomeController;
+use App\Http\controllers\ParticipantController;
+use App\Http\controllers\EvenementController;
 
-
-Route::get('/', [welcomeController ::class,'index']);
-
-
-
-
-
-Route::get('/mimiya' , function (){
-    return view('mimiya.mimiya');
-});
+Route::resource('evenements', EvenementController ::class);
+Route::resource('participants', ParticipantController ::class);
