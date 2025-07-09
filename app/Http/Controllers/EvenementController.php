@@ -92,6 +92,11 @@ class EvenementController extends Controller
  
     public function destroy(string $id)
     {
-       
+        $evenement = Evenement::findOrFail($id);
+        $evenement->delete(); 
+
+    return redirect()->route('evenements.index')->with('success', 'Événement supprimé avec succès.');
+
+
     }
 }
