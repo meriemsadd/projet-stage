@@ -17,8 +17,12 @@ return new class extends Migration
             $table->string('lieu');
             $table->date('date');
             $table->time('heure');
-            $table->string('categorie');
+            $table->text('description');
+            $table->unsignedBigInteger('user_id')->nullable(); 
+            $table->unsignedBigInteger('type_events_id');
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('type_events_id')->references('id')->on('type_events')->onDelete('cascade');
 
         });
     }
