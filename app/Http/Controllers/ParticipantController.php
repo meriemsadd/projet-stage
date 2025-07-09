@@ -3,15 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Participant;
+use App\Models\Evenement;
 
 class ParticipantController
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index()//kat3rd ga3 les participants li 3ndna(index)
     {
-        //
+        $participants=Participant::with('evenement')->get();//mn model participant yjib get(kolchi les particpan)o with(m3a les events dyalhom)
+        return view('participants.index',compact('participants'));//compact(kansifto dak l variable li fih l partiicpant m3a levent dyalo)bach nkhdmoha  flview
+
+
+
+
+        
     }
 
     /**
@@ -19,7 +27,9 @@ class ParticipantController
      */
     public function create()
     {
-        //
+        $evenements = Evenement ::all();
+        return view('participants.create',compact('evenements'));
+        
     }
 
     /**
@@ -27,7 +37,8 @@ class ParticipantController
      */
     public function store(Request $request)
     {
-        //
+        Participant ::create($request->all());
+        return redirect('/participants')->with('success','participant ajouté avec succes !');
     }
 
     /**
@@ -41,9 +52,12 @@ class ParticipantController
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id)//quand je clique sur modifier
     {
-        //
+    $participant=participant::findOrFail($id);//on cherche dans bd (model partciipant) qui a ce id pour le modifier 
+    $evenements = Evenement::all();//kanjibo hta les events kamlin
+    return view('participants.edit',compact('participant','evenements'));//l view  de edit kanrj3o bhta les donne de (participants +events)
+
     }
 
     /**
@@ -51,7 +65,11 @@ class ParticipantController
      */
     public function update(Request $request, string $id)
     {
-        //
+    $participant = Participant::findOrFail($id);//on trouve le particpant de id x pour le modifiee
+    $participant->update($request->all());//on le modifie selon wcha 
+
+    return redirect('/participants')->with('success', 'Participant mis à jour !');//kaywli ydini la page de particpants , hdchi apres modif
+
     }
 
     /**

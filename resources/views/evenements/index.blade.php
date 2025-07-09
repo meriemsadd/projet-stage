@@ -32,7 +32,7 @@
                     <tr>
                         <td>{{ $evenement->titre }}</td>
                         <td>{{ $evenement->lieu }}</td>
-                        <td>{{ $evenement->date->format('d/m/Y') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($evenement->date)->format('d/m/Y') }}</td>
                         <td>{{ $evenement->heure }}</td>
                         <td>{{ $evenement->categorie }}</td>
                         <td>

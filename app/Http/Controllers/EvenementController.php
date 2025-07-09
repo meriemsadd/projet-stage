@@ -11,9 +11,10 @@ class EvenementController extends Controller
      */
     public function index()
     {
-         $evenements = Evenement::all(); // Récupère tous les événements
+         $evenements = Evenement::all(); // Récupère tous les événements du model evenement (base doonnee) 
 
-         return view('evenements.index', compact('evenements'));
+         return view('evenements.index', compact('evenements'));//compact=$data = ['evenements' => $evenements];return view('evenements.index', $data);
+         //cad sift l view (evenement.index) wsift m3ah les donne evenements bach nst3mlohom fl view
     }
 
     /**
