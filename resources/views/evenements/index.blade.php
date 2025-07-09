@@ -1,17 +1,14 @@
-<!-- resources/views/evenements/index.blade.php -->
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8" />
     <title>Liste des événements</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="container mt-4">
+<body >
 
     <h1>Liste des événements</h1>
 
-    <a href="{{ route('evenements.create') }}" class="btn btn-primary mb-3">Créer un nouvel événement</a>
+    <a href="{{ route('evenements.create') }}">Créer un nouvel événement</a>
 
     @if($evenements->isEmpty())
         <p>Aucun événement disponible.</p>
@@ -23,7 +20,8 @@
                     <th>Lieu</th>
                     <th>Date</th>
                     <th>Heure</th>
-                    <th>Catégorie</th>
+                    <th>Description</th>
+                    <th>Type d'evenement</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -31,10 +29,11 @@
                 @foreach($evenements as $evenement)
                     <tr>
                         <td>{{ $evenement->titre }}</td>
-                        <td>{{ $evenement->lieu }}</td>
-                        <td>{{ \Carbon\Carbon::parse($evenement->date)->format('d/m/Y') }}</td>
+                        <td>{{ $evenement->lieu }}</td><td>{{ \Carbon\Carbon::parse($evenement->date)->format('d/m/Y') }}</td>
                         <td>{{ $evenement->heure }}</td>
-                        <td>{{ $evenement->categorie }}</td>
+                        <td>{{ $evenement->description}}</td>
+                        <td>{{ $evenement->type->nom}}</td>
+
                         <td>
                             <a href="{{ route('evenements.show', $evenement->id) }}" class="btn btn-info btn-sm">Voir</a>
                             <a href="{{ route('evenements.edit', $evenement->id) }}" class="btn btn-warning btn-sm">Modifier</a>
