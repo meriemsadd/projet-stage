@@ -27,9 +27,9 @@ class ParticipantController
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($evenementId)
     {
-        $evenements = Evenement ::all();
+        $evenements = Evenement ::findOrFail($evenementId);
         return view('participants.create',compact('evenements'));
         
     }

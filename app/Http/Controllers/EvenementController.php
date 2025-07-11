@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Type;
 
 
+
 class EvenementController extends Controller
 {
    
@@ -45,7 +46,8 @@ class EvenementController extends Controller
     public function show(string $id)
     {
         
-         $Evenement=Evenement::findOrFail($id);
+         $evenement = Evenement::with('type')->findOrFail($id);
+
         
        return view('evenements.show',compact('Evenement'));
       

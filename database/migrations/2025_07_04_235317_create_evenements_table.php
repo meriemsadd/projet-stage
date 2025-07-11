@@ -23,6 +23,8 @@ return new class extends Migration
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->foreign('type_events_id')->references('id')->on('type_events')->onDelete('cascade');
+            $table->string('image')->nullable();
+
 
         });
     }

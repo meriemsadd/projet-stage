@@ -22,13 +22,10 @@
 
         <label>Profession :</label>
         <input type="text" name="profession"><br>
+        <!-- Champ caché pour envoyer l'ID de l'événement -->
+        <input type="hidden" name="evenement_id" value="{{ $evenement_id }}">
 
-        <label>Événement :</label>
-        <select name="evenement_id" required>
-            @foreach($evenements as $e)
-                <option value="{{ $e->id }}">{{ $e->titre }}</option>
-            @endforeach
-        </select><br><br>
+
 
         <button type="submit">✅ Enregistrer</button>
     </form>
