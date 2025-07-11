@@ -13,6 +13,9 @@
         <label>Nom :</label>
         <input type="text" name="nom" value="{{ $participant->nom }}"><br>
 
+        <label>Prenom :</label>
+        <input type="text" name="prenom" value="{{ $participant->prenom }}"><br>
+        
         <label>Email :</label>
         <input type="email" name="email" value="{{ $participant->email }}"><br>
 

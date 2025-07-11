@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Participant;
 use App\Models\Evenement;
+use App\Mail\InvitationParticipant;
+use Illuminate\Support\Facades\Mail;
 
 class ParticipantController
 {
@@ -36,10 +38,16 @@ class ParticipantController
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        Participant ::create($request->all());
-        return redirect('/participants')->with('success','participant ajouté avec succes !');
-    }
+{
+    // 1. Sauvegarder le participant dans la base de données
+    $participant = Participant::create($request->all());//on stoke dans objet pour le reutiliser
+
+    // 2. Envoyer l'e-mail
+    Mail::to($participant->email)->send(new InvitationParticipant($participant));//email baséé sur ce participant
+
+    // 3. Rediriger avec message de succès
+    return redirect('/participants')->with('success', 'Participant ajouté avec succès ! E-mail envoyé.');
+}
 
     /**
      * Display the specified resource.
@@ -77,6 +85,9 @@ class ParticipantController
      */
     public function destroy(string $id)
     {
-        //
+        $participant = Participant ::findOrFail($id);
+        $participant->delete();
+
+        return redirect()->back()->with('success', 'Participant supprimé avec succès.');
     }
 }
