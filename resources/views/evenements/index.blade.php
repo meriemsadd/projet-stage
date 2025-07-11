@@ -32,7 +32,9 @@
                         <td>{{ $evenement->lieu }}</td><td>{{ \Carbon\Carbon::parse($evenement->date)->format('d/m/Y') }}</td>
                         <td>{{ $evenement->heure }}</td>
                         <td>{{ $evenement->description}}</td>
-                        <td>{{ $evenement->type->nom}}</td>
+                        <td>{{ $evenement->type?->nom ?? 'Non défini' }}</td>
+
+
 
                         <td>
                             <a href="{{ route('evenements.show', $evenement->id) }}" class="btn btn-info btn-sm">Voir</a>
