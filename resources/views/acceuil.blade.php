@@ -45,7 +45,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
         <a class="navbar-brand" href="#">Site Officiel de la Wilaya OUJDA ORIENTAL</a>
         <div class="ms-auto">
-            <a href="#" class="btn btn-outline-primary">Se connecter</a>
+            <a href="{{ route('login') }}" class="btn btn-outline-primary">Se connecter</a>
         </div>
     </nav>
 
