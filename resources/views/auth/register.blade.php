@@ -72,7 +72,7 @@
 
             <p class="mt-3 text-center">
                 <i>Vous avez déja un compte ?</i><br>
-                <a href="/login">Se connecter</a>
+                <a href="/login">S'inscrire</a>
             </p>
         </form>
     </div>
