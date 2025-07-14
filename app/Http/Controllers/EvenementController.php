@@ -12,8 +12,7 @@ class EvenementController extends Controller
    
     public function index()
     {
-         $evenements = Evenement::all(); // Récupère tous les événements du model evenement (base doonnee) 
-
+         $evenements = Evenement::where('user_id', auth()->id())->get();
          return view('evenements.index', compact('evenements'));//compact=$data = ['evenements' => $evenements];return view('evenements.index', $data);
          //cad sift l view (evenement.index) wsift m3ah les donne evenements bach nst3mlohom fl view
     }
@@ -36,9 +35,12 @@ class EvenementController extends Controller
               'heure'=> 'required|date_format:H:i',
               'description'=>'required|string',
               'type_events_id'=> 'required|exists:type_events,id',
+             
         ]);
+        $data = $request->all();
+        $data['user_id'] = auth()->id();
+        Evenement::create($data);
 
-        Evenement::create($request->all());
         return redirect()->route('evenements.index')->with('suces','Evenement ajoute avec succes');
 
     }
@@ -49,7 +51,7 @@ class EvenementController extends Controller
          $evenement = Evenement::with('type')->findOrFail($id);
 
         
-       return view('evenements.show',compact('Evenement'));
+       return view('evenements.show',compact('evenement'));
       
     }
 
@@ -58,36 +60,20 @@ class EvenementController extends Controller
     {
 
          $Evenement=Evenement::findOrFail($id);
+         $types = Type::all();
         
-       return view('evenements.edit',compact('Evenement'));
+       return view('evenements.edit',compact('Evenement','types'));
      
     }
 
    
     public function update(Request $request, string $id)
     {
-       /* $request->validate([
-            'titre' => 'required|string|max:255',
-              'lieu' => 'required|string|max:255',
-              'date' => 'required|date',
-              'heure'=> 'required|date_format:H:i',
-              'categorie'=> 'required|string'
-        ]);*/ 
 
         $Evenement=Evenement::findOrFail($id);
         $Evenement->update($request->all());
         
-         
-        /*$request->update([
-            'titre'=>$request->titre,
-            'lieu'=>$request->lieu,
-            'date'=>$request->date,
-            'heure'=>$request->heure,
-            'categorie'=>$request->categorie,
-        ]);*/
-
-
-        return redirect('/evenements')->with('suces','Evenement modifie avec succes');
+        return redirect()->route('evenements.index')->with('succes','Evenement modifie avec succes');
 
     }
 
