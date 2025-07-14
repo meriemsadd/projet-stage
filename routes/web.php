@@ -11,8 +11,6 @@ use App\Http\Controllers\Auth\RegisterController;
 Route::get('/',[AcceuilController::class,'index'])->name('acceuil');//la racine du projet c la page d'acceuil
 Route::resource('evenements', EvenementController ::class);
 Route::resource('participants', ParticipantController ::class);//sinn ghiur hado f participant Route::get('/inscription', [ParticipantController::class, 'create']);Route::post('/inscription', [ParticipantController::class, 'store'])->name('participants.store');
-Route::get('/evenements/{id}',[EvenementController::class,'show'])->name('evenements.show');
-
 
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
