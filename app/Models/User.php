@@ -42,5 +42,19 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+
+
+
+        public function evenements()
+{
+    return $this->hasMany(Evenement::class);
+}
+
+
+        public function service()
+{
+    return $this->belongsTo(Service::class);
+}
+
     }
 
