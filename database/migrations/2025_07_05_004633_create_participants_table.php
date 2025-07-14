@@ -19,6 +19,10 @@ return new class extends Migration
             $table->foreignId('evenement_id')
             ->constrained('evenements')/*kayrbt jdwl dyl participants m3a jdwl dyl evenemts*/
             ->onDelete('cascade');/*cascade , ila mshna levenemtnt automatiquemenet ytms7o les participants*/
+             $table->foreignId('organisme_id')
+             ->nullable()
+             ->constrained('organismes') 
+              ->onDelete('set null');
             $table->timestamps();/*pour cree et updateee */
 
         });
