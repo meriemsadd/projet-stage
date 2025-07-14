@@ -24,7 +24,7 @@ class RegisterController extends Controller
         // 1. Validation des champs envoyés
         $request->validate([
             'username' => 'required|string|unique:users,username',
-            'email' => 'required|string|unique:users,email',
+            'email' => 'required|string|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
             'service_id' => 'required|exists:services,id',
 

@@ -25,7 +25,10 @@
     <h3>Inscription au participant</h3>
 
     {{-- Suppose que tu as un formulaire Blade ici --}}
-    @include('participants.create', ['evenement_id' => $evenement->id])
+    <a href="{{ route('participants.create', $evenement->id) }}" class="btn btn-primary">
+    S'inscrire comme participant
+    </a>
+
 
 
 </div>

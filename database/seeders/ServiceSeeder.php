@@ -15,16 +15,15 @@ class ServiceSeeder extends Seeder
     public function run(): void
     {
          DB::table('services')->insert([
-            ['nom' => 'Affaires culturelles', 'created_at' => now(), 'updated_at' => now()],
-            ['nom' => 'Travaux publics', 'created_at' => now(), 'updated_at' => now()],
-            ['nom' => 'Ressources humaines', 'created_at' => now(), 'updated_at' => now()],
-            ['nom' => 'Finances', 'created_at' => now(), 'updated_at' => now()],
-            ['nom' => 'Affaires générales', 'created_at' => now(), 'updated_at' => now()],
+            ['nom' => 'Ressources Humaines', 'created_at' => now(), 'updated_at' => now()],
+            ['nom' => 'Urbanisme et Habitat', 'created_at' => now(), 'updated_at' => now()],
+            ['nom' => 'Service Technique', 'created_at' => now(), 'updated_at' => now()],
+            ['nom' => 'Service Financier', 'created_at' => now(), 'updated_at' => now()],
+            ['nom' => 'Service Informatique', 'created_at' => now(), 'updated_at' => now()],
+            ['nom' => 'Service des Passeport', 'created_at' => now(), 'updated_at' => now()],
+            ['nom' => 'Affaire intérieures', 'created_at' => now(), 'updated_at' => now()],
+            ['nom' => 'Affaires economique', 'created_at' => now(), 'updated_at' => now()],
             ['nom' => 'Affaires sociales', 'created_at' => now(), 'updated_at' => now()],
-            ['nom' => 'Informatique', 'created_at' => now(), 'updated_at' => now()],
-            ['nom' => 'Douane', 'created_at' => now(), 'updated_at' => now()],
-            ['nom' => 'Sécurité civile', 'created_at' => now(), 'updated_at' => now()],
-
         ]);
     }
 }

@@ -184,9 +184,10 @@
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid px-4">
             <a class="navbar-brand" href="#">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Logo_CMR_Maroc.png/64px-Logo_CMR_Maroc.png" alt="Logo CMR" />
-                Wilaya Oujda Oriental
+              <img src="{{ asset('images/R.png') }}" alt="Logo" style="height: 60px; width: auto;" />
+                 Wilaya Oujda Oriental
             </a>
+ 
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
                 aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">

@@ -7,6 +7,8 @@ use App\Models\Participant;
 use App\Models\Evenement;
 use App\Mail\InvitationParticipant;
 use Illuminate\Support\Facades\Mail;
+use App\Models\Organisme;
+
 
 class ParticipantController
 {
@@ -28,11 +30,13 @@ class ParticipantController
      * Show the form for creating a new resource.
      */
     public function create($evenementId)
-    {
-        $evenements = Evenement ::findOrFail($evenementId);
-        return view('participants.create',compact('evenements'));
-        
-    }
+{
+    $evenement_id = $evenementId; // <-- correspond à ce que la vue attend
+    $organismes = Organisme::all();
+
+    return view('participants.create', compact('evenement_id', 'organismes'));
+}
+
 
     /**
      * Store a newly created resource in storage.

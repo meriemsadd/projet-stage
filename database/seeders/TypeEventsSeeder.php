@@ -15,13 +15,16 @@ class TypeEventsSeeder extends Seeder
         $now = Carbon::now();
 
         DB::table('type_events')->insert([
-            ['nom' => 'Réunion officielle', 'created_at' => $now, 'updated_at' => $now],
+            ['nom' => 'Réunion ', 'created_at' => $now, 'updated_at' => $now],
             ['nom' => 'Formation', 'created_at' => $now, 'updated_at' => $now],
             ['nom' => 'Cérémonie', 'created_at' => $now, 'updated_at' => $now],
             ['nom' => 'Inspection', 'created_at' => $now, 'updated_at' => $now],
             ['nom' => 'Conférence', 'created_at' => $now, 'updated_at' => $now],
             ['nom' => 'Atelier', 'created_at' => $now, 'updated_at' => $now],
             ['nom' => 'Visite de terrain', 'created_at' => $now, 'updated_at' => $now],
+            ['nom' => 'Webinaire', 'created_at' => $now, 'updated_at' => $now],
+            ['nom' => 'Séminaire', 'created_at' => $now, 'updated_at' => $now],
+
         ]);
     }
 }
