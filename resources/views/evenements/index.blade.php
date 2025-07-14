@@ -3,9 +3,22 @@
 <head>
     <meta charset="UTF-8" />
     <title>Liste des événements</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body >
-
+        {{-- Barre de navigation --}}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
+        <a class="navbar-brand" href="#">Site Officiel de la Wilaya OUJDA ORIENTAL</a>
+        
+        {{-- Bouton retour Accueil --}}
+        <div class="ms-auto">
+            <a href="{{ route('login') }}" class="btn btn-outline-secondary">← Se deconnecter</a>
+        </div>
+         <div class="ms-auto">
+            <a href="{{ route('acceuil') }}" class="btn btn-outline-secondary">← Accueil</a>
+        </div>
+    </nav>
     <h1>Liste des événements</h1>
 
     <a href="{{ route('evenements.create') }}">Créer un nouvel événement</a>
@@ -33,8 +46,6 @@
                         <td>{{ $evenement->heure }}</td>
                         <td>{{ $evenement->description}}</td>
                         <td>{{ $evenement->type?->nom ?? 'Non défini' }}</td>
-
-
 
                         <td>
                             <a href="{{ route('evenements.show', $evenement->id) }}" class="btn btn-info btn-sm">Voir</a>

@@ -44,16 +44,24 @@
             <input type="time" name="heure" class="form-control" id="heure" value="{{old('heure',$Evenement->heure)}}" required>
         </div>
 
+         <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="description" class="form-control" id="description" required>{{ old('description', $Evenement->description) }}</textarea>
+        </div>
+
         <div class="mb-3">
-            <label for="categorie" class="form-label">Catégorie</label>
-            <select name="categorie" id="categorie" class="form-select" required>
-                <option value="">-- Choisir une catégorie --</option>
-                <option value="Conférence" >Conférence</option>
-                <option value="Réunion">Réunion</option>
-                <option value="Séminaire">Séminaire</option>
-                <option value="Autre">Autre</option>
+            <label for="type_events_id" class="form-label">Type d'événement</label>
+            <select name="type_events_id" id="type_events_id" class="form-select" required>
+                <option value="">-- Choisir un type --</option>
+                @foreach ($types as $type)
+                    <option value="{{ $type->id }}" 
+                        {{ old('type_events_id', $Evenement->type_events_id) == $type->id ? 'selected' : '' }}>
+                        {{ $type->nom }}
+                    </option>
+                @endforeach
             </select>
         </div>
+
 
         <button type="submit" class="btn btn-success">Modifier</button>
         <a href="{{ route('evenements.index') }}" class="btn secondary">Annuler</a>

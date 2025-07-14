@@ -45,6 +45,17 @@
                 <input type="email" class="form-control" id="email" name="email" required autofocus>
             </div>
 
+            <div class="mb-3" class="form-group">
+               <label for="service_id">Service</label>
+               <select name="service_id" id="service_id" required>
+              <option value="">-- Choisir un service --</option>
+             @foreach($services as $service)
+              <option value="{{ $service->id }}">{{ $service->nom }}</option>
+            @endforeach
+               </select>
+            </div>
+
+
             <div class="mb-3">
                 <label for="password" class="form-label">Mot de passe</label>
                 <input type="password" class="form-control" id="password" name="password" required>
