@@ -3,8 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Créer un événement</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
-<body>
+<body >
+        {{-- Barre de navigation --}}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
+        <a class="navbar-brand" href="#">Site Officiel de la Wilaya OUJDA ORIENTAL</a>
+        
+        {{-- Bouton retour Accueil --}}
+        <div class="ms-auto">
+            <a href="{{ route('login') }}" class="btn btn-outline-secondary">← Se deconnecter</a>
+        </div>
+         <div class="ms-auto">
+            <a href="{{ route('acceuil') }}" class="btn btn-outline-secondary">← Accueil</a>
+        </div>
+    </nav>
 <div>
     <h2>Créer un nouvel événement</h2>
 
