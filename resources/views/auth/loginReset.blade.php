@@ -15,7 +15,6 @@
             <a href="{{ route('acceuil') }}" class="btn btn-outline-secondary">← Accueil</a>
         </div>
     </nav>
-    </nav> 
 
     <div class="container mt-5" style="max-width: 500px;">
         <h2 class="mb-4 text-center">Connexion</h2>
@@ -31,8 +30,8 @@
             </div>
         @endif
 
-        {{-- Formulaire de connexion --}}
-        <form action="{{ route('login') }}" method="POST">
+        {{-- Formulaire de réinitialisation du mot de passe --}}
+        <form action="{{ route('loginReset') }}" method="POST">
             @csrf
 
             <div class="mb-3">
@@ -41,19 +40,24 @@
             </div>
 
             <div class="mb-3">
-                <label for="password" class="form-label">Mot de passe</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+                <label for="newpassword" class="form-label">Nouveau mot de passe</label>
+                <input type="password" class="form-control" id="newpassword" name="password" required>
+            </div>
+
+            <div class="mb-3">
+               <label for="password_confirmation" class="form-label">Confirmer le mot de passe</label>
+               <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
             </div>
 
             <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-primary">Se connecter</button>
+                <button type="submit" class="btn btn-primary">Confirmer le nouveau mot de passe</button>
             </div>
 
             <p class="mt-3 text-center">
-                <i>Vous avez oublié votre mot de passe ?</i><br>
-            <a href="{{ route('loginReset') }}">Réinitialiser mot de passe</a>
+                <i>Vous avez un compte ?</i><br>
+                <a href="/login">Se connecter</a>
             </p>
         </form>
     </div>
- </body>
+</body>
 </html>

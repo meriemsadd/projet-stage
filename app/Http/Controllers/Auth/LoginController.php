@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -54,4 +56,37 @@ class LoginController extends Controller
 
         return redirect('/');
     }
+
+ 
+
+    public function showResetForm()
+{
+    return view('auth.loginReset'); 
+}
+
+public function reset(Request $request)
+{
+
+    $request->validate([
+        'login' => 'required', // nom d’utilisateur ou e-mail
+        'password' => 'required|min:6|confirmed',
+    ]);
+
+    // Recherche l'utilisateur par email ou nom d'utilisateur
+    $user = User::where('email', $request->login)
+                ->orWhere('username', $request->login)
+                ->first();
+
+    if (!$user) {
+        return back()->withErrors(['login' => 'Aucun utilisateur trouvé avec cet identifiant.']);
+    }
+
+    // Mise à jour du mot de passe
+    $user->password = Hash::make($request->password);
+    $user->save();
+
+    return redirect()->route('login')->with('success', 'Mot de passe réinitialisé avec succès.');
+}
+
+
 }
