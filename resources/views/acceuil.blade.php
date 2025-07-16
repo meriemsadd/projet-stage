@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <title>Accueil - Wilaya Oujda Oriental</title>
 
-    <!-- Bootstrap CSS -->
+   
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
     <style>
@@ -104,12 +104,12 @@
             color: white;
             text-transform: uppercase;
         }
-        /* Couleurs badges */
+        
         .badge-avenir { background-color: #4caf50; }    /* Vert */
         .badge-encours { background-color: #ff9800; }  /* Orange */
         .badge-passe { background-color: #f44336; }    /* Rouge */
 
-        /* Card body */
+        
         .card-body {
             flex-grow: 1;
             padding: 1.3rem 1.5rem;
@@ -129,7 +129,6 @@
             flex-grow: 1;
         }
 
-        /* Bouton */
         .btn-details {
             align-self: flex-start;
             background-color: #00796b;
@@ -145,7 +144,6 @@
             color: white;
         }
 
-        /* Footer */
         footer.footer {
             background-color: #004d40;
             color: #e0f2f1;
