@@ -15,9 +15,9 @@
         <div class="ms-auto">
             <a href="{{ route('login') }}" class="btn btn-outline-secondary">← Se deconnecter</a>
         </div>
-         <div class="ms-auto">
+         {{--<div class="ms-auto">
             <a href="{{ route('acceuil') }}" class="btn btn-outline-secondary">← Accueil</a>
-        </div>
+        </div>--}}
     </nav>
     <h1>Liste des événements</h1>
 
@@ -48,7 +48,7 @@
                         <td>{{ $evenement->type?->nom ?? 'Non défini' }}</td>
 
                         <td>
-                            <a href="{{ route('evenements.show', $evenement->id) }}" class="btn btn-info btn-sm">Voir</a>
+                            <a href="{{ route('evenements.show1', $evenement->id) }}" class="btn btn-info btn-sm">Voir</a>
                             <a href="{{ route('evenements.edit', $evenement->id) }}" class="btn btn-warning btn-sm">Modifier</a>
                             <form action="{{ route('evenements.destroy', $evenement->id) }}" method="POST" style="display:inline-block;">
                                 @csrf

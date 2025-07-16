@@ -49,8 +49,13 @@
         </div>
 
         <div class="mb-3">
-            <label for="date" class="form-label">Date</label>
-            <input type="date" name="date" class="form-control" id="date" value="{{old('date',$Evenement->date)}}" required>
+            <label for="date" class="form-label">Date de début</label>
+            <input type="date" name="date" class="form-control" id="date" value="{{old('date',$Evenement->date_de_début)}}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="date" class="form-label">Date de fin</label>
+            <input type="date" name="date" class="form-control" id="date" value="{{old('date',$Evenement->date_de_fin)}}" required>
         </div>
 
         <div class="mb-3">

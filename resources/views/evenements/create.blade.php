@@ -53,8 +53,12 @@
         </div>
 
         <div class="mb-3">
-            <label for="date" class="form-label">Date</label>
-            <input type="date" name="date" class="form-control" id="date" required>
+            <label for="date" class="form-label">Date de début</label>
+            <input type="date" name="date_de_début" class="form-control" id="date" required>
+        </div>
+          <div class="mb-3">
+            <label for="date" class="form-label">Date de fin</label>
+            <input type="date" name="date_de_fin" class="form-control" id="date" required>
         </div>
 
         <div class="mb-3">
