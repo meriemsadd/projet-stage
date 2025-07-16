@@ -14,13 +14,15 @@ class AcceuilController extends Controller
 
         // Pour chaque événement, on calcule le statut et la classe du badge
         $evenements->transform(function ($event) {
-            $date = Carbon::parse($event->date); // Convertir la date de l'événement en objet Carbon
+            $datedebut = Carbon::parse($event->date_de_début. ' ' . $event->heure); // Convertir la date de l'événement en objet Carbon
+            $datefin = Carbon::parse($event->date_de_fin. ' ' . $event->heure); // Convertir la date de l'événement en objet Carbon
+
             $now = Carbon::now(); // Date et heure actuelle
 
-            if ($date->isToday()) {
+            if ($now->between($datedebut,$datefin)) {
                 $event->status = 'En cours'; // Texte du statut
                 $event->badge = 'success';   // Classe Bootstrap (vert)
-            } elseif ($date->isPast()) {
+            } elseif ($now->lt($datedebut) && $now->lt($datefin)) {
                 $event->status = 'Passé';    // Texte du statut
                 $event->badge = 'secondary'; // Classe Bootstrap (gris)
             } else {
