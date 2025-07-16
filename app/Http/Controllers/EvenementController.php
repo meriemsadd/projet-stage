@@ -31,7 +31,8 @@ class EvenementController extends Controller
         $request->validate([
               'titre' => 'required|string|max:255',
               'lieu' => 'required|string|max:255',
-              'date' => 'required|date',
+              'date_de_début' => 'required|date',
+               'date_de_fin' => 'required|date',
               'heure'=> 'required|date_format:H:i',
               'description'=>'required|string',
               'type_events_id'=> 'required|exists:type_events,id',
@@ -45,6 +46,15 @@ class EvenementController extends Controller
 
     }
 
+    public function show1(string $id)
+    {
+        
+         $evenement = Evenement::with('participants')->findOrFail($id);
+
+         $participants = $evenement->participants;
+       return view('evenements.show1',compact('evenement','participants'));
+      
+    }
     public function show(string $id)
     {
         
@@ -87,4 +97,6 @@ class EvenementController extends Controller
 
 
     }
+
+   
 }
