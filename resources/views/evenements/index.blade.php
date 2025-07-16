@@ -38,27 +38,29 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach($evenements as $evenement)
-                    <tr>
-                        <td>{{ $evenement->titre }}</td>
-                        <td>{{ $evenement->lieu }}</td><td>{{ \Carbon\Carbon::parse($evenement->date)->format('d/m/Y') }}</td>
-                        <td>{{ $evenement->heure }}</td>
-                        <td>{{ $evenement->description}}</td>
-                        <td>{{ $evenement->type?->nom ?? 'Non défini' }}</td>
+<tbody>
+    @foreach($evenements as $evenement)
+        <tr>
+            <td>{{ $evenement->titre }}</td>
+            <td>{{ $evenement->lieu }}</td>
+            <td>{{ \Carbon\Carbon::parse($evenement->date)->format('d/m/Y') }}</td>
+            <td>{{ $evenement->heure }}</td>
+            <td>{{ $evenement->description }}</td>
+            <td>{{ $evenement->type?->nom ?? 'Non défini' }}</td>
+            <td>
+                <a href="{{ route('evenements.show', $evenement->id) }}" class="btn btn-info btn-sm">Voir</a>
+                <a href="{{ route('evenements.edit', $evenement->id) }}" class="btn btn-warning btn-sm">Modifier</a>
+                <form action="{{ route('evenements.destroy', $evenement->id) }}" method="POST" style="display:inline-block;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" onclick="return confirm('Confirmer la suppression ?')" class="btn btn-danger btn-sm">Supprimer</button>
+                </form>
+            </td>
 
-                        <td>
-                            <a href="{{ route('evenements.show', $evenement->id) }}" class="btn btn-info btn-sm">Voir</a>
-                            <a href="{{ route('evenements.edit', $evenement->id) }}" class="btn btn-warning btn-sm">Modifier</a>
-                            <form action="{{ route('evenements.destroy', $evenement->id) }}" method="POST" style="display:inline-block;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" onclick="return confirm('Confirmer la suppression ?')" class="btn btn-danger btn-sm">Supprimer</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
+        </tr>
+    @endforeach
+</tbody>
+
         </table>
     @endif
 

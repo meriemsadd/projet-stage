@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Models\Participant;
 use App\Models\Evenement;
 use App\Mail\InvitationParticipant;
@@ -94,4 +95,13 @@ class ParticipantController
 
         return redirect()->back()->with('success', 'Participant supprimé avec succès.');
     }
+    public function indexByEvenement($evenementId)
+{
+    $evenement = Evenement::findOrFail($evenementId);
+    $participants = Participant::where('evenement_id', $evenementId)->get();
+
+    return view('participants.index', compact('participants', 'evenement'));
+}
+
+
 }

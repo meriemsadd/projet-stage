@@ -47,7 +47,7 @@
 
             <div class="mb-3" class="form-group">
                <label for="service_id">Service</label>
-               <select name="service_id" id="service_id" required>
+               <select name="service_id" id="service_id" class="form-select" required>
               <option value="">-- Choisir un service --</option>
              @foreach($services as $service)
               <option value="{{ $service->id }}">{{ $service->nom }}</option>
@@ -65,6 +65,12 @@
                 <label for="password_confirmation" class="form-label">Confirmer le mot de passe</label>
                 <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
             </div>
+            <div class="mb-3">
+                 <label for="signature" class="form-label">Signature numérique</label>
+                 <canvas id="signature-pad" width="400" height="150" style="border: 2px dashed #00796b; border-radius: 8px; background-color: #fff; touch-action: none;"></canvas>
+                <input type="hidden" name="signature" id="signature">
+                <button type="button" class="btn btn-sm btn-outline-danger mt-2" onclick="clearSignature()">Effacer</button>
+            </div>
 
             <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-primary">Se connecter</button>
@@ -76,5 +82,44 @@
             </p>
         </form>
     </div>
+<script>
+    const canvas = document.getElementById('signature-pad');
+    const ctx = canvas.getContext('2d');
+    let isDrawing = false;
+
+    canvas.addEventListener('mousedown', (e) => {
+        isDrawing = true;
+        ctx.beginPath();
+        ctx.moveTo(e.offsetX, e.offsetY);
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+        if (isDrawing) {
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+        }
+    });
+
+    canvas.addEventListener('mouseup', () => {
+        isDrawing = false;
+        saveSignature();
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+        isDrawing = false;
+        saveSignature();
+    });
+
+    function saveSignature() {
+        const signatureData = canvas.toDataURL('image/png');
+        document.getElementById('signature').value = signatureData;
+    }
+
+    function clearSignature() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    document.getElementById('signature').value = '';
+    }
+</script>
+
 </body>
 </html>
