@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('titre');
             $table->string('lieu');
-            $table->date('date');
+            $table->date('date_de_début');
+            $table->date('date_de_fin');
             $table->time('heure');
             $table->text('description');
             $table->unsignedBigInteger('user_id')->nullable(); 
