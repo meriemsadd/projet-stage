@@ -12,7 +12,11 @@ Route::get('/',[AcceuilController::class,'index'])->name('acceuil');//la racine 
 Route::resource('evenements', EvenementController ::class);
 Route::resource('participants', ParticipantController::class)->except(['create']);//sinn ghiur hado f participant Route::get('/inscription', [ParticipantController::class, 'create']);Route::post('/inscription', [ParticipantController::class, 'store'])->name('participants.store');
 Route::get('/participants/create/{evenementId}', [ParticipantController::class, 'create'])->name('participants.create');
+<<<<<<< HEAD
+Route::get('/evenements/{evenement}/participants', [ParticipantController::class, 'indexByEvenement'])->name('participants.byEvenement');
+=======
 Route::get('/evenements/{id}/show1', [EvenementController::class, 'show1'])->name('evenements.show1');
+>>>>>>> b2385e6187615e83d1c68e39fbe54efc9be812bd
 
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');

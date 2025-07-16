@@ -6,10 +6,17 @@
   <title>Liste des participants</title>
 </head>
 <body>
+  @if(isset($evenement))
+  <h1>Participants pour l'événement : {{ $evenement->titre }}</h1>
+@else
   <h1>Participants enregistrés</h1>
-  <a href="{{route('participants.create')}}">
-    <button type="button">Nouveau Participant</button>
-  </a>  
+@endif
+ @if(isset($evenement))
+    <a href="{{ route('participants.create', ['evenementId' => $evenement->id]) }}">
+        <button type="button">Nouveau Participant</button>
+    </a>
+@endif
+
   <table border="1" cellpadding="8" cellspacing="0">
     <thead><!--titre des coolonnes=entete du tableau-->
       <tr><!--ligne(tr=row)-->
@@ -17,7 +24,10 @@
        <th>Prenom</th>
        <th>Email</th>
        <th>Profession</th>
-       <th>Evenement</th>
+       @if(!isset($evenement))
+        <th>Evenement</th>
+       @endif
+
        <th>Actions</th>
       </tr>
     </thead>
@@ -28,7 +38,10 @@
         <td>{{$p->prenom}}</td>
         <td>{{$p->email}}</td>
         <td>{{$p->profession}}</td>
-        <td>{{$p->titre}}</td>
+        @if(!isset($evenement))
+         <td>{{ $p->evenement?->titre ?? 'Non défini' }}</td>
+        @endif
+
         <td>
           <!--bouton Modifier-->
           <a href="{{route('participants.edit',$p->id)}}">Modifier</a><!--Lien pour modifier ce participant (va à edit)--> |
