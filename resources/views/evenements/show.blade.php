@@ -1,37 +1,27 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Détails de l'événement - {{ $evenement->titre }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+@extends('layouts.app')
 
-<nav class="navbar navbar-light bg-light px-4">
-    <a class="navbar-brand" href="{{ url('/') }}">← Retour à l'accueil</a>
-</nav>
+@section('title', "Détails de l'événement - {$evenement->titre}")
 
-<div class="container mt-4">
-    <h1>{{ $evenement->titre }}</h1>
+@section('content')
+    <div class="container mt-4">
+        <!-- Bouton retour à l'accueil -->
+        <a href="{{ route('acceuil') }}" class="btn btn-outline-secondary mb-3">← Retour à l’accueil</a>
 
-    <p><strong>Lieu :</strong> {{ $evenement->lieu }}</p>
-    <p><strong>Date :</strong> {{ \Carbon\Carbon::parse($evenement->date)->format('d/m/Y') }}</p>
-    <p><strong>Heure :</strong> {{ \Carbon\Carbon::parse($evenement->heure)->format('H:i') }}</p>
-    <p><strong>Description :</strong> {{ $evenement->description }}</p>
-    <p><strong>Type :</strong> {{ $evenement->type->nom ?? 'N/A' }}</p>
+        <h1>{{ $evenement->titre }}</h1>
 
-    <hr>
+        <p><strong>Lieu :</strong> {{ $evenement->lieu }}</p>
+        <p><strong>Date :</strong> {{ \Carbon\Carbon::parse($evenement->date)->format('d/m/Y') }}</p>
+        <p><strong>Heure :</strong> {{ \Carbon\Carbon::parse($evenement->heure)->format('H:i') }}</p>
+        <p><strong>Description :</strong> {{ $evenement->description }}</p>
+        <p><strong>Type :</strong> {{ $evenement->type->nom ?? 'N/A' }}</p>
 
-    <h3>Inscription au participant</h3>
+        <hr>
 
-    {{-- Suppose que tu as un formulaire Blade ici--}}
-    <a href="{{ route('participants.create', $evenement->id) }}" class="btn btn-primary">
-    S'inscrire comme participant
-    </a> 
+        <h3>Inscription au participant</h3>
 
-
-
-</div>
-
-</body>
-</html>
+        {{-- Suppose que tu as un formulaire Blade ici --}}
+        <a href="{{ route('participants.create', $evenement->id) }}" class="btn btn-primary">
+            S'inscrire comme participant
+        </a>
+    </div>
+@endsection
