@@ -10,12 +10,34 @@ use App\Models\Type;
 class EvenementController extends Controller
 {
    
-    public function index()
-    {
-         $evenements = Evenement::where('user_id', auth()->id())->get();
-         return view('evenements.index', compact('evenements'));//compact=$data = ['evenements' => $evenements];return view('evenements.index', $data);
-         //cad sift l view (evenement.index) wsift m3ah les donne evenements bach nst3mlohom fl view
+    public function index(Request $request)
+{
+    $query = Evenement::query()->with('type');
+
+    // Recherche par mot-clé (titre)
+    if ($request->filled('q')) {
+        $query->where('titre', 'like', '%' . $request->q . '%');
     }
+
+    // Filtrage par type d'événement
+    if ($request->filled('type')) {
+        $query->where('type_events_id', $request->type);
+    }
+
+    // Récupérer les événements appartenant à l'utilisateur connecté
+    $query->where('user_id', auth()->id());
+
+    $evenements = $query->orderByDesc('date_de_début')->get(); // ou 'date'
+
+    // Récupérer tous les types pour les afficher dans le filtre
+    $types = Type::all();
+
+    return view('evenements.index', compact('evenements', 'types'));
+}
+
+         //compact=$data = ['evenements' => $evenements];return view('evenements.index', $data);
+         //cad sift l view (evenement.index) wsift m3ah les donne evenements bach nst3mlohom fl view
+    
 
     
     public function create()

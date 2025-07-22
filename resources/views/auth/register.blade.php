@@ -82,44 +82,5 @@
             </p>
         </form>
     </div>
-<script>
-    const canvas = document.getElementById('signature-pad');
-    const ctx = canvas.getContext('2d');
-    let isDrawing = false;
-
-    canvas.addEventListener('mousedown', (e) => {
-        isDrawing = true;
-        ctx.beginPath();
-        ctx.moveTo(e.offsetX, e.offsetY);
-    });
-
-    canvas.addEventListener('mousemove', (e) => {
-        if (isDrawing) {
-            ctx.lineTo(e.offsetX, e.offsetY);
-            ctx.stroke();
-        }
-    });
-
-    canvas.addEventListener('mouseup', () => {
-        isDrawing = false;
-        saveSignature();
-    });
-
-    canvas.addEventListener('mouseleave', () => {
-        isDrawing = false;
-        saveSignature();
-    });
-
-    function saveSignature() {
-        const signatureData = canvas.toDataURL('image/png');
-        document.getElementById('signature').value = signatureData;
-    }
-
-    function clearSignature() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    document.getElementById('signature').value = '';
-    }
-</script>
-
 </body>
 </html>

@@ -193,19 +193,23 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navMenu">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
-                    <li class="nav-item"><a class="nav-link" href="#">Accueil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Nos Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Événements</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Partenaires</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Espace Citoyens</a></li>
-                     <li class="nav-item"><a class="nav-link" href="#">Contact
+                <form class="d-flex w-100 gap-3" action="{{ route('evenements.index') }}" method="GET">
+    <!-- Barre de recherche -->
+    <input class="form-control me-2" type="search" placeholder="Rechercher un événement..." name="q" value="{{ request('q') }}" />
 
-</a></li>
-                    <li class="nav-item ms-lg-3">
-                        <a href="{{ route('login') }}" class="btn btn-outline-light px-4">Se connecter</a>
-                    </li>
-                </ul>
+    <!-- Filtre par type d'événement -->
+    <select name="type" class="form-select w-auto">
+        <option value="">Tous les types</option>
+        @foreach($types as $type)
+            <option value="{{ $type->id }}" {{ request('type') == $type->id ? 'selected' : '' }}>
+                {{ $type->nom }}
+            </option>
+        @endforeach
+    </select>
+
+    <button class="btn btn-outline-light" type="submit">🔎</button>
+</form>
+
             </div>
         </div>
     </nav>

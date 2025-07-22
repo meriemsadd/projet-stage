@@ -46,6 +46,19 @@ class ParticipantController
 {
     // 1. Sauvegarder le participant dans la base de données
     $participant = Participant::create($request->all());//on stoke dans objet pour le reutiliser
+      // 🔽 Ajoute ce bloc pour gérer la signature
+    if ($request->has('signature')) {
+        $signatureData = $request->input('signature');
+        $signatureName = 'signature_' . time() . '.png';
+        $signaturePath = public_path('signatures/' . $signatureName);
+
+        // Enlever le header "data:image/png;base64,"
+        $signatureData = explode(',', $signatureData)[1];
+        file_put_contents($signaturePath, base64_decode($signatureData));
+
+        $participant->signature = 'signatures/' . $signatureName;
+        $participant->save(); // On sauvegarde après avoir mis la signature
+    }
 
     // 2. Envoyer l'e-mail
     Mail::to($participant->email)->send(new InvitationParticipant($participant));//email baséé sur ce participant
