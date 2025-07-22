@@ -192,12 +192,33 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
+
     
 </a></li>
                     <li class="nav-item ms-lg-3">
                         <a href="{{ route('login') }}" class="btn btn-outline-light px-4">Se connecter</a>
                     </li>
                 </ul>
+
+            <div class="collapse navbar-collapse" id="navMenu">
+                <form class="d-flex w-100 gap-3" action="{{ route('evenements.index') }}" method="GET">
+    <!-- Barre de recherche -->
+    <input class="form-control me-2" type="search" placeholder="Rechercher un événement..." name="q" value="{{ request('q') }}" />
+
+    <!-- Filtre par type d'événement -->
+    <select name="type" class="form-select w-auto">
+        <option value="">Tous les types</option>
+        @foreach($types as $type)
+            <option value="{{ $type->id }}" {{ request('type') == $type->id ? 'selected' : '' }}>
+                {{ $type->nom }}
+            </option>
+        @endforeach
+    </select>
+
+    <button class="btn btn-outline-light" type="submit">🔎</button>
+</form>
+
+
             </div>
         </div>
     </nav>

@@ -24,6 +24,7 @@ return new class extends Migration
              ->constrained('organismes') 
               ->onDelete('set null');
             $table->timestamps();/*pour cree et updateee */
+            $table->string('signature')->nullable();
 
         });
     }

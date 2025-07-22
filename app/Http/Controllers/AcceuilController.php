@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Type;
+
 
 use App\Models\Evenement; // Modèle Evenement
 use Carbon\Carbon; // Librairie Carbon pour manipuler les dates
@@ -33,7 +35,8 @@ class AcceuilController extends Controller
             return $event; // Retourner l'événement modifié
         });
 
+         $types = Type::all();
         // Envoyer les événements modifiés à la vue 'acceuil.blade.php'
-        return view('acceuil', compact('evenements'));
+        return view('acceuil', compact('evenements','types'));
     }
 }
