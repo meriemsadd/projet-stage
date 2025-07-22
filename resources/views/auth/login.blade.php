@@ -1,35 +1,20 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Se connecter</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    {{-- Barre de navigation --}}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
-        <a class="navbar-brand" href="#">Site Officiel de la Wilaya OUJDA ORIENTAL</a>
-        
-        {{-- Bouton retour Accueil --}}
-        <div class="ms-auto">
-            <a href="{{ route('acceuil') }}" class="btn btn-outline-secondary">← Accueil</a>
+@extends('template.app')
+
+@section('title', 'Se connecter')
+
+@section('content')
+<div class="container mt-5" style="max-width: 500px;">
+    <h2 class="mb-4 text-center">Connexion</h2>
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
-    </nav>
-    </nav> 
-
-    <div class="container mt-5" style="max-width: 500px;">
-        <h2 class="mb-4 text-center">Connexion</h2>
-
-        {{-- Affichage des erreurs --}}
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+    @endif
 
         {{-- Formulaire de connexion --}}
         <form action="{{ route('login') }}" method="POST">
@@ -54,6 +39,4 @@
             <a href="{{ route('loginReset') }}">Réinitialiser mot de passe</a>
             </p>
         </form>
-    </div>
- </body>
-</html>
+   

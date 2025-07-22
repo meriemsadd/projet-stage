@@ -192,15 +192,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navMenu">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
-                    <li class="nav-item"><a class="nav-link" href="#">Accueil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Nos Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Événements</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Partenaires</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Espace Citoyens</a></li>
-                     <li class="nav-item"><a class="nav-link" href="#">Contact
-
+    
 </a></li>
                     <li class="nav-item ms-lg-3">
                         <a href="{{ route('login') }}" class="btn btn-outline-light px-4">Se connecter</a>
@@ -212,7 +204,7 @@
 
     <!-- Contenu principal -->
     <main class="container-main">
-        <h1 class="section-title">📅 Événements à venir, en cours et passés</h1>
+        <h1 class="section-title">Listes des événements</h1>
 
         <div class="row g-4 justify-content-center">
             @forelse ($evenements as $event)
