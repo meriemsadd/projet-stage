@@ -26,8 +26,8 @@
             gap: 0.5rem;
         }
         .navbar-brand img {
-            height: 38px;
-            width: 38px;
+            height: 60px;
+            width: auto;
         }
         .btn-outline-light {
             color: white !important;

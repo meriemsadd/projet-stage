@@ -4,12 +4,14 @@
     <meta charset="UTF-8" />
     <title>Accueil - Wilaya Oujda Oriental</title>
 
-   
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
     <style>
         body {
-            background: linear-gradient(135deg, #e0f7fa, #ffffff);
+            /* Mis à jour avec le style radial-gradient et perspective 3D */
+            background: radial-gradient(circle at top left, #e0f7fa, #ffffff);
+            perspective: 1000px;
+
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
             display: flex;
@@ -30,8 +32,8 @@
             gap: 0.5rem;
         }
         .navbar-brand img {
-            height: 38px;
-            width: 38px;
+            height: 60px;
+            width: auto;
         }
         .nav-link {
             color: #c8e6c9 !important;
@@ -70,19 +72,21 @@
             text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
         }
 
-        /* Cartes */
+        /* Cartes avec effets 3D et ombre améliorée */
         .event-card {
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
             background: white;
             display: flex;
             flex-direction: column;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
         }
         .event-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+            transform: rotateY(5deg) scale(1.03);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
 
         /* Image et badge */
@@ -91,7 +95,12 @@
             width: 100%;
             object-fit: cover;
             position: relative;
+            border-bottom: 3px solid #00796b;
         }
+        .btn-outline-light {
+    white-space: nowrap;
+}
+
         .badge-position {
             position: absolute;
             top: 12px;
@@ -104,12 +113,11 @@
             color: white;
             text-transform: uppercase;
         }
-        
+
         .badge-avenir { background-color: #4caf50; }    /* Vert */
         .badge-encours { background-color: #ff9800; }  /* Orange */
         .badge-passe { background-color: #f44336; }    /* Rouge */
 
-        
         .card-body {
             flex-grow: 1;
             padding: 1.3rem 1.5rem;
@@ -117,10 +125,11 @@
             flex-direction: column;
         }
         .card-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #00695c;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #00796b;
             margin-bottom: 0.7rem;
+            text-shadow: 1px 1px #d0f0e0;
         }
         .card-text {
             color: #444;
@@ -131,16 +140,18 @@
 
         .btn-details {
             align-self: flex-start;
-            background-color: #00796b;
+            background: linear-gradient(135deg, #26a69a, #004d40);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             border: none;
             font-weight: 600;
             padding: 0.45rem 1.3rem;
             border-radius: 25px;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.2s ease;
             color: white;
         }
         .btn-details:hover {
-            background-color: #004d40;
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #00796b, #00332e);
             color: white;
         }
 
@@ -182,43 +193,32 @@
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid px-4">
             <a class="navbar-brand" href="#">
-              <img src="{{ asset('images/R.png') }}" alt="Logo" style="height: 60px; width: auto;" />
-                 Wilaya Oujda Oriental
+                <img src="{{ asset('images/R.png') }}" alt="Logo" />
+                Wilaya Oujda Oriental
             </a>
- 
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
                 aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
+            <div class="collapse navbar-collapse justify-content-between" id="navMenu">
+                <form class="d-flex w-100 gap-3 me-auto" action="{{ route('evenements.index') }}" method="GET">
+                    <input class="form-control me-2" type="search" placeholder="Rechercher un événement..." name="q" value="{{ request('q') }}" />
+                    <select name="type" class="form-select w-auto">
+                        <option value="">Tous les types</option>
+                        @foreach($types as $type)
+                            <option value="{{ $type->id }}" {{ request('type') == $type->id ? 'selected' : '' }}>
+                                {{ $type->nom }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <button class="btn btn-outline-light" type="submit">🔎</button>
+                </form>
 
-    
-</a></li>
-                    <li class="nav-item ms-lg-3">
-                        <a href="{{ route('login') }}" class="btn btn-outline-light px-4">Se connecter</a>
-                    </li>
-                </ul>
-
-            <div class="collapse navbar-collapse" id="navMenu">
-                <form class="d-flex w-100 gap-3" action="{{ route('evenements.index') }}" method="GET">
-    <!-- Barre de recherche -->
-    <input class="form-control me-2" type="search" placeholder="Rechercher un événement..." name="q" value="{{ request('q') }}" />
-
-    <!-- Filtre par type d'événement -->
-    <select name="type" class="form-select w-auto">
-        <option value="">Tous les types</option>
-        @foreach($types as $type)
-            <option value="{{ $type->id }}" {{ request('type') == $type->id ? 'selected' : '' }}>
-                {{ $type->nom }}
-            </option>
-        @endforeach
-    </select>
-
-    <button class="btn btn-outline-light" type="submit">🔎</button>
-</form>
-
-
+                <div class="ms-3">
+                    <a href="{{ route('login') }}" class="btn btn-outline-light px-4">Se connecter</a>
+                </div>
             </div>
         </div>
     </nav>
@@ -233,19 +233,18 @@
                     <div class="card event-card position-relative w-100">
                         <div class="position-relative">
                             <img src="{{ $event->image_url ?? 'https://via.placeholder.com/400x180?text=Événement' }}" alt="Image de l'événement" class="event-image w-100" />
-                            <span class="badge badge-position 
-                                @if($event->status == 'À venir') badge-avenir
-                                @elseif($event->status == 'En cours') badge-encours
-                                @else badge-passe @endif">
-                                {{ $event->status }}
+                            <span class="badge badge-position {{ $event->badge }}">
+                                 {{ $event->status }}
                             </span>
+
                         </div>
 
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">{{ $event->titre }}</h5>
                             <p class="card-text">
-                                📍 {{ $event->lieu }} <br />
-                                🕓 {{ \Carbon\Carbon::parse($event->date)->format('d/m/Y') }} à {{ \Carbon\Carbon::parse($event->heure)->format('H:i') }}
+                                📍 {{ $event->lieu }} <br>
+                                🕓 Du {{ \Carbon\Carbon::parse($event->date_de_début)->format('d/m/Y') }} à {{ \Carbon\Carbon::parse($event->heure)->format('H:i') }}
+                                au {{ \Carbon\Carbon::parse($event->date_de_fin)->format('d/m/Y') }}
                             </p>
                             <a href="{{ route('evenements.show', $event->id) }}" class="btn btn-details mt-auto">Voir détails</a>
                         </div>
