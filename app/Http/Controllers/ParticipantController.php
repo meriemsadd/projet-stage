@@ -64,7 +64,7 @@ class ParticipantController
     Mail::to($participant->email)->send(new InvitationParticipant($participant));//email baséé sur ce participant
 
     // 3. Rediriger avec message de succès
-    return redirect('/participants')->with('success', 'Participant ajouté avec succès ! E-mail envoyé.');
+    return redirect('/')->with('success', 'Participant ajouté avec succès ! E-mail envoyé.');
 }
 
     /**
