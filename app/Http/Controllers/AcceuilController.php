@@ -23,13 +23,13 @@ class AcceuilController extends Controller
 
             if ($now->between($datedebut,$datefin)) {
                 $event->status = 'En cours'; // Texte du statut
-                $event->badge = 'success';   // Classe Bootstrap (vert)
-            } elseif ($now->lt($datedebut) && $now->lt($datefin)) {
-                $event->status = 'Passé';    // Texte du statut
-                $event->badge = 'secondary'; // Classe Bootstrap (gris)
+                $event->badge = 'badge-encours';   // Classe Bootstrap (vert)
+            } elseif ($now->lt($datedebut)) {
+                $event->status = 'À venir';    // Texte du statut
+                $event->badge = 'badge-avenir'; // Classe Bootstrap (gris)
             } else {
-                $event->status = 'À venir';  // Texte du statut
-                $event->badge = 'primary';   // Classe Bootstrap (bleu)
+                $event->status = 'Passé';  // Texte du statut
+                $event->badge = 'badge-passe';   // Classe Bootstrap (bleu)
             }
 
             return $event; // Retourner l'événement modifié
