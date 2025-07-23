@@ -38,7 +38,6 @@
                             <th>Prénom</th>
                             <th>Email</th>
                             <th>Profession</th>
-                            <th>Événement</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -49,7 +48,6 @@
                             <td>{{ $p->prenom }}</td>
                             <td>{{ $p->email }}</td>
                             <td>{{ $p->profession }}</td>
-                            <td>{{ $p->titre }}</td>
                             <td>
                                 <a href="{{ route('participants.edit', $p->id) }}" class="btn btn-sm btn-primary">Modifier</a>
                                 <form action="{{ route('participants.destroy', $p->id) }}" method="POST" style="display:inline-block;">
