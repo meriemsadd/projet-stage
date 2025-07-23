@@ -38,7 +38,8 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             // Connexion réussie → rediriger vers la page d'accueil
             $request->session()->regenerate();
-            return redirect()->route('evenements.index');
+           return redirect()->route('dashboard');
+
         }
 
         // 5. Échec de connexion → renvoyer vers le formulaire avec message d'erreur

@@ -27,4 +27,21 @@ Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'store'])->name('register.submit');
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
+
+//route de statistique
+Route::middleware('auth')->group(function () {
+    Route::get('/statistiques', function () {
+        return view('statistiques.index');  // Cette vue doit exister (voir plus bas)
+    })->name('statistiques');
+});
+
+//route de rapport
+Route::middleware('auth')->group(function () {
+    Route::get('/rapport', function () {
+        return view('rapport.index');  // Crée aussi cette vue (voir ci-dessous)
+    })->name('rapport.index');
+});
