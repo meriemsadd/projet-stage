@@ -16,27 +16,27 @@
         </div>
     @endif
 
-        {{-- Formulaire de connexion --}}
-        <form action="{{ route('login') }}" method="POST">
-            @csrf
+    <form action="{{ route('login') }}" method="POST">
+        @csrf
 
-            <div class="mb-3">
-                <label for="login" class="form-label">Nom d'utilisateur ou E-mail</label>
-                <input type="text" class="form-control" id="login" name="login" required autofocus>
-            </div>
+        <div class="mb-3">
+            <label for="login" class="form-label">Nom d'utilisateur ou E-mail</label>
+            <input type="text" class="form-control" id="login" name="login" required autofocus>
+        </div>
 
-            <div class="mb-3">
-                <label for="password" class="form-label">Mot de passe</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Mot de passe</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
 
-            <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-primary">Se connecter</button>
-            </div>
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">Se connecter</button>
+        </div>
 
-            <p class="mt-3 text-center">
-                <i>Vous avez oublié votre mot de passe ?</i><br>
+        <p class="mt-3 text-center">
+            <i>Vous avez oublié votre mot de passe ?</i><br>
             <a href="{{ route('loginReset') }}">Réinitialiser mot de passe</a>
-            </p>
-        </form>
-   
+        </p>
+    </form>
+</div>
+@endsection
