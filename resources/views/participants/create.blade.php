@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Ajouter un participant</title>
-</head>
+@extends('template.app')
+
+@section('title', 'Inscription des participants')
+
+@section('content')
 <body>
     <h1>Formulaire d'inscription</h1>
 
@@ -106,4 +106,4 @@ canvas.addEventListener('mousemove', function (e) {
     });
 </script>
 </body>
-</html>
+@endsection
