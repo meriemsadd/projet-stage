@@ -7,6 +7,11 @@
         <h1 class="text-primary">📅 Liste des événements</h1>
         <a href="{{ route('evenements.create') }}" class="btn btn-success">+ Créer un nouvel événement</a>
     </div>
+    <div class="d-flex justify-content-end mb-3">
+    <a href="{{ route('evenements.export.pdf') }}" class="btn btn-danger me-2">Exporter en PDF</a>
+    <a href="{{ route('evenements.export.excel') }}" class="btn btn-success">Exporter en Excel</a>
+    </div>
+
 
     @if($evenements->isEmpty())
         <div class="alert alert-info">Aucun événement disponible.</div>

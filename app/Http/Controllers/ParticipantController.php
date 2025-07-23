@@ -10,6 +10,10 @@ use App\Mail\InvitationParticipant;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Organisme;
 
+use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ParticipantsExport;
+
 
 class ParticipantController
 {
@@ -116,5 +120,16 @@ class ParticipantController
     return view('participants.index', compact('participants', 'evenement'));
 }
 
+    public function exportPDF()
+{
+    $participants = Participant::all();
+    $pdf = PDF::loadView('exports.participants', compact('paticipants'));
+    return $pdf->download('participants.pdf');
+}
+
+    public function exportExcel()
+{
+    return Excel::download(new ParticipantsExport, 'participants.xlsx');
+}
 
 }

@@ -45,3 +45,12 @@ Route::middleware('auth')->group(function () {
         return view('rapport.index');  // Crée aussi cette vue (voir ci-dessous)
     })->name('rapport.index');
 });
+
+
+// Événements
+Route::get('/evenements/export/pdf', [EvenementController::class, 'exportPDF'])->name('evenements.export.pdf');
+Route::get('/evenements/export/excel', [EvenementController::class, 'exportExcel'])->name('evenements.export.excel');
+
+// Participants
+Route::get('/participants/export/pdf', [ParticipantController::class, 'exportPDF'])->name('participants.export.pdf');
+Route::get('/participants/export/excel', [ParticipantController::class, 'exportExcel'])->name('participants.export.excel');
