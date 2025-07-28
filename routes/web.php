@@ -39,21 +39,24 @@ Route::middleware('auth')->group(function () {
     })->name('statistiques');
 });
 
-<<<<<<< HEAD
-//route de rapport
+// Statistiques
+Route::middleware('auth')->group(function () {
+    Route::get('/statistiques', function () {
+        return view('statistiques.index');  // Cette vue doit exister
+    })->name('statistiques');
+});
+
+// Rapport
 Route::middleware('auth')->group(function () {
     Route::get('/rapport', function () {
-        return view('rapport.index');  // Crée aussi cette vue (voir ci-dessous)
+        return view('rapport.index');  // Crée aussi cette vue
     })->name('rapport.index');
 });
 
-
-// Événements
+// Événements - Export
 Route::get('/evenements/export/pdf', [EvenementController::class, 'exportPDF'])->name('evenements.export.pdf');
 Route::get('/evenements/export/excel', [EvenementController::class, 'exportExcel'])->name('evenements.export.excel');
 
-// Participants
+// Participants - Export
 Route::get('/participants/export/pdf', [ParticipantController::class, 'exportPDF'])->name('participants.export.pdf');
 Route::get('/participants/export/excel', [ParticipantController::class, 'exportExcel'])->name('participants.export.excel');
-=======
->>>>>>> 8675e7b1dfa4a19f6202d545fafefb5822ddc762
