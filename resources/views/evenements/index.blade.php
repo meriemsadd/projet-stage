@@ -19,7 +19,7 @@
             padding: 25px 30px;
             border-radius: 12px;
             color: white;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
         }
 
@@ -80,7 +80,7 @@
 
     <div class="container my-5">
         <div class="event-header">
-            <h1> Liste des événements</h1>
+            <h1>📅 Liste des événements</h1>
             <a href="{{ route('evenements.create') }}" class="btn shadow">
                 + Créer un nouvel événement
             </a>
@@ -122,16 +122,16 @@
                                 <td>{{ $evenement->type?->nom ?? 'Non défini' }}</td>
                                 <td>
                                     <a href="{{ route('evenements.show1', $evenement->id) }}" class="btn btn-sm btn-info mb-1">
-                                         Voir
+                                        Voir
                                     </a>
                                     <a href="{{ route('evenements.edit', $evenement->id) }}" class="btn btn-sm btn-warning mb-1">
-                                         Modifier
+                                        Modifier
                                     </a>
                                     <form action="{{ route('evenements.destroy', $evenement->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Confirmer la suppression ?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">
-                                             Supprimer
+                                            Supprimer
                                         </button>
                                     </form>
                                 </td>

@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8" />
-    <title>Accueil -Wilaya De L'Oriental</title>
+    <title>Accueil - Wilaya De L'Oriental</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
@@ -72,7 +72,7 @@
             text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
         }
 
-        /* Cartes avec effets 3D et ombre améliorée */
+        /* Cartes avec effets 3D, ombre améliorée et animation */
         .event-card {
             border-radius: 20px;
             overflow: hidden;
@@ -83,10 +83,31 @@
             transition: transform 0.4s ease, box-shadow 0.4s ease;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             width: 100%;
+
+            /* Animation d'apparition */
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease forwards;
         }
+        /* Décalage de l’animation pour chaque carte */
+        .event-card:nth-child(1) { animation-delay: 0.1s; }
+        .event-card:nth-child(2) { animation-delay: 0.2s; }
+        .event-card:nth-child(3) { animation-delay: 0.3s; }
+        .event-card:nth-child(4) { animation-delay: 0.4s; }
+        .event-card:nth-child(5) { animation-delay: 0.5s; }
+        /* Ajouter autant que nécessaire */
+
         .event-card:hover {
             transform: rotateY(5deg) scale(1.03);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Animation clé */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Image et badge */
@@ -98,8 +119,8 @@
             border-bottom: 3px solid #00796b;
         }
         .btn-outline-light {
-    white-space: nowrap;
-}
+            white-space: nowrap;
+        }
 
         .badge-position {
             position: absolute;
@@ -203,8 +224,8 @@
             </button>
 
             <div class="collapse navbar-collapse justify-content-between" id="navMenu">
-                <form class="d-flex w-100 gap-3 me-auto" action="{{ route('evenements.index') }}" method="GET">
-                    <input class="form-control me-2" type="search" placeholder="Rechercher un événement..." name="q" value="{{ request('q') }}" />
+                <form class="d-flex w-100 gap-3 me-auto" action="{{ route('acceuil') }}" method="GET">
+                    <input class="form-control me-2" type="search" placeholder="Rechercher un événement..." name="search" value="{{ request('search') }}" />
                     <select name="type" class="form-select w-auto">
                         <option value="">Tous les types</option>
                         @foreach($types as $type)
@@ -236,7 +257,6 @@
                             <span class="badge badge-position {{ $event->badge }}">
                                  {{ $event->status }}
                             </span>
-
                         </div>
 
                         <div class="card-body d-flex flex-column">

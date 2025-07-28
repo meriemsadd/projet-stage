@@ -39,6 +39,7 @@ Route::middleware('auth')->group(function () {
     })->name('statistiques');
 });
 
+<<<<<<< HEAD
 //route de rapport
 Route::middleware('auth')->group(function () {
     Route::get('/rapport', function () {
@@ -54,3 +55,5 @@ Route::get('/evenements/export/excel', [EvenementController::class, 'exportExcel
 // Participants
 Route::get('/participants/export/pdf', [ParticipantController::class, 'exportPDF'])->name('participants.export.pdf');
 Route::get('/participants/export/excel', [ParticipantController::class, 'exportExcel'])->name('participants.export.excel');
+=======
+>>>>>>> 8675e7b1dfa4a19f6202d545fafefb5822ddc762
