@@ -39,9 +39,3 @@ Route::middleware('auth')->group(function () {
     })->name('statistiques');
 });
 
-//route de rapport
-Route::middleware('auth')->group(function () {
-    Route::get('/rapport', function () {
-        return view('rapport.index');  // Crée aussi cette vue (voir ci-dessous)
-    })->name('rapport.index');
-});

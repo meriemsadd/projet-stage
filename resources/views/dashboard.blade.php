@@ -107,18 +107,6 @@
                 </div>
             </a>
         </div>
-
-        <div class="col">
-            <a href="{{ route('rapport.index') }}" class="text-decoration-none">
-                <div class="card card-dashboard h-100 shadow">
-                    <div class="card-body">
-                        <div class="card-icon">📄</div>
-                        <h5 class="card-title">Rapports</h5>
-                    </div>
-                </div>
-            </a>
-        </div>
-
     </div>
 </div>
 @endsection
