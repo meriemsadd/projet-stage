@@ -1,128 +1,167 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8" />
-    <title>@yield("title", "Wilaya De L'Oriental")</title>
+@extends('template.app')
 
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+@section('title', 'Créer un événement')
 
-    <!-- Style global -->
-    <style>
-        body {
-            background: linear-gradient(135deg, #e0f7fa, #ffffff);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+@push('styles')
+<style>
+    .container-form {
+        max-width: 650px;
+        background: white;
+        padding: 2.5rem 3rem;
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(0, 77, 64, 0.15);
+        margin: 2rem auto 5rem;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-        .navbar {
-            background-color: #00796b;
-            padding: 0.75rem 1.5rem;
-        }
+    h2 {
+        color: #004d40;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 2rem;
+        text-shadow: 1px 1px 2px rgba(160, 212, 167, 0.6);
+    }
 
-        .navbar-brand {
-            font-weight: 700;
-            font-size: 1.25rem;
-            color: white !important;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+    label.form-label {
+        font-weight: 600;
+        color: #00695c;
+    }
 
-        .navbar-brand img {
-            height: 38px;
-            width: 38px;
-        }
+    input.form-control, select.form-select {
+        border: 2px solid #a5d6a7;
+        border-radius: 12px;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+    }
+    input.form-control:focus, select.form-select:focus {
+        border-color: #004d40;
+        box-shadow: 0 0 8px #004d40aa;
+        outline: none;
+    }
 
-        .nav-link {
-            color: #c8e6c9 !important;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
+    .alert-danger {
+        background-color: #f8d7da;
+        color: #842029;
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 12px rgba(229, 57, 53, 0.25);
+    }
+    .alert-danger ul {
+        margin-bottom: 0;
+        padding-left: 1.2rem;
+    }
 
-        .nav-link:hover,
-        .nav-link:focus {
-            color: #a5d6a7 !important;
-        }
+    .d-flex.gap-2 {
+        justify-content: center;
+        margin-top: 1.8rem;
+    }
 
-        .btn-outline-light {
-            color: white !important;
-            font-weight: 600;
-            border-color: white !important;
-        }
+    button.btn-success {
+        background: linear-gradient(135deg, #4caf50, #087f23);
+        border: none;
+        padding: 0.55rem 2.2rem;
+        font-weight: 700;
+        font-size: 1.1rem;
+        border-radius: 30px;
+        box-shadow: 0 6px 15px rgba(46, 125, 50, 0.4);
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    button.btn-success:hover {
+        background: linear-gradient(135deg, #087f23, #4caf50);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(30, 90, 40, 0.6);
+    }
 
-        .btn-outline-light:hover {
-            background-color: white !important;
-            color: #00796b !important;
-        }
+    a.btn-secondary {
+        padding: 0.55rem 2.2rem;
+        font-weight: 600;
+        font-size: 1.1rem;
+        border-radius: 30px;
+        background-color: #9e9e9e;
+        color: white !important;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    a.btn-secondary:hover {
+        background-color: #6e6e6e;
+        transform: translateY(-3px);
+        text-decoration: none;
+    }
 
-        .footer {
-            background-color: #004d40;
-            color: #e0f2f1;
-            text-align: center;
-            padding: 1.8rem 1rem;
-            font-weight: 500;
-            font-size: 0.95rem;
-            margin-top: auto;
-        }
+</style>
+@endpush
 
-        @media (max-width: 767px) {
-            .section-title {
-                font-size: 2rem;
-            }
-        }
-    </style>
+@section('content')
 
-    @yield('styles')
-    @stack('styles') <!-- Pour empiler des styles spécifiques -->
-</head>
-<body>
+<div class="container-form">
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid px-4">
-            <a class="navbar-brand" href="{{ url('/') }}">
-                <img src="{{ asset('images/R.png') }}" alt="Logo" style="height: 60px; width: auto;" />
-                Wilaya Oujda Oriental
-            </a>
+    <h2>Créer un nouvel événement</h2>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
-                aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navMenu">
-                <ul class="navbar-nav ms-auto">
-                    @guest
-                        @if (Route::currentRouteName() !== 'login')
-                            <li class="nav-item ms-lg-3">
-                                <a href="{{ route('login') }}" class="btn btn-outline-light px-4">Se connecter</a>
-                            </li>
-                        @endif
-                    @endguest
-                </ul>
-            </div>
+    {{-- Affichage des erreurs --}}
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>⚠️ {{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
-    </nav>
+    @endif
 
-    <!-- Contenu principal -->
-    <main class="container-main flex-grow-1 py-4 px-3">
-        @yield('content')
-    </main>
+    {{-- Formulaire --}}
+    <form action="{{ route('evenements.store') }}" method="POST" class="mt-4">
+        @csrf
 
-    <!-- Footer -->
-    <footer class="footer">
-        &copy; {{ now()->year }} Wilaya Oujda-Angad. Tous droits réservés. &nbsp;&nbsp; | &nbsp;&nbsp; 
-        <a href="#" class="text-light text-decoration-none">Mentions légales</a> &nbsp;&nbsp; | &nbsp;&nbsp; 
-        <a href="#" class="text-light text-decoration-none">Politique de confidentialité</a>
-    </footer>
+        <div class="mb-3">
+            <label for="titre" class="form-label">Titre</label>
+            <input type="text" name="titre" id="titre" class="form-control" placeholder="Titre de l'événement" required>
+        </div>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    @yield('scripts')
-    @stack('scripts') <!-- Pour empiler des scripts spécifiques -->
+        <div class="mb-3">
+            <label for="lieu" class="form-label">Lieu</label>
+            <input type="text" name="lieu" id="lieu" class="form-control" placeholder="Lieu de l'événement" required>
+        </div>
 
-</body>
-</html>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <input type="text" name="description" id="description" class="form-control" placeholder="Brève description" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="date_de_début" class="form-label">Date de début</label>
+            <input type="date" name="date_de_début" id="date_de_début" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="date_de_fin" class="form-label">Date de fin</label>
+            <input type="date" name="date_de_fin" id="date_de_fin" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="heure" class="form-label">Heure</label>
+            <input type="time" name="heure" id="heure" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="type_events_id" class="form-label">Type d'événement</label>
+            <select name="type_events_id" id="type_events_id" class="form-select" required>
+                <option value="">-- Choisir un type --</option>
+                @foreach ($types as $type)
+                    <option value="{{ $type->id }}">{{ $type->nom }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="d-flex gap-2 justify-content-center">
+            <button type="submit" class="btn btn-success">Créer</button>
+            <a href="{{ route('evenements.index') }}" class="btn btn-secondary">Annuler</a>
+        </div>
+
+    </form>
+</div>
+
+@endsection

@@ -9,34 +9,52 @@ use Carbon\Carbon; // Librairie Carbon pour manipuler les dates
 
 class AcceuilController extends Controller
 {
-    public function index()
-    {
-        // Récupérer tous les événements avec leur type associé
-        $evenements = Evenement::with('type')->get();
+   public function index()
+{
+    $query = Evenement::with('type'); // Commencer la requête
 
-        // Pour chaque événement, on calcule le statut et la classe du badge
-        $evenements->transform(function ($event) {
-            $datedebut = Carbon::parse($event->date_de_début. ' ' . $event->heure); // Convertir la date de l'événement en objet Carbon
-            $datefin = Carbon::parse($event->date_de_fin. ' ' . $event->heure); // Convertir la date de l'événement en objet Carbon
-
-            $now = Carbon::now(); // Date et heure actuelle
-
-            if ($now->between($datedebut,$datefin)) {
-                $event->status = 'En cours'; // Texte du statut
-                $event->badge = 'badge-encours';   // Classe Bootstrap (vert)
-            } elseif ($now->lt($datedebut)) {
-                $event->status = 'À venir';    // Texte du statut
-                $event->badge = 'badge-avenir'; // Classe Bootstrap (gris)
-            } else {
-                $event->status = 'Passé';  // Texte du statut
-                $event->badge = 'badge-passe';   // Classe Bootstrap (bleu)
-            }
-
-            return $event; // Retourner l'événement modifié
-        });
-
-         $types = Type::all();
-        // Envoyer les événements modifiés à la vue 'acceuil.blade.php'
-        return view('acceuil', compact('evenements','types'));
+    // Appliquer le filtre par type s’il est présent dans la requête
+    if (request()->has('type') && request()->type != '') {
+        $query->where('type_events_id', request()->type);
     }
+
+    // Appliquer la recherche s’il y a un mot-clé
+    if (request()->has('search') && request()->search != '') {
+        $search = request()->search;
+        $query->where(function ($q) use ($search) {
+            $q->where('titre', 'like', '%' . $search . '%')
+              ->orWhere('lieu', 'like', '%' . $search . '%');
+        });
+    }
+
+    // Exécuter la requête
+    $evenements = $query->get();
+
+    // Calculer le statut de chaque événement
+    $evenements->transform(function ($event) {
+        $datedebut = Carbon::parse($event->date_de_début . ' ' . $event->heure);
+        $datefin = Carbon::parse($event->date_de_fin . ' ' . $event->heure);
+        $now = Carbon::now();
+
+        if ($now->between($datedebut, $datefin)) {
+            $event->status = 'En cours';
+            $event->badge = 'badge-encours';
+        } elseif ($now->lt($datedebut)) {
+            $event->status = 'À venir';
+            $event->badge = 'badge-avenir';
+        } else {
+            $event->status = 'Passé';
+            $event->badge = 'badge-passe';
+        }
+
+        return $event;
+    });
+
+    // Récupérer les types pour le filtre
+    $types = Type::all();
+
+    // Retourner la vue avec les données
+    return view('acceuil', compact('evenements', 'types'));
+}
+
 }
