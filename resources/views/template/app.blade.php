@@ -152,9 +152,11 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid px-4">
-            <a class="navbar-brand" href="{{ route('acceuil') }}">
+            <a class="navbar-brand d-flex flex-column align-items-start" href="{{ route('acceuil') }}">
               <img src="{{ asset('images/R.png') }}" alt="Logo" />
-              Wilaya Oujda Oriental
+              <span style="font-size: 0.85rem; font-weight: 500;">
+                Wilaya de la région de l’Oriental<br>Préfecture Oujda Angad
+             </span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
                 aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">

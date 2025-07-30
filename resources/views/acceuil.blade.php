@@ -210,43 +210,55 @@
 </head>
 <body>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid px-4">
-            <a class="navbar-brand" href="#">
-                <img src="{{ asset('images/R.png') }}" alt="Logo" />
-                Wilaya Oujda Oriental
+ <!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid px-4 d-flex align-items-center justify-content-between">
+
+        <!-- Logo + Wilaya -->
+        <div class="d-flex flex-column align-items-start">
+            <a class="navbar-brand" href="{{ route('acceuil') }}">
+                <img src="{{ asset('images/R.png') }}" alt="Logo" style="height: 60px;" />
             </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
-                aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse justify-content-between" id="navMenu">
-                <form class="d-flex w-100 gap-3 me-auto" action="{{ route('acceuil') }}" method="GET">
-                    <input class="form-control me-2" type="search" placeholder="Rechercher un événement..." name="search" value="{{ request('search') }}" />
-                    <select name="type" class="form-select w-auto">
-                        <option value="">Tous les types</option>
-                        @foreach($types as $type)
-                            <option value="{{ $type->id }}" {{ request('type') == $type->id ? 'selected' : '' }}>
-                                {{ $type->nom }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <button class="btn btn-outline-light" type="submit">🔎</button>
-                </form>
-
-                <div class="ms-3">
-                    <a href="{{ route('login') }}" class="btn btn-outline-light px-4">Se connecter</a>
-                </div>
-            </div>
+            <span style="font-size: 0.85rem; font-weight: 500; color: white;">
+                Wilaya de la région de l’Oriental<br>Préfecture Oujda Angad
+            </span>
         </div>
-    </nav>
+
+        <!-- Titre centré -->
+        <div class="flex-grow-1 text-center">
+            <h1 class="mb-0" style="font-size: 1.8rem; font-weight: bold; color: white;">
+                Gestion des événements
+            </h1>
+        </div>
+
+        <!-- Bouton Se connecter -->
+        <div class="ms-auto">
+            <a href="{{ route('login') }}" class="btn btn-outline-light px-4">Se connecter</a>
+        </div>
+    </div>
+</nav>
+
+
 
     <!-- Contenu principal -->
     <main class="container-main">
         <h1 class="section-title">Listes des événements</h1>
+        <div class="container my-4">
+    <form class="d-flex flex-wrap gap-3 justify-content-center" action="{{ route('acceuil') }}" method="GET">
+        <input class="form-control w-25" type="search" placeholder="Rechercher un événement..." name="search" value="{{ request('search') }}" />
+        
+        <select name="type" class="form-select w-auto">
+            <option value="">Tous les types</option>
+            @foreach($types as $type)
+                <option value="{{ $type->id }}" {{ request('type') == $type->id ? 'selected' : '' }}>
+                    {{ $type->nom }}
+                </option>
+            @endforeach
+        </select>
+
+        <button class="btn btn-primary" type="submit">🔎 Rechercher</button>
+    </form>
+</div>
 
         <div class="row g-4 justify-content-center">
             @forelse ($evenements as $event)
