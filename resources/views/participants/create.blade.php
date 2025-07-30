@@ -4,7 +4,7 @@
 
 @section('content')
 <body>
-    <h1>Formulaire d'inscription</h1>
+    <h1>Inscription à : {{ $evenement->titre }}</h1>
 
     {{-- Affichage des erreurs --}}
     @if ($errors->any())
@@ -54,7 +54,7 @@
 
 
         {{-- ID caché de l'événement --}}
-        <input type="hidden" name="evenement_id" value="{{ $evenement_id }}">
+        <input type="hidden" name="evenement_id" value="{{ $evenement->id }}">
 
         <button type="submit">✅ Enregistrer</button>
     </form>

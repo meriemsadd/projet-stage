@@ -36,10 +36,10 @@ class ParticipantController
      */
     public function create($evenementId)
 {
-    $evenement_id = $evenementId; // <-- correspond à ce que la vue attend
+    $evenement = Evenement::findOrFail($evenementId); // ← on récupère l'événement complet
     $organismes = Organisme::all();
 
-    return view('participants.create', compact('evenement_id', 'organismes'));
+    return view('participants.create', compact('evenement', 'organismes'));
 }
 
 

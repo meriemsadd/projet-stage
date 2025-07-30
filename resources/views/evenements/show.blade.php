@@ -25,7 +25,8 @@
             <div class="col-md-8">
                 <div class="bg-light p-4 rounded shadow-sm border border-success">
                     <p><strong>📍 Lieu :</strong> {{ $evenement->lieu }}</p>
-                    <p><strong>📅 Date :</strong> {{ \Carbon\Carbon::parse($evenement->date)->format('d/m/Y') }}</p>
+                    <p><strong>📅 Début :</strong> {{ \Carbon\Carbon::parse($evenement->date_de_début)->format('d/m/Y') }}</p>
+                    <p><strong>📅 Fin :</strong> {{ \Carbon\Carbon::parse($evenement->date_de_fin)->format('d/m/Y') }}</p>
                     <p><strong>⏰ Heure :</strong> {{ \Carbon\Carbon::parse($evenement->heure)->format('H:i') }}</p>
                     <p><strong>📝 Description :</strong> {{ $evenement->description }}</p>
                     <p><strong>📂 Type :</strong> {{ $evenement->type->nom ?? 'Non spécifié' }}</p>
