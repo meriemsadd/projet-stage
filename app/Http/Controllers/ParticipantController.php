@@ -120,16 +120,15 @@ class ParticipantController
     return view('participants.index', compact('participants', 'evenement'));
 }
 
-    public function exportPDF()
-{
-    $participants = Participant::all();
-    $pdf = PDF::loadView('exports.participants', compact('paticipants'));
-    return $pdf->download('participants.pdf');
-}
+  public function exportPDF()
+    {
+        $participants = Participant::all();
+        $pdf = PDF::loadView('participants.pdf', compact('participants'));
+        return $pdf->download('participants.pdf');
+    }
 
     public function exportExcel()
-{
-    return Excel::download(new ParticipantsExport, 'participants.xlsx');
-}
-
+    {
+        return Excel::download(new ParticipantsExport, 'participants.xlsx');
+    }
 }
