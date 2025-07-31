@@ -1,8 +1,6 @@
-@extends('layouts.app')
+<?php $__env->startSection('title', 'Détails de l\'événement'); ?>
 
-@section('title', 'Détails de l\'événement')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap');
 
@@ -203,40 +201,41 @@
 </style>
 
 <div class="container my-4" style="max-width: 960px;">
-    {{-- Boutons retour et modifier --}}
+    
     <div class="mb-4 d-flex justify-content-between flex-wrap gap-3">
-        <a href="{{ route('evenements.index') }}" class="btn-custom-outline-secondary">← Retour à la liste des événements</a>
-        <a href="{{ route('evenements.edit', $evenement->id) }}" class="btn-warning">Modifier</a>
+        <a href="<?php echo e(route('evenements.index')); ?>" class="btn-custom-outline-secondary">← Retour à la liste des événements</a>
+        <a href="<?php echo e(route('evenements.edit', $evenement->id)); ?>" class="btn-warning">Modifier</a>
     </div>
 
-    {{-- Carte de l'événement --}}
+    
     <div class="card-custom">
         <div class="card-header-custom">
-            {{ $evenement->titre }}
+            <?php echo e($evenement->titre); ?>
+
         </div>
 
-        {{-- Image sous le titre --}}
-        @if($evenement->image)
-            <img src="{{ asset('storage/' . $evenement->image) }}" alt="Image de l'événement" class="event-image">
-        @endif
+        
+        <?php if($evenement->image): ?>
+            <img src="<?php echo e(asset('storage/' . $evenement->image)); ?>" alt="Image de l'événement" class="event-image">
+        <?php endif; ?>
 
         <div class="event-info mt-4">
-            <p><strong>Lieu :</strong> {{ $evenement->lieu }}</p>
-            <p><strong>Date de début :</strong> {{ \Carbon\Carbon::parse($evenement->date_debut)->format('d/m/Y') }}</p>
-            <p><strong>Date de fin :</strong> {{ \Carbon\Carbon::parse($evenement->date_fin)->format('d/m/Y') }}</p>
-            <p><strong>Heure :</strong> {{ $evenement->heure }}</p>
-            <p><strong>Description :</strong><br>{{ $evenement->description }}</p>
-            <p><strong>Type :</strong> {{ $evenement->type?->nom ?? 'Non défini' }}</p>
+            <p><strong>Lieu :</strong> <?php echo e($evenement->lieu); ?></p>
+            <p><strong>Date de début :</strong> <?php echo e(\Carbon\Carbon::parse($evenement->date_debut)->format('d/m/Y')); ?></p>
+            <p><strong>Date de fin :</strong> <?php echo e(\Carbon\Carbon::parse($evenement->date_fin)->format('d/m/Y')); ?></p>
+            <p><strong>Heure :</strong> <?php echo e($evenement->heure); ?></p>
+            <p><strong>Description :</strong><br><?php echo e($evenement->description); ?></p>
+            <p><strong>Type :</strong> <?php echo e($evenement->type?->nom ?? 'Non défini'); ?></p>
         </div>
     </div>
 
-    {{-- Liste des participants --}}
+    
     <div class="card-custom">
         <div class="card-header-custom" style="background: linear-gradient(90deg, #004d40, #00796b);">
             Liste des participants
         </div>
         <div class="table-responsive p-3">
-            @if ($participants->count())
+            <?php if($participants->count()): ?>
                 <table class="table align-middle mb-0">
                     <thead>
                         <tr>
@@ -248,28 +247,30 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($participants as $p)
+                        <?php $__currentLoopData = $participants; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
-                            <td>{{ $p->nom }}</td>
-                            <td>{{ $p->prenom }}</td>
-                            <td>{{ $p->email }}</td>
-                            <td>{{ $p->profession }}</td>
+                            <td><?php echo e($p->nom); ?></td>
+                            <td><?php echo e($p->prenom); ?></td>
+                            <td><?php echo e($p->email); ?></td>
+                            <td><?php echo e($p->profession); ?></td>
                             <td>
-                                <a href="{{ route('participants.edit', $p->id) }}" class="btn btn-sm btn-primary mb-1">Modifier</a>
-                                <form action="{{ route('participants.destroy', $p->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Confirmer la suppression ?')">
-                                    @csrf
-                                    @method('DELETE')
+                                <a href="<?php echo e(route('participants.edit', $p->id)); ?>" class="btn btn-sm btn-primary mb-1">Modifier</a>
+                                <form action="<?php echo e(route('participants.destroy', $p->id)); ?>" method="POST" class="d-inline" onsubmit="return confirm('Confirmer la suppression ?')">
+                                    <?php echo csrf_field(); ?>
+                                    <?php echo method_field('DELETE'); ?>
                                     <button type="submit" class="btn btn-sm btn-danger mb-1">Supprimer</button>
                                 </form>
                             </td>
                         </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
                 </table>
-            @else
+            <?php else: ?>
                 <p class="text-center text-muted fs-5">Aucun participant pour cet événement.</p>
-            @endif
+            <?php endif; ?>
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\lenovo\projet-stage\resources\views/evenements/show1.blade.php ENDPATH**/ ?>

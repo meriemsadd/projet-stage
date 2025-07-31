@@ -1,8 +1,6 @@
-@extends('layouts.app')
+<?php $__env->startSection('title', "Détails de l'événement - {$evenement->titre}"); ?>
 
-@section('title', "Détails de l'événement - {$evenement->titre}")
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap');
 
@@ -133,31 +131,33 @@
 
 <div class="container">
     <!-- Bouton retour -->
-    <a href="{{ route('acceuil') }}" class="btn-outline-secondary">← Retour à l’accueil</a>
+    <a href="<?php echo e(route('acceuil')); ?>" class="btn-outline-secondary">← Retour à l’accueil</a>
 
     <!-- Titre -->
-    <h1>{{ $evenement->titre }}</h1>
+    <h1><?php echo e($evenement->titre); ?></h1>
 
     <!-- Image -->
-    @if($evenement->image)
-        <img src="{{ asset('storage/' . $evenement->image) }}" alt="Image de l'événement" class="image-evenement">
-    @endif
+    <?php if($evenement->image): ?>
+        <img src="<?php echo e(asset('storage/' . $evenement->image)); ?>" alt="Image de l'événement" class="image-evenement">
+    <?php endif; ?>
 
     <!-- Détails -->
     <div class="details">
-        <p><strong>Lieu :</strong> {{ $evenement->lieu }}</p>
-        <p><strong>Date de début :</strong> {{ \Carbon\Carbon::parse($evenement->date_de_début)->format('d/m/Y') }}</p>
-        <p><strong>Date de fin :</strong> {{ \Carbon\Carbon::parse($evenement->date_de_fin)->format('d/m/Y') }}</p>
-        <p><strong>Heure :</strong> {{ \Carbon\Carbon::parse($evenement->heure)->format('H:i') }}</p>
-        <p><strong>Description :</strong> {{ $evenement->description }}</p>
-        <p><strong>Type :</strong> {{ $evenement->type->nom ?? 'Non spécifié' }}</p>
+        <p><strong>Lieu :</strong> <?php echo e($evenement->lieu); ?></p>
+        <p><strong>Date de début :</strong> <?php echo e(\Carbon\Carbon::parse($evenement->date_de_début)->format('d/m/Y')); ?></p>
+        <p><strong>Date de fin :</strong> <?php echo e(\Carbon\Carbon::parse($evenement->date_de_fin)->format('d/m/Y')); ?></p>
+        <p><strong>Heure :</strong> <?php echo e(\Carbon\Carbon::parse($evenement->heure)->format('H:i')); ?></p>
+        <p><strong>Description :</strong> <?php echo e($evenement->description); ?></p>
+        <p><strong>Type :</strong> <?php echo e($evenement->type->nom ?? 'Non spécifié'); ?></p>
     </div>
 
     <!-- Bouton inscription -->
     <div class="text-center">
-        <a href="{{ route('participants.create', $evenement->id) }}" class="btn-inscrire">
+        <a href="<?php echo e(route('participants.create', $evenement->id)); ?>" class="btn-inscrire">
             S'inscrire à cet événement
         </a>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\lenovo\projet-stage\resources\views/evenements/show.blade.php ENDPATH**/ ?>

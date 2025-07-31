@@ -1,8 +1,6 @@
-@extends('layouts.app')
+<?php $__env->startSection('title', 'Créer un événement'); ?>
 
-@section('title', 'Créer un événement')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap');
 
@@ -164,32 +162,32 @@
         }
     </style>
 
-    {{-- Navbar --}}
+    
     <nav class="navbar navbar-expand-lg px-4 mb-4">
         <a class="navbar-brand" href="#">Wilaya de la Région de l'Oriental</a>
         <div class="ms-auto d-flex gap-2">
-            <a href="{{ route('acceuil') }}" class="btn btn-outline-primary">← Accueil</a>
-            <a href="{{ route('login') }}" class="btn btn-outline-secondary">Se déconnecter</a>
+            <a href="<?php echo e(route('acceuil')); ?>" class="btn btn-outline-primary">← Accueil</a>
+            <a href="<?php echo e(route('login')); ?>" class="btn btn-outline-secondary">Se déconnecter</a>
         </div>
     </nav>
 
     <div class="container">
         <h2>Créer un nouvel événement</h2>
 
-        {{-- Erreurs validation --}}
-        @if ($errors->any())
+        
+        <?php if($errors->any()): ?>
             <div class="alert alert-danger">
                 <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>⚠️ {{ $error }}</li>
-                    @endforeach
+                    <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li>⚠️ <?php echo e($error); ?></li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </ul>
             </div>
-        @endif
+        <?php endif; ?>
 
-        {{-- Formulaire --}}
-        <form action="{{ route('evenements.store') }}" method="POST" enctype="multipart/form-data" class="mt-4">
-            @csrf
+        
+        <form action="<?php echo e(route('evenements.store')); ?>" method="POST" enctype="multipart/form-data" class="mt-4">
+            <?php echo csrf_field(); ?>
 
             <div class="mb-3">
                 <label for="titre" class="form-label">Titre</label>
@@ -225,13 +223,13 @@
                 <label for="type_events_id" class="form-label">Type d'événement</label>
                 <select name="type_events_id" id="type_events_id" class="form-select" required>
                     <option value="">-- Choisir un type --</option>
-                    @foreach ($types as $type)
-                        <option value="{{ $type->id }}">{{ $type->nom }}</option>
-                    @endforeach
+                    <?php $__currentLoopData = $types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($type->id); ?>"><?php echo e($type->nom); ?></option>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
             </div>
 
-            {{-- Upload image --}}
+            
             <div class="mb-3">
                 <label for="image" class="form-label">Image de l'événement (jpg, png, max 2MB)</label>
                 <input 
@@ -245,7 +243,7 @@
                 <img id="preview-image" src="#" alt="Aperçu image" style="display:none;">
             </div>
 
-            {{-- Événement certifié --}}
+            
             <div class="mb-3">
                 <label class="form-label d-block">Événement certifié</label>
                 <div class="form-check form-check-inline">
@@ -260,7 +258,7 @@
 
             <div class="d-flex gap-2 justify-content-center">
                 <button type="submit" class="btn btn-success">Créer</button>
-                <a href="{{ route('evenements.index') }}" class="btn btn-secondary">Annuler</a>
+                <a href="<?php echo e(route('evenements.index')); ?>" class="btn btn-secondary">Annuler</a>
             </div>
         </form>
     </div>
@@ -297,4 +295,6 @@
             }
         }
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\lenovo\projet-stage\resources\views/evenements/create.blade.php ENDPATH**/ ?>
