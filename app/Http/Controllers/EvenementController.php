@@ -122,18 +122,16 @@ class EvenementController extends Controller
 
     }
 
-
-
-    public function exportPDF()
-{
-    $evenements = Evenement::all();
-    $pdf = Pdf::loadView('exports.evenements', compact('evenements'));
-    return $pdf->download('evenements.pdf');
-}
+     public function exportPDF()
+    {
+        $evenements = Evenement::all();
+        $pdf = PDF::loadView('evenements.pdf', compact('evenements'));
+        return $pdf->download('evenements.pdf');
+    }
 
     public function exportExcel()
-{
-    return Excel::download(new EvenementsExport, 'evenements.xlsx');
-}
+    {
+        return Excel::download(new EvenementsExport, 'evenements.xlsx');
+    }
    
 }
