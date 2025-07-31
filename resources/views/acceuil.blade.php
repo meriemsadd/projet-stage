@@ -210,34 +210,28 @@
 </head>
 <body>
 
- <!-- Navbar -->
+   <!-- Navbar -->
 <nav class="navbar navbar-expand-lg">
-    <div class="container-fluid px-4 d-flex align-items-center justify-content-between">
-
-        <!-- Logo + Wilaya -->
-        <div class="d-flex flex-column align-items-start">
-            <a class="navbar-brand" href="{{ route('acceuil') }}">
-                <img src="{{ asset('images/R.png') }}" alt="Logo" style="height: 60px;" />
-            </a>
-            <span style="font-size: 0.85rem; font-weight: 500; color: white;">
+    <div class="container-fluid px-4">
+        <a class="navbar-brand d-flex flex-column align-items-start" href="{{ route('acceuil') }}">
+            <img src="{{ asset('images/R.png') }}" alt="Logo" />
+            <span style="font-size: 0.85rem; font-weight: 500;">
                 Wilaya de la région de l’Oriental<br>Préfecture Oujda Angad
             </span>
-        </div>
+        </a>
 
-        <!-- Titre centré -->
-        <div class="flex-grow-1 text-center">
-            <h1 class="mb-0" style="font-size: 1.8rem; font-weight: bold; color: white;">
-                Gestion des événements
-            </h1>
-        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
+            aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-        <!-- Bouton Se connecter -->
-        <div class="ms-auto">
-            <a href="{{ route('login') }}" class="btn btn-outline-light px-4">Se connecter</a>
+        <div class="collapse navbar-collapse justify-content-end" id="navMenu">
+            <div class="ms-auto">
+                <a href="{{ route('login') }}" class="btn btn-outline-light px-4">Se connecter</a>
+            </div>
         </div>
     </div>
 </nav>
-
 
 
     <!-- Contenu principal -->
