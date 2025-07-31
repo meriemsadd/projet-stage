@@ -1,8 +1,6 @@
-@extends('template.app')
+<?php $__env->startSection('title', 'Inscription des participants'); ?>
 
-@section('title', 'Inscription des participants')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap');
 
@@ -122,42 +120,43 @@
 </style>
 
 <div class="container">
-    <h1>Inscription à : {{ $evenement->titre }}</h1>
+    <h1>Inscription à : <?php echo e($evenement->titre); ?></h1>
 
-    {{-- Affichage des erreurs --}}
-    @if ($errors->any())
+    
+    <?php if($errors->any()): ?>
         <div class="errors">
             <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
+                <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <li><?php echo e($error); ?></li>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </ul>
         </div>
-    @endif
+    <?php endif; ?>
 
-    <form action="{{ route('participants.store') }}" method="POST">
-        @csrf
+    <form action="<?php echo e(route('participants.store')); ?>" method="POST">
+        <?php echo csrf_field(); ?>
 
         <label for="nom">Nom :</label>
-        <input type="text" id="nom" name="nom" value="{{ old('nom') }}" required>
+        <input type="text" id="nom" name="nom" value="<?php echo e(old('nom')); ?>" required>
 
         <label for="prenom">Prénom :</label>
-        <input type="text" id="prenom" name="prenom" value="{{ old('prenom') }}" required>
+        <input type="text" id="prenom" name="prenom" value="<?php echo e(old('prenom')); ?>" required>
 
         <label for="email">Email :</label>
-        <input type="email" id="email" name="email" value="{{ old('email') }}" required>
+        <input type="email" id="email" name="email" value="<?php echo e(old('email')); ?>" required>
 
         <label for="profession">Profession :</label>
-        <input type="text" id="profession" name="profession" value="{{ old('profession') }}">
+        <input type="text" id="profession" name="profession" value="<?php echo e(old('profession')); ?>">
 
         <label for="organisme_id">Organisme (facultatif) :</label>
         <select id="organisme_id" name="organisme_id">
             <option value="">-- Aucun / Non spécifié --</option>
-            @foreach($organismes as $organisme)
-                <option value="{{ $organisme->id }}" {{ old('organisme_id') == $organisme->id ? 'selected' : '' }}>
-                    {{ $organisme->nom }}
+            <?php $__currentLoopData = $organismes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organisme): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <option value="<?php echo e($organisme->id); ?>" <?php echo e(old('organisme_id') == $organisme->id ? 'selected' : ''); ?>>
+                    <?php echo e($organisme->nom); ?>
+
                 </option>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </select>
 
         <label for="signature">Signature :</label>
@@ -165,7 +164,7 @@
         <input type="hidden" name="signature" id="signature">
         <button type="button" class="btn-clear" onclick="clearSignature()">Effacer</button>
 
-        <input type="hidden" name="evenement_id" value="{{ $evenement->id }}">
+        <input type="hidden" name="evenement_id" value="<?php echo e($evenement->id); ?>">
 
         <button type="submit">Enregistrer</button>
     </form>
@@ -217,4 +216,6 @@
         signatureInput.value = canvas.toDataURL();
     });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('template.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\lenovo\projet-stage\resources\views/participants/create.blade.php ENDPATH**/ ?>
