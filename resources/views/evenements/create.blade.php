@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('template.app')
 
 @section('title', 'Créer un événement')
 
@@ -164,14 +164,7 @@
         }
     </style>
 
-    {{-- Navbar --}}
-    <nav class="navbar navbar-expand-lg px-4 mb-4">
-        <a class="navbar-brand" href="#">Wilaya de la Région de l'Oriental</a>
-        <div class="ms-auto d-flex gap-2">
-            <a href="{{ route('acceuil') }}" class="btn btn-outline-primary">← Accueil</a>
-            <a href="{{ route('login') }}" class="btn btn-outline-secondary">Se déconnecter</a>
-        </div>
-    </nav>
+
 
     <div class="container">
         <h2>Créer un nouvel événement</h2>
