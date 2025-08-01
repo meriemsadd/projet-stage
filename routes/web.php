@@ -5,7 +5,7 @@ use App\Http\controllers\ParticipantController;
 use App\Http\controllers\EvenementController;
 use App\Http\controllers\AcceuilController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
+use App\Http\ControllersAuth\RegisterController;
 
 Route::get('/', [AcceuilController::class, 'index'])->name('acceuil');
 
@@ -15,6 +15,7 @@ Route::resource('participants', ParticipantController::class)->except(['create']
 Route::get('/inscription', [ParticipantController::class, 'create']);
 Route::post('/inscription', [ParticipantController::class, 'store'])->name('participants.store');
 Route::get('/participants/create/{evenementId}', [ParticipantController::class, 'create'])->name('participants.create');
+Route::get('/participants/{id}/checkin', [ParticipantController::class, 'checkin'])->name('participants.checkin');
 
 Route::get('/evenements/{evenement}/participants', [ParticipantController::class, 'indexByEvenement'])->name('participants.byEvenement');
 Route::get('/evenements/{id}/show1', [EvenementController::class, 'show1'])->name('evenements.show1');

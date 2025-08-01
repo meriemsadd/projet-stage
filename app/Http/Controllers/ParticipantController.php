@@ -79,6 +79,8 @@ class ParticipantController
         //
     }
 
+
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -131,4 +133,16 @@ class ParticipantController
     {
         return Excel::download(new ParticipantsExport, 'participants.xlsx');
     }
+
+
+    
+// ParticipantController.php
+
+public function checkin($id)
+{
+    $participant = Participant::findOrFail($id);
+    // Tu peux ici marquer la présence, ou afficher une page
+    return view('participants.checkin', compact('participant'));
+}
+
 }

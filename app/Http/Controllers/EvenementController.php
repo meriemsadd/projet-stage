@@ -134,4 +134,13 @@ class EvenementController extends Controller
         return Excel::download(new EvenementsExport, 'evenements.xlsx');
     }
    
+
+    public function invitationPDF($participantId)
+{
+    $participant = Participant::with('evenement')->findOrFail($participantId);
+
+    $pdf = Pdf::loadView('invitation', compact('participant'));
+    return $pdf->download('invitation_'.$participant->prenom.'_'.$participant->nom.'.pdf');
+}
+
 }
