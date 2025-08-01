@@ -69,3 +69,9 @@ Route::post('/logout', function () {
     Auth::logout();
     return redirect('/'); // ou redirect('/login');
 })->name('logout');
+
+use App\Http\Controllers\UserController;
+
+Route::resource('users', UserController::class)->middleware('auth');
+
+

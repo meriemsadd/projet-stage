@@ -84,7 +84,6 @@
         </div>
 
         {{-- Gestion utilisateurs (commentée pour l'instant) --}}
-        {{-- 
         <div class="col">
             <a href="{{ route('users.index') }}" class="text-decoration-none">
                 <div class="card card-dashboard h-100 shadow">
@@ -95,7 +94,7 @@
                 </div>
             </a>
         </div>
-        --}}
+        
 
         <div class="col">
             <a href="{{ route('statistiques') }}" class="text-decoration-none">
