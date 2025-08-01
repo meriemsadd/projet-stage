@@ -39,8 +39,24 @@
     </div>
 
     <div class="qr-code">
-        {!! QrCode::size(150)->generate(route('participants.checkin', $participant->id)) !!}
-        <p>Scannez ce QR code à l'entrée pour valider votre présence.</p>
+       @php
+use SimpleSoftwareIO\QrCode\Generator;
+use SimpleSoftwareIO\QrCode\Renderer\ImageRenderer;
+use SimpleSoftwareIO\QrCode\Renderer\Image\GDImageBackEnd;
+use SimpleSoftwareIO\QrCode\Renderer\RendererStyle\RendererStyle;
+
+$renderer = new ImageRenderer(
+    new RendererStyle(150),
+    new GDImageBackEnd()
+);
+
+$qr = new Generator($renderer);
+$qrImage = $qr->format('png')->generate(route('participants.checkin', $participant->id));
+@endphp
+
+<img src="data:image/png;base64,{{ base64_encode($qrImage) }}" alt="QR Code" />
+<p>Scannez ce QR code à l'entrée pour valider votre présence.</p>
+
     </div>
 
     <div class="footer">

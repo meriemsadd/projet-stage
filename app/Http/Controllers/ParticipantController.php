@@ -71,9 +71,7 @@ class ParticipantController
     return redirect('/')->with('success', 'Participant ajouté avec succès ! E-mail envoyé.');
 }
 
-    /**
-     * Display the specified resource.
-     */
+   
     public function show(string $id)
     {
         //
@@ -92,9 +90,7 @@ class ParticipantController
 
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, string $id)
     {
     $participant = Participant::findOrFail($id);//on trouve le particpant de id x pour le modifiee
