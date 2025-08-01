@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('template.app')
 
 @section('title', "Détails de l'événement - {$evenement->titre}")
 

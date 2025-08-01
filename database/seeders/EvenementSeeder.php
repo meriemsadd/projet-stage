@@ -21,7 +21,7 @@ class EvenementSeeder extends Seeder
                 'heure' => '09:00:00',
                 'description' => "Sensibilisation aux problématiques environnementales, nettoyage de zones naturelles, ateliers éco-responsables.",
                 'type_events_id' => 6, // Atelier
-        
+                'user_id' => 1,
                 'image' => 'images/environnement.png',
                 'created_at' => $now,
                 'updated_at' => $now,
@@ -32,22 +32,22 @@ class EvenementSeeder extends Seeder
                 'date_de_début'=> '2025-05-05',
                 'date_de_fin'=> '2025-05-07',
                 'heure' => '10:00:00',
-                'description' => "Rencontre entre entreprises locales, chercheurs d’emploi, ateliers CV et coaching.",
+                'description' => "Rencontre entre entreprises locales, chercheurs d'emploi, ateliers CV et coaching.",
                 'type_events_id' => 9, // Séminaire
-       
+                'user_id' => 1,
                 'image' => 'images/evenements/emploi.jpg',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
-                'titre' => "Salon de l’Artisanat et du Patrimoine Culturel",
+                'titre' => "Salon de l'Artisanat et du Patrimoine Culturel",
                 'lieu' => "Place du Marché",
                 'date_de_début'  => '2025-11-10',
                 'date_de_fin'  => '2025-11-15',
                 'heure' => '09:00:00',
                 'description' => "Exposition et vente de produits artisanaux, démonstrations de savoir-faire traditionnels.",
-                'type_events_id' => 7, // Visite de terrain (ou à ajuster selon tes types)
-            
+                'type_events_id' => 7, // Visite de terrain
+                'user_id' => 1,
                 'image' => 'images/evenements/artisanat.jpg',
                 'created_at' => $now,
                 'updated_at' => $now,
@@ -60,7 +60,7 @@ class EvenementSeeder extends Seeder
                 'heure' => '18:00:00',
                 'description' => "Concerts, spectacles folkloriques, animations culturelles.",
                 'type_events_id' => 3, // Cérémonie
-             
+                'user_id' => 1,
                 'image' => 'images/evenements/festival_musique.jpg',
                 'created_at' => $now,
                 'updated_at' => $now,
@@ -73,7 +73,7 @@ class EvenementSeeder extends Seeder
                 'heure' => '14:00:00',
                 'description' => "Débats, ateliers pour améliorer la collaboration entre citoyens et administration.",
                 'type_events_id' => 5, // Conférence
-         
+                'user_id' => 1,
                 'image' => 'images/evenements/gouvernance.jpg',
                 'created_at' => $now,
                 'updated_at' => $now,
@@ -86,7 +86,7 @@ class EvenementSeeder extends Seeder
                 'heure' => '08:00:00',
                 'description' => "Campagnes de vaccination, dépistages gratuits, sensibilisation aux maladies chroniques.",
                 'type_events_id' => 6, // Atelier
-         
+                'user_id' => 1,
                 'image' => 'images/evenements/sante.jpg',
                 'created_at' => $now,
                 'updated_at' => $now,
@@ -98,21 +98,21 @@ class EvenementSeeder extends Seeder
                 'date_de_fin' => '2025-10-01',
                 'heure' => '09:00:00',
                 'description' => "Tournois de football, athlétisme, sports traditionnels.",
-                'type_events_id' => 1, // Réunion (pas parfait, mais pas de type Sport, à ajuster)
-            
+                'type_events_id' => 1, // Réunion
+                'user_id' => 1,
                 'image' => 'images/evenements/sport.jpg',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
-                'titre' => "Salon de l’Innovation Technologique et du Numérique",
+                'titre' => "Salon de l'Innovation Technologique et du Numérique",
                 'lieu' => "Centre Technologique",
                 'date_de_début'  => '2025-11-15',
                 'date_de_fin'  => '2025-11-18',
                 'heure' => '09:30:00',
                 'description' => "Présentation de startups locales, formations et démonstrations.",
-                'type_events_id' => 8, // Webinaire (pas exact, mais proche)
-              
+                'type_events_id' => 8, // Webinaire
+                'user_id' => 1,
                 'image' => 'images/evenements/innovation.jpg',
                 'created_at' => $now,
                 'updated_at' => $now,
@@ -125,7 +125,7 @@ class EvenementSeeder extends Seeder
                 'heure' => '10:00:00',
                 'description' => "Conférences, ateliers empowerment, expositions sur les droits des femmes.",
                 'type_events_id' => 5, // Conférence
-            
+                'user_id' => 4,
                 'image' => 'images/evenements/journee_femme.jpg',
                 'created_at' => $now,
                 'updated_at' => $now,
@@ -138,7 +138,7 @@ class EvenementSeeder extends Seeder
                 'heure' => '08:00:00',
                 'description' => "Mise en avant des produits agricoles et fermiers de la région.",
                 'type_events_id' => 7, // Visite de terrain
-               
+                'user_id' => 1,
                 'image' => 'images/evenements/marche_agricole.jpg',
                 'created_at' => $now,
                 'updated_at' => $now,
@@ -151,20 +151,20 @@ class EvenementSeeder extends Seeder
                 'heure' => '09:00:00',
                 'description' => "Sessions de sensibilisation pour conducteurs, distribution de supports pédagogiques.",
                 'type_events_id' => 2, // Formation
-             
+                'user_id' => 1,
                 'image' => 'images/evenements/securite_routiere.jpg',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
-                'titre' => "Campagne de Solidarité et d’Action Sociale",
+                'titre' => "Campagne de Solidarité et d'Action Sociale",
                 'lieu' => "Place de la Solidarité",
                 'date_de_début' => '2025-12-01',
                 'date_de_fin' => '2025-12-01',
                 'heure' => '10:00:00',
                 'description' => "Collecte de dons, distribution alimentaire, aide aux personnes vulnérables.",
                 'type_events_id' => 9, // Séminaire
-          
+                'user_id' => 1,
                 'image' => 'images/evenements/solidarite.jpg',
                 'created_at' => $now,
                 'updated_at' => $now,
@@ -177,20 +177,20 @@ class EvenementSeeder extends Seeder
                 'heure' => '09:00:00',
                 'description' => "Défilés, discours officiels, animations festives.",
                 'type_events_id' => 3, // Cérémonie
-               
+                'user_id' => 1,
                 'image' => 'images/evenements/fetes_nationales.jpg',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
                 'titre' => "Journée des Jeunes Entrepreneurs",
-                'lieu' => "Centre d’Affaires",
+                'lieu' => "Centre d'Affaires",
                 'date_de_début' => '2025-10-20',
                 'date_de_fin' => '2025-10-20',
                 'heure' => '10:00:00',
-                'description' => "Conférences, ateliers sur la création d’entreprise, rencontres avec des mentors.",
+                'description' => "Conférences, ateliers sur la création d'entreprise, rencontres avec des mentors.",
                 'type_events_id' => 9, // Séminaire
-             
+                'user_id' => 1,
                 'image' => 'images/evenements/jeunes_entrepreneurs.jpg',
                 'created_at' => $now,
                 'updated_at' => $now,
@@ -201,9 +201,9 @@ class EvenementSeeder extends Seeder
                 'date_de_début'  => '2025-11-25',
                 'date_de_fin'  => '2025-11-25',
                 'heure' => '09:00:00',
-                'description' => "Promotion des sites touristiques, visites guidées, ateliers d’artisanat.",
+                'description' => "Promotion des sites touristiques, visites guidées, ateliers d'artisanat.",
                 'type_events_id' => 7, // Visite de terrain
-                
+                'user_id' => 1,
                 'image' => 'images/evenements/tourisme.jpg',
                 'created_at' => $now,
                 'updated_at' => $now,

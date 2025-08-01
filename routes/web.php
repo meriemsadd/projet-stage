@@ -63,6 +63,14 @@ Route::get('/participants/export/pdf', [ParticipantController::class, 'exportPDF
 Route::get('/participants/export/excel', [ParticipantController::class, 'exportExcel'])->name('participants.export.excel');
 
 
+
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->name('logout');
+
+    Route::get('/parametres', function () {
+    return view('parametres');
+})->name('parametres')->middleware('auth'); // Le middleware 'auth' protège la page
+
 use Illuminate\Support\Facades\Auth;
 
 Route::post('/logout', function () {
@@ -73,5 +81,4 @@ Route::post('/logout', function () {
 use App\Http\Controllers\UserController;
 
 Route::resource('users', UserController::class)->middleware('auth');
-
 

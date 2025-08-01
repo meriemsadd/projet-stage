@@ -6,25 +6,46 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap');
 
-    .container {
+    body {
+        background: linear-gradient(135deg, #e0f7fa, #f5fbfc);
+        min-height: 100vh;
+        margin: 0;
+        padding: 2rem 0;
+        font-family: 'Raleway', sans-serif;
+    }
+
+    .form-container {
         max-width: 600px;
-        background: #ffffffcc;
+        background: #ffffff;
         padding: 30px 36px;
         border-radius: 20px;
         box-shadow:
             0 16px 30px rgba(0, 121, 107, 0.3),
             0 6px 18px rgba(0, 0, 0, 0.06);
-        margin: 40px auto 60px auto;
-        font-family: 'Raleway', sans-serif;
+        margin: 0 auto;
     }
 
-    h1 {
+    .form-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .form-title {
         color: #00796b;
         font-weight: 700;
         font-size: 2rem;
-        text-align: center;
-        margin-bottom: 30px;
+        margin-bottom: 10px;
         text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .event-title {
+        color: #004d40;
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 30px;
+        padding: 10px;
+        background: rgba(178, 223, 219, 0.3);
+        border-radius: 8px;
     }
 
     form label {
@@ -39,15 +60,16 @@
     form input[type="email"],
     form select {
         width: 100%;
-        padding: 10px 14px;
+        padding: 12px 16px;
         margin-bottom: 20px;
         border-radius: 12px;
         border: 1.5px solid #00796b;
         font-size: 1rem;
         color: #004d40;
         box-shadow: inset 0 1px 4px #a7ffeb44;
-        transition: border-color 0.3s ease;
+        transition: all 0.3s ease;
     }
+
     form input[type="text"]:focus,
     form input[type="email"]:focus,
     form select:focus {
@@ -57,7 +79,6 @@
         background: #e0f2f1;
     }
 
-    /* Signature canvas */
     #signature-pad {
         display: block;
         margin-bottom: 10px;
@@ -71,7 +92,13 @@
         cursor: crosshair;
     }
 
-    button {
+    .form-actions {
+        display: flex;
+        gap: 15px;
+        margin-top: 25px;
+    }
+
+    .btn-submit {
         background: linear-gradient(45deg, #4caf50, #087f23);
         color: white;
         font-weight: 700;
@@ -81,32 +108,34 @@
         box-shadow: 0 6px 20px #19692cbb;
         font-size: 1.1rem;
         cursor: pointer;
-        transition: background 0.3s ease, transform 0.25s ease;
-        margin-top: 10px;
+        transition: all 0.3s ease;
+        flex: 1;
     }
-    button:hover {
+
+    .btn-submit:hover {
         background: linear-gradient(45deg, #087f23, #4caf50);
-        transform: scale(1.05);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px #19692cbb;
     }
 
     .btn-clear {
-        background: #ccccccdd;
+        background: #f5f5f5;
         color: #555;
         font-weight: 700;
-        margin-left: 10px;
         padding: 12px 24px;
+        border: none;
         border-radius: 30px;
-        box-shadow: inset 0 -3px 8px #ffffffaa;
-        transition: background-color 0.3s ease, transform 0.25s ease;
-    }
-    .btn-clear:hover {
-        background: #999999;
-        color: white;
-        box-shadow: 0 6px 15px #555555bb;
-        transform: scale(1.05);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        cursor: pointer;
+        transition: all 0.3s ease;
     }
 
-    /* Erreurs */
+    .btn-clear:hover {
+        background: #e0e0e0;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    }
+
     .errors {
         background-color: #f8d7da;
         color: #842029;
@@ -115,16 +144,41 @@
         margin-bottom: 1.8rem;
         box-shadow: 0 4px 12px rgba(229, 57, 53, 0.25);
     }
+
     .errors ul {
         margin: 0;
         padding-left: 1.2rem;
     }
+
+    @media (max-width: 768px) {
+        .form-container {
+            padding: 25px;
+            margin: 0 15px;
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+        }
+
+        .form-actions {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-submit, .btn-clear {
+            width: 100%;
+        }
+    }
 </style>
 
-<div class="container">
-    <h1>Inscription à : {{ $evenement->titre }}</h1>
+<div class="form-container">
+    <div class="form-header">
+        <h1 class="form-title">Formulaire d'inscription</h1>
+        <div class="event-title">
+            Événement : {{ $evenement->titre }}
+        </div>
+    </div>
 
-    {{-- Affichage des erreurs --}}
     @if ($errors->any())
         <div class="errors">
             <ul>
@@ -163,11 +217,13 @@
         <label for="signature">Signature :</label>
         <canvas id="signature-pad" width="400" height="200"></canvas>
         <input type="hidden" name="signature" id="signature">
-        <button type="button" class="btn-clear" onclick="clearSignature()">Effacer</button>
+
+        <div class="form-actions">
+            <button type="button" class="btn-clear" onclick="clearSignature()">Effacer la signature</button>
+            <button type="submit" class="btn-submit">S'inscrire</button>
+        </div>
 
         <input type="hidden" name="evenement_id" value="{{ $evenement->id }}">
-
-        <button type="submit">Enregistrer</button>
     </form>
 </div>
 
@@ -179,41 +235,75 @@
     let lastX = 0;
     let lastY = 0;
 
-    canvas.addEventListener('mousedown', function (e) {
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+
+    function startDrawing(e) {
         drawing = true;
-        const rect = canvas.getBoundingClientRect();
-        lastX = e.clientX - rect.left;
-        lastY = e.clientY - rect.top;
-    });
+        const pos = getPosition(e);
+        lastX = pos.x;
+        lastY = pos.y;
+    }
 
-    canvas.addEventListener('mouseup', () => drawing = false);
-    canvas.addEventListener('mouseleave', () => drawing = false);
-
-    canvas.addEventListener('mousemove', function (e) {
+    function draw(e) {
         if (!drawing) return;
-        const rect = canvas.getBoundingClientRect();
-        const currentX = e.clientX - rect.left;
-        const currentY = e.clientY - rect.top;
-
-        ctx.lineWidth = 2;
-        ctx.lineCap = 'round';
-        ctx.strokeStyle = '#000';
+        const pos = getPosition(e);
         ctx.beginPath();
         ctx.moveTo(lastX, lastY);
-        ctx.lineTo(currentX, currentY);
+        ctx.lineTo(pos.x, pos.y);
         ctx.stroke();
+        lastX = pos.x;
+        lastY = pos.y;
+    }
 
-        lastX = currentX;
-        lastY = currentY;
+    function stopDrawing() {
+        drawing = false;
+    }
+
+    function getPosition(e) {
+        const rect = canvas.getBoundingClientRect();
+        return {
+            x: (e.clientX || e.touches?.[0].clientX) - rect.left,
+            y: (e.clientY || e.touches?.[0].clientY) - rect.top
+        };
+    }
+
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseleave', stopDrawing);
+
+    canvas.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        startDrawing(e.touches[0]);
     });
+
+    canvas.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        draw(e.touches[0]);
+    });
+
+    canvas.addEventListener('touchend', stopDrawing);
 
     function clearSignature() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         signatureInput.value = '';
     }
 
-    // On soumet le formulaire, on sauvegarde l'image en base64
-    document.querySelector('form').addEventListener('submit', function () {
+    function isCanvasBlank(c) {
+        const blank = document.createElement('canvas');
+        blank.width = c.width;
+        blank.height = c.height;
+        return c.toDataURL() === blank.toDataURL();
+    }
+
+    document.querySelector('form').addEventListener('submit', function (e) {
+        if (isCanvasBlank(canvas)) {
+            e.preventDefault();
+            alert('Veuillez fournir une signature');
+            return false;
+        }
         signatureInput.value = canvas.toDataURL();
     });
 </script>

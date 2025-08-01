@@ -260,7 +260,7 @@
 
         {{-- Upload image --}}
         <div class="mb-3">
-            <label for="image" class="form-label">Image de l'événement (jpg, png, max 2MB)</label>
+            <label for="image" class="form-label">Image d l'événement (jpg, png, max 2MB)</label>
             <input 
                 type="file" 
                 name="image" 

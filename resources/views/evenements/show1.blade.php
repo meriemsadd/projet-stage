@@ -4,247 +4,303 @@
 
 @section('content')
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
 
-    body {
-        font-family: 'Raleway', sans-serif;
-        background: #f4f9f9;
-        margin: 0;
-        padding: 0;
-    }
-
-    .btn-custom-outline-secondary {
-        color: #00796b;
-        border: 1.5px solid #00796b;
-        font-weight: 700;
-        border-radius: 30px;
-        padding: 8px 20px;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-        background: #ffffffdd;
-        backdrop-filter: blur(8px);
-        box-shadow:
-            0 4px 10px rgba(0, 121, 107, 0.2),
-            inset 0 -2px 8px rgba(255, 255, 255, 0.8);
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-    }
-    .btn-custom-outline-secondary:hover {
-        background: #00796b;
-        color: #e0f2f1;
-        box-shadow: 0 8px 18px rgba(0, 121, 107, 0.7);
-        transform: scale(1.05);
-        text-decoration: none;
+    :root {
+        --primary: #00796b;
+        --primary-dark: #004d40;
+        --primary-light: #b2dfdb;
+        --accent: #ffab00;
+        --accent-dark: #ff6d00;
+        --text-dark: #263238;
+        --text-light: #eceff1;
     }
 
-    .btn-warning {
-        background: linear-gradient(45deg, #ffd54f, #ffb300);
-        border: none;
-        color: #4e342e;
-        font-weight: 700;
-        border-radius: 30px;
-        padding: 8px 20px;
-        box-shadow: 0 3px 10px #ffb300aa;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-    }
-    .btn-warning:hover {
-        background: linear-gradient(45deg, #ffca28, #ffa000);
-        color: #3e2723;
-        box-shadow: 0 6px 18px #ffa000cc;
-        transform: scale(1.06);
-        text-decoration: none;
+    .event-detail-container {
+        max-width: 1024px;
+        margin: 2rem auto;
+        padding: 0 1rem;
     }
 
-    .card-custom {
-        background: #ffffffcc;
-        border-radius: 20px;
-        padding: 24px 28px;
-        box-shadow:
-            0 12px 28px rgba(0, 121, 107, 0.25),
-            0 4px 14px rgba(0, 0, 0, 0.08);
-        backdrop-filter: saturate(180%) blur(15px);
-        border: 1px solid #00796b33;
-        margin-bottom: 40px;
+    /* Header with image section */
+    .event-header {
+        position: relative;
+        margin-bottom: 2.5rem;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 15px 35px rgba(0, 121, 107, 0.15);
     }
 
-    .card-header-custom {
-        background: linear-gradient(90deg, #00796b, #004d40);
+    .event-title {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
         color: white;
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5rem;
         font-weight: 700;
-        font-size: 1.9rem;
-        border-radius: 14px 14px 0 0;
-        padding: 18px 30px;
-        box-shadow: 0 4px 12px rgba(0, 121, 107, 0.6);
-        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+        padding: 1.5rem 2rem;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        position: relative;
+    }
+
+    .event-image-container {
+        width: 100%;
+        height: 400px;
+        position: relative;
+        overflow: hidden;
     }
 
     .event-image {
-        max-width: 100%;
-        height: auto;
-        border-radius: 14px;
-        margin-top: 16px;
-        box-shadow: 0 8px 20px rgba(0, 121, 107, 0.2);
-        object-fit: cover;
-    }
-
-    .event-info p {
-        font-size: 1.1rem;
-        margin: 10px 0;
-        color: #004d40;
-        user-select: none;
-    }
-    .event-info p strong {
-        color: #00796b;
-        font-weight: 700;
-    }
-
-    /* Table participants */
-    .table-responsive {
-        border-radius: 20px;
-        overflow: hidden;
-        box-shadow: 0 8px 22px rgba(0, 121, 107, 0.15);
-    }
-    table {
         width: 100%;
-        border-collapse: separate;
-        border-spacing: 0 12px;
-        font-size: 1rem;
-        color: #004d40;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
     }
-    thead tr th {
-        background: linear-gradient(45deg, #00796bcc, #004d4088);
-        color: #e0f2f1;
-        font-weight: 700;
-        padding: 14px 12px;
-        text-align: center;
-        border-radius: 12px 12px 0 0;
-        user-select: none;
+
+    .event-image-container:hover .event-image {
+        transform: scale(1.03);
     }
-    tbody tr {
-        background: #e0f2f1dd;
-        border-radius: 14px;
-        box-shadow: 0 3px 14px rgba(0, 121, 107, 0.15);
-        transition: transform 0.25s ease, box-shadow 0.3s ease;
-    }
-    tbody tr:hover {
-        background: #b2dfdbff;
-        transform: translateY(-4px);
-        box-shadow: 0 8px 22px rgba(0, 121, 107, 0.3);
-    }
-    tbody tr td {
-        padding: 14px 12px;
-        text-align: center;
-        vertical-align: middle;
-        white-space: nowrap;
+
+    /* Event details section */
+    .event-details {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 18px;
+        padding: 2.5rem;
+        box-shadow: 0 10px 30px rgba(0, 121, 107, 0.1);
+        margin-bottom: 2.5rem;
+        position: relative;
         overflow: hidden;
-        text-overflow: ellipsis;
     }
 
-    /* Buttons inside table */
-    .btn-sm {
-        font-size: 0.85rem;
-        padding: 6px 14px;
-        border-radius: 28px;
+    .event-details::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%2300796b' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+        z-index: 0;
+    }
+
+    .detail-item {
+        position: relative;
+        z-index: 1;
+        margin-bottom: 1.5rem;
+        padding-left: 2rem;
+    }
+
+    .detail-item::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0.35rem;
+        width: 1.2rem;
+        height: 1.2rem;
+        background-color: var(--primary);
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 11.08V12a10 10 0 1 1-5.93-9.14'%3E%3C/path%3E%3Cpolyline points='22 4 12 14.01 9 11.01'%3E%3C/polyline%3E%3C/svg%3E");
+        mask-repeat: no-repeat;
+        background-size: contain;
+    }
+
+    .detail-label {
         font-weight: 700;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.07);
-        transition: all 0.3s ease;
-        letter-spacing: 0.03em;
-        white-space: nowrap;
-    }
-    .btn-primary {
-        background-color: #00796b;
-        border: 1.5px solid #004d40;
-        color: white;
-        text-shadow: 0 1px 1px rgba(0,0,0,0.2);
-    }
-    .btn-primary:hover {
-        background-color: #004d40;
-        box-shadow: 0 6px 15px #004d40aa;
-        color: #a7ffeb;
-        transform: scale(1.05);
-    }
-    .btn-danger {
-        background: linear-gradient(45deg, #ef5350, #d32f2f);
-        border: none;
-        color: white;
-        text-shadow: 0 1px 1px rgba(0,0,0,0.25);
-        box-shadow: 0 3px 10px #d32f2faa;
-    }
-    .btn-danger:hover {
-        background: linear-gradient(45deg, #e53935, #b71c1c);
-        box-shadow: 0 6px 20px #b71c1ccc;
-        transform: scale(1.06);
+        color: var(--primary-dark);
+        display: block;
+        margin-bottom: 0.3rem;
+        font-size: 1.1rem;
     }
 
-    /* Responsive */
-    @media (max-width: 767px) {
-        .btn-custom-outline-secondary, .btn-warning {
-            font-size: 0.9rem;
-            padding: 10px 16px;
+    .detail-value {
+        font-size: 1.15rem;
+        color: var(--text-dark);
+        line-height: 1.6;
+    }
+
+    .event-description {
+        background: rgba(178, 223, 219, 0.2);
+        border-left: 4px solid var(--primary);
+        padding: 1.5rem;
+        border-radius: 0 12px 12px 0;
+        margin: 2rem 0;
+        position: relative;
+    }
+
+    /* Participants section */
+    .participants-section {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 18px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 121, 107, 0.1);
+    }
+
+    .section-title {
+        font-family: 'Playfair Display', serif;
+        color: var(--primary-dark);
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+        display: inline-block;
+    }
+
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 60%;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary), transparent);
+    }
+
+    /* Buttons */
+    .action-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .btn-back {
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--primary);
+        border: 2px solid var(--primary);
+        padding: 0.8rem 1.8rem;
+        border-radius: 50px;
+        font-weight: 700;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+    }
+
+    .btn-back:hover {
+        background: var(--primary);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 121, 107, 0.3);
+    }
+
+    .btn-edit {
+        background: linear-gradient(45deg, var(--accent), var(--accent-dark));
+        color: #4e342e;
+        border: none;
+        padding: 0.8rem 1.8rem;
+        border-radius: 50px;
+        font-weight: 700;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        box-shadow: 0 4px 15px rgba(255, 171, 0, 0.3);
+    }
+
+    .btn-edit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 109, 0, 0.4);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .event-title {
+            font-size: 1.8rem;
+            padding: 1.2rem;
         }
-        .card-custom {
-            padding: 20px 16px;
+        
+        .event-image-container {
+            height: 250px;
         }
-        .card-header-custom {
-            font-size: 1.5rem;
-            padding: 14px 20px;
+        
+        .event-details {
+            padding: 1.5rem;
         }
-        thead tr th, tbody tr td {
-            font-size: 0.85rem;
-            white-space: normal;
+        
+        .detail-item {
+            padding-left: 1.5rem;
+        }
+        
+        .section-title {
+            font-size: 1.6rem;
         }
     }
 </style>
 
-<div class="container my-4" style="max-width: 960px;">
-    {{-- Boutons retour et modifier --}}
-    <div class="mb-4 d-flex justify-content-between flex-wrap gap-3">
-        <a href="{{ route('evenements.index') }}" class="btn-custom-outline-secondary">← Retour à la liste des événements</a>
-        <a href="{{ route('evenements.edit', $evenement->id) }}" class="btn-warning">Modifier</a>
+<div class="event-detail-container">
+    <div class="action-buttons">
+        <a href="{{ route('evenements.index') }}" class="btn-back">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+            </svg>
+            Retour à la liste
+        </a>
+        <a href="{{ route('evenements.edit', $evenement->id) }}" class="btn-edit">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+            </svg>
+            Modifier
+        </a>
     </div>
 
-    {{-- Carte de l'événement --}}
-    <div class="card-custom">
-        <div class="card-header-custom">
-            {{ $evenement->titre }}
-        </div>
-
-        {{-- Image sous le titre --}}
+    <!-- Event Header with Title and Image -->
+    <div class="event-header">
+        <div class="event-title">{{ $evenement->titre }}</div>
         @if($evenement->image)
+        <div class="event-image-container">
             <img src="{{ asset('storage/' . $evenement->image) }}" alt="Image de l'événement" class="event-image">
+        </div>
         @endif
+    </div>
 
-        <div class="event-info mt-4">
-            <p><strong>Lieu :</strong> {{ $evenement->lieu }}</p>
-            <p><strong>Date de début :</strong> {{ \Carbon\Carbon::parse($evenement->date_debut)->format('d/m/Y') }}</p>
-            <p><strong>Date de fin :</strong> {{ \Carbon\Carbon::parse($evenement->date_fin)->format('d/m/Y') }}</p>
-            <p><strong>Heure :</strong> {{ $evenement->heure }}</p>
-            <p><strong>Description :</strong><br>{{ $evenement->description }}</p>
-            <p><strong>Type :</strong> {{ $evenement->type?->nom ?? 'Non défini' }}</p>
+    <!-- Event Details -->
+    <div class="event-details">
+        <div class="detail-item">
+            <span class="detail-label">Lieu</span>
+            <span class="detail-value">{{ $evenement->lieu }}</span>
+        </div>
+        
+        <div class="detail-item">
+            <span class="detail-label">Date de début</span>
+            <span class="detail-value">{{ \Carbon\Carbon::parse($evenement->date_debut)->format('d/m/Y') }}</span>
+        </div>
+        
+        <div class="detail-item">
+            <span class="detail-label">Date de fin</span>
+            <span class="detail-value">{{ \Carbon\Carbon::parse($evenement->date_fin)->format('d/m/Y') }}</span>
+        </div>
+        
+        <div class="detail-item">
+            <span class="detail-label">Heure</span>
+            <span class="detail-value">{{ $evenement->heure }}</span>
+        </div>
+        
+        <div class="detail-item">
+            <span class="detail-label">Type</span>
+            <span class="detail-value">{{ $evenement->type?->nom ?? 'Non défini' }}</span>
+        </div>
+        
+        <div class="event-description">
+            <div class="detail-label">Description</div>
+            <p class="detail-value">{{ $evenement->description }}</p>
         </div>
     </div>
 
-    {{-- Liste des participants --}}
-    <div class="card-custom">
-        <div class="card-header-custom" style="background: linear-gradient(90deg, #004d40, #00796b);">
-            Liste des participants
-        </div>
-        <div class="table-responsive p-3">
-            @if ($participants->count())
-                <table class="table align-middle mb-0">
+    <!-- Participants Section -->
+    <div class="participants-section">
+        <h2 class="section-title">Participants</h2>
+        
+        @if ($participants->count())
+            <div class="table-responsive">
+                <table class="table">
                     <thead>
                         <tr>
                             <th>Nom</th>
                             <th>Prénom</th>
                             <th>Email</th>
                             <th>Profession</th>
-                            <th style="width: 140px;">Actions</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -255,21 +311,29 @@
                             <td>{{ $p->email }}</td>
                             <td>{{ $p->profession }}</td>
                             <td>
-                                <a href="{{ route('participants.edit', $p->id) }}" class="btn btn-sm btn-primary mb-1">Modifier</a>
-                                <form action="{{ route('participants.destroy', $p->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Confirmer la suppression ?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger mb-1">Supprimer</button>
-                                </form>
+                                <div class="d-flex gap-2">
+                                    <a href="{{ route('participants.edit', $p->id) }}" class="btn btn-sm btn-primary">
+                                        Modifier
+                                    </a>
+                                    <form action="{{ route('participants.destroy', $p->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Confirmer la suppression ?')">
+                                            Supprimer
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
-            @else
-                <p class="text-center text-muted fs-5">Aucun participant pour cet événement.</p>
-            @endif
-        </div>
+            </div>
+        @else
+            <div class="alert alert-info">
+                Aucun participant inscrit à cet événement.
+            </div>
+        @endif
     </div>
 </div>
 @endsection

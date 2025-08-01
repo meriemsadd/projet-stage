@@ -3,12 +3,115 @@
 @section('title', 'Se connecter')
 
 @section('content')
-<div class="container mt-5" style="max-width: 500px;">
-    <h2 class="mb-4 text-center">Connexion</h2>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap');
+
+    .container-login {
+        max-width: 600px; /* plus large */
+        background: #ffffffcc;
+        padding: 40px 48px; /* plus grand */
+        border-radius: 20px;
+        box-shadow:
+            0 16px 30px rgba(0, 121, 107, 0.3),
+            0 6px 18px rgba(0, 0, 0, 0.06);
+        margin: 60px auto;
+        font-family: 'Raleway', sans-serif;
+    }
+
+    h2 {
+        color: #00796b;
+        font-weight: 700;
+        font-size: 1.8rem;
+        text-align: center;
+        margin-bottom: 30px;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #004d40;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        width: 100%;
+        padding: 10px 14px;
+        margin-bottom: 20px;
+        border-radius: 12px;
+        border: 1.5px solid #00796b;
+        font-size: 1rem;
+        color: #004d40;
+        box-shadow: inset 0 1px 4px #a7ffeb44;
+        transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+        border-color: #004d40;
+        outline: none;
+        box-shadow: 0 0 10px #004d40aa;
+        background: #e0f2f1;
+    }
+
+    button[type="submit"] {
+        background: linear-gradient(135deg, #26a69a, #004d40);
+        color: #fff;
+        font-weight: 700;
+        padding: 12px 28px;
+        border: none;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        width: 100%;
+        box-shadow: 0 6px 15px rgba(0, 150, 136, 0.4);
+        transition: background-color 0.3s ease, transform 0.25s ease, box-shadow 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+        background: linear-gradient(135deg, #004d40, #26a69a);
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(0, 105, 92, 0.7);
+    }
+
+    .errors {
+        background-color: #f8d7da;
+        color: #842029;
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+        margin-bottom: 1.8rem;
+        box-shadow: 0 4px 12px rgba(229, 57, 53, 0.25);
+    }
+
+    .errors ul {
+        margin: 0;
+        padding-left: 1.2rem;
+    }
+
+    .forgot {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 0.95rem;
+    }
+
+    .forgot a {
+        color: #00796b;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .forgot a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="container-login">
+    <h2>Connexion</h2>
 
     @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul class="mb-0">
+        <div class="errors">
+            <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
@@ -19,24 +122,19 @@
     <form action="{{ route('login') }}" method="POST">
         @csrf
 
-        <div class="mb-3">
-            <label for="login" class="form-label">Nom d'utilisateur ou E-mail</label>
-            <input type="text" class="form-control" id="login" name="login" required autofocus>
-        </div>
+        <label for="login">Nom d'utilisateur ou E-mail</label>
+        <input type="text" id="login" name="login" required autofocus>
 
-        <div class="mb-3">
-            <label for="password" class="form-label">Mot de passe</label>
-            <input type="password" class="form-control" id="password" name="password" required>
-        </div>
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" name="password" required>
 
-        <div class="d-grid gap-2">
-            <button type="submit" class="btn btn-primary">Se connecter</button>
-        </div>
+        <button type="submit">Se connecter</button>
 
-        <p class="mt-3 text-center">
-            <i>Vous avez oublié votre mot de passe ?</i><br>
-            <a href="{{ route('loginReset') }}">Réinitialiser mot de passe</a>
-        </p>
+        <div class="forgot">
+            <p>Vous avez oublié votre mot de passe ?<br>
+                <a href="{{ route('loginReset') }}">Réinitialiser mot de passe</a>
+            </p>
+        </div>
     </form>
 </div>
 @endsection
