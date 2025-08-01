@@ -61,3 +61,11 @@ Route::get('/evenements/export/excel', [EvenementController::class, 'exportExcel
 // Participants - Export
 Route::get('/participants/export/pdf', [ParticipantController::class, 'exportPDF'])->name('participants.export.pdf');
 Route::get('/participants/export/excel', [ParticipantController::class, 'exportExcel'])->name('participants.export.excel');
+
+
+use Illuminate\Support\Facades\Auth;
+
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/'); // ou redirect('/login');
+})->name('logout');
