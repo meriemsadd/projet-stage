@@ -236,6 +236,23 @@
             + Créer un nouvel événement
         </a>
     </div>
+    <div class="container my-4">
+    <form class="d-flex flex-wrap gap-3 justify-content-center" action="<?php echo e(route('acceuil')); ?>" method="GET">
+        <input class="form-control w-25" type="search" placeholder="Rechercher un événement..." name="search" value="<?php echo e(request('search')); ?>" />
+        
+        <select name="type" class="form-select w-auto">
+            <option value="">Tous les types</option>
+            <?php $__currentLoopData = $types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <option value="<?php echo e($type->id); ?>" <?php echo e(request('type') == $type->id ? 'selected' : ''); ?>>
+                    <?php echo e($type->nom); ?>
+
+                </option>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </select>
+
+        <button class="btn btn-primary" type="submit">🔎 Rechercher</button>
+    </form>
+</div>
 
     <div class="d-flex justify-content-end mb-3 gap-3 flex-wrap">
         <a href="<?php echo e(route('evenements.export.pdf')); ?>" class="btn btn-danger">Exporter en PDF</a>

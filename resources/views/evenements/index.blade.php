@@ -238,6 +238,22 @@
             + Créer un nouvel événement
         </a>
     </div>
+    <div class="container my-4">
+    <form class="d-flex flex-wrap gap-3 justify-content-center" action="{{ route('acceuil') }}" method="GET">
+        <input class="form-control w-25" type="search" placeholder="Rechercher un événement..." name="search" value="{{ request('search') }}" />
+        
+        <select name="type" class="form-select w-auto">
+            <option value="">Tous les types</option>
+            @foreach($types as $type)
+                <option value="{{ $type->id }}" {{ request('type') == $type->id ? 'selected' : '' }}>
+                    {{ $type->nom }}
+                </option>
+            @endforeach
+        </select>
+
+        <button class="btn btn-primary" type="submit">🔎 Rechercher</button>
+    </form>
+</div>
 
     <div class="d-flex justify-content-end mb-3 gap-3 flex-wrap">
         <a href="{{ route('evenements.export.pdf') }}" class="btn btn-danger">Exporter en PDF</a>
