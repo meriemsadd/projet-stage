@@ -1,59 +1,40 @@
 <?php
 
 namespace App\Mail;
-use App\Models\Participant;//pour acceder au donnee du participant
 
-use Illuminate\Bus\Queueable;//Permet de mettre l'envoi de l'e-mail en file d’attente (asynchrone).
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Queue\SerializesModels;//Sérialise (convertit) les objets comme Participant pour les utiliser dans un e-mail.
+use Illuminate\Queue\SerializesModels;
+use App\Models\Participant;
+use Barryvdh\DomPDF\Facade\Pdf;
+
+
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use SimpleSoftwareIO\QrCode\Renderer\ImageRenderer;
+use SimpleSoftwareIO\QrCode\Renderer\Image\GDImageBackEnd;
+use SimpleSoftwareIO\QrCode\Renderer\RendererStyle\RendererStyle;
+
 
 class InvitationParticipant extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $participant;//pour sera accessible depuis l view
+    public $participant;
 
-    public function __construct(Participant $participant)//constructeur , Reçoit le participant au moment de l’envoi.
+    public function __construct(Participant $participant)
     {
         $this->participant = $participant;
     }
 
-    public function build(){//Construit l’e-mail (titre + contenu HTML).
-        return $this->subject('Invitation à l évenement x ')//subject pour definir le titre de l email
-                    ->view('emails.invitation');//sa se voit ce fichier html 
-    }
-
-    /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
+    public function build()
     {
-        return new Envelope(
-            subject: 'Invitation Participant',
-        );
-    }
+        // Génère le PDF à partir de la vue 'pdf.invitation'
+        $pdf = Pdf::loadView('invitation', ['participant' => $this->participant]);
 
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-{
-    return new Content(
-        view: 'emails.invitation',
-    );
-}
-
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
+        return $this->subject('Invitation à l\'événement')
+                    ->view('emails.invitation')
+                    ->attachData($pdf->output(), 'invitation.pdf', [
+                        'mime' => 'application/pdf',
+                    ]);
     }
 }

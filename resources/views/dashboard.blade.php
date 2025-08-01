@@ -252,18 +252,32 @@
             </div>
         </a>
 
+
         <!-- Carte Statistiques -->
         <a href="{{ route('statistiques') }}" class="dashboard-link">
             <div class="card card-dashboard">
                 <div class="card-body">
                     <div class="card-icon">
                         <i class="fas fa-chart-bar"></i>
+        {{-- Gestion utilisateurs (commentée pour l'instant) --}}
+        <div class="col">
+            <a href="{{ route('users.index') }}" class="text-decoration-none">
+                <div class="card card-dashboard h-100 shadow">
+                    <div class="card-body">
+                        <div class="card-icon">👥</div>
+                        <h5 class="card-title">Gestion des utilisateurs</h5>
+
                     </div>
                     <h3 class="card-title">Statistiques</h3>
                     <p class="card-desc">Analytiques et données sur les événements</p>
                 </div>
+
             </div>
         </a>
+
+            </a>
+        </div>
+
 
         <!-- Carte Paramètres -->
         <a href="{{ route('parametres') }}" class="dashboard-link">

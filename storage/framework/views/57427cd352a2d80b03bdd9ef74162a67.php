@@ -40,15 +40,15 @@
 </head>
 <body>
     <div class="email-container">
-        <h2>Bonjour {{ $participant->prenom }} {{ $participant->nom }},</h2>
+        <h2>Bonjour <?php echo e($participant->prenom); ?> <?php echo e($participant->nom); ?>,</h2>
 
         <p>🎉 Merci pour votre inscription à l'événement<br>
-        <span class="event-title">« {{ $participant->evenement->titre }} »</span>.</p>
+        <span class="event-title">« <?php echo e($participant->evenement->titre); ?> »</span>.</p>
 
         <p>Nous avons bien reçu et enregistré vos informations.</p>
 
-        <p>📍 <strong>Lieu :</strong> {{ $participant->evenement->lieu }}</p>
-        <p>📅 <strong>Date :</strong> {{ \Carbon\Carbon::parse($participant->evenement->date_debut)->format('d/m/Y') }} à {{ \Carbon\Carbon::parse($participant->evenement->heure)->format('H:i') }}</p>
+        <p>📍 <strong>Lieu :</strong> <?php echo e($participant->evenement->lieu); ?></p>
+        <p>📅 <strong>Date :</strong> <?php echo e(\Carbon\Carbon::parse($participant->evenement->date_debut)->format('d/m/Y')); ?> à <?php echo e(\Carbon\Carbon::parse($participant->evenement->heure)->format('H:i')); ?></p>
 
         <p>Nous vous attendons avec plaisir. 🤝<br>
         À très bientôt !</p>
@@ -59,3 +59,4 @@
     </div>
 </body>
 </html>
+<?php /**PATH C:\Users\FATY\Desktop\projet-stage\resources\views/emails/invitation.blade.php ENDPATH**/ ?>

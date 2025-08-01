@@ -1,6 +1,6 @@
 @extends('template.app')
 
-@section('title', 'Liste des événements')
+@section('title', 'Liste des utilisateurs')
 
 @section('content')
 <style>
@@ -13,7 +13,7 @@
         padding: 0;
     }
 
-    .event-header {
+    .header {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -29,7 +29,7 @@
         text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
     }
 
-    .event-header a.btn {
+    .header a.btn {
         background: #ffffffdd;
         color: #00796b;
         font-weight: 700;
@@ -42,8 +42,9 @@
         font-size: 1.1rem;
         backdrop-filter: blur(10px);
         border: 1.5px solid #00796b;
+        text-decoration: none;
     }
-    .event-header a.btn:hover {
+    .header a.btn:hover {
         background: #00796b;
         color: #e0f2f1;
         box-shadow:
@@ -69,7 +70,7 @@
 
     table {
         width: 100vw; /* full viewport width */
-        min-width: 1200px; /* minimal width */
+        min-width: 900px; /* minimal width */
         border-collapse: separate;
         border-spacing: 0 14px;
         font-size: 0.9rem;
@@ -121,13 +122,10 @@
 
     /* Largeurs fixes par colonne */
     td:nth-child(1), th:nth-child(1) { width: 5%; }    /* ID petit */
-    td:nth-child(2), th:nth-child(2) { width: 12%; }   /* Titre un peu plus large */
-    td:nth-child(3), th:nth-child(3) { width: 7%; }   /* Lieu */
-    td:nth-child(4), th:nth-child(4) { width: 10%; }   /* Date */
-    td:nth-child(5), th:nth-child(5) { width: 13%; }   /* Description */
-    td:nth-child(6), th:nth-child(6) { width: 5%; }   /* Type */
-    td:nth-child(7), th:nth-child(7) { width:6%; }   /* Status */
-    td:nth-child(8), th:nth-child(8) { width: 11%; }   /* Actions */
+    td:nth-child(2), th:nth-child(2) { width: 25%; }   /* Username */
+    td:nth-child(3), th:nth-child(3) { width: 35%; }   /* Email */
+    td:nth-child(4), th:nth-child(4) { width: 15%; }   /* Service */
+    td:nth-child(5), th:nth-child(5) { width: 20%; }   /* Actions */
 
     .fw-semibold {
         font-weight: 700;
@@ -143,6 +141,7 @@
         transition: all 0.3s ease;
         letter-spacing: 0.03em;
         white-space: nowrap;
+        margin: 0 4px;
     }
 
     .btn-info {
@@ -185,19 +184,6 @@
         transform: scale(1.06);
     }
 
-    /* Badge Status */
-    .badge {
-        display: inline-block;
-        padding: 0.35em 0.65em;
-        font-size: 0.85rem;
-        font-weight: 600;
-        border-radius: 12px;
-        user-select: none;
-    }
-    .bg-secondary { background-color: #6c757d; color: white; } /* gris */
-    .bg-success { background-color: #28a745; color: white; }   /* vert */
-    .bg-warning { background-color: #ffc107; color: #212529; } /* jaune */
-
     /* Alert */
     .alert-info {
         background-color: #d0f0dd;
@@ -209,11 +195,12 @@
         padding: 18px 20px;
         box-shadow: 0 4px 16px rgba(46, 125, 50, 0.25);
         margin-top: 40px;
+        text-align: center;
     }
 
     /* Responsive tweaks */
     @media (max-width: 767px) {
-        .event-header {
+        .header {
             flex-direction: column;
             gap: 20px;
             font-size: 1.8rem;
@@ -225,44 +212,30 @@
             white-space: normal;
         }
         td:nth-child(1), th:nth-child(1),
-        td:nth-child(8), th:nth-child(8) {
+        td:nth-child(5), th:nth-child(5) {
             width: auto;
         }
     }
 </style>
 
 <div style="width: 100vw; margin-left: calc(-50vw + 50%); padding: 10px 20px;">
-    <div class="event-header">
-        Liste des événements
-        <a href="{{ route('evenements.create') }}" class="btn shadow">
-            + Créer un nouvel événement
+    <div class="header">
+        Liste des utilisateurs
+        <a href="{{ route('users.create') }}" class="btn shadow">
+            + Ajouter un utilisateur
         </a>
     </div>
+
     <div class="container my-4">
-    <form class="d-flex flex-wrap gap-3 justify-content-center" action="{{ route('acceuil') }}" method="GET">
-        <input class="form-control w-25" type="search" placeholder="Rechercher un événement..." name="search" value="{{ request('search') }}" />
-        
-        <select name="type" class="form-select w-auto">
-            <option value="">Tous les types</option>
-            @foreach($types as $type)
-                <option value="{{ $type->id }}" {{ request('type') == $type->id ? 'selected' : '' }}>
-                    {{ $type->nom }}
-                </option>
-            @endforeach
-        </select>
-
-        <button class="btn btn-primary" type="submit">🔎 Rechercher</button>
-    </form>
-</div>
-
-    <div class="d-flex justify-content-end mb-3 gap-3 flex-wrap">
-        <a href="{{ route('evenements.export.pdf') }}" class="btn btn-danger">Exporter en PDF</a>
-        <a href="{{ route('evenements.export.excel') }}" class="btn btn-success">Exporter en Excel</a>
+        <form class="d-flex flex-wrap gap-3 justify-content-center" action="{{ route('users.index') }}" method="GET">
+            <input class="form-control w-25" type="search" placeholder="Rechercher un utilisateur..." name="search" value="{{ request('search') }}" />
+            <button class="btn btn-primary" type="submit">🔎 Rechercher</button>
+        </form>
     </div>
 
-    @if($evenements->isEmpty())
-        <div class="alert alert-info text-center">
-            Aucun événement disponible pour le moment.
+    @if($users->isEmpty())
+        <div class="alert alert-info">
+            Aucun utilisateur trouvé.
         </div>
     @else
         <div class="table-container">
@@ -270,50 +243,22 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Titre</th>
-                        <th>Lieu</th>
-                        <th>Date</th>
-                        <th>Description</th>
-                        <th>Type</th>
-                        <th>Status</th>
+                        <th>Nom d'utilisateur</th>
+                        <th>Email</th>
+                        <th>Service</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($evenements as $evenement)
-                        @php
-                            $now = \Carbon\Carbon::now();
-                            $debut = \Carbon\Carbon::parse($evenement->date_debut);
-                            $fin = \Carbon\Carbon::parse($evenement->date_fin);
-
-                            if ($fin->lt($now)) {
-                                $status = 'Passé';
-                                $badgeClass = 'badge bg-secondary';
-                            } elseif ($debut->gt($now)) {
-                                $status = 'À venir';
-                                $badgeClass = 'badge bg-success';
-                            } else {
-                                $status = 'En cours';
-                                $badgeClass = 'badge bg-warning';
-                            }
-                        @endphp
+                    @foreach($users as $user)
                         <tr>
-                            <td class="fw-semibold">{{ $evenement->id }}</td>
-                            <td class="fw-semibold text-truncate" style="max-width: 160px;" title="{{ $evenement->titre }}">{{ $evenement->titre }}</td>
-                            <td>{{ $evenement->lieu }}</td>
-                            <td style="white-space: normal;">
-                                {{ $debut->format('d/m/Y') }} à {{ $evenement->heure }}<br>
-                                jusqu’au {{ $fin->format('d/m/Y') }}
-                            </td>
-                            <td class="text-truncate" style="max-width: 180px;" title="{{ $evenement->description }}">{{ Str::limit($evenement->description, 60) }}</td>
-                            <td>{{ $evenement->type?->nom ?? 'Non défini' }}</td>
+                            <td class="fw-semibold">{{ $user->id }}</td>
+                            <td class="fw-semibold text-truncate" style="max-width: 250px;" title="{{ $user->username }}">{{ $user->username }}</td>
+                            <td class="text-truncate" style="max-width: 350px;" title="{{ $user->email }}">{{ $user->email }}</td>
+                            <td>{{ $user->service?->nom ?? '-' }}</td>
                             <td>
-                                <span class="{{ $badgeClass }}">{{ $status }}</span>
-                            </td>
-                            <td>
-                                <a href="{{ route('evenements.show1', $evenement->id) }}" class="btn btn-sm btn-info mb-1">Voir</a>
-                                <a href="{{ route('evenements.edit', $evenement->id) }}" class="btn btn-sm btn-warning mb-1">Modifier</a>
-                                <form action="{{ route('evenements.destroy', $evenement->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Confirmer la suppression ?')">
+                                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-warning">Modifier</a>
+                                <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Confirmer la suppression ?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
@@ -323,6 +268,10 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+
+        <div class="d-flex justify-content-center mt-4">
+            {{ $users->links() }} {{-- Pagination Laravel --}}
         </div>
     @endif
 </div>

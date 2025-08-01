@@ -5,7 +5,7 @@ use App\Http\controllers\ParticipantController;
 use App\Http\controllers\EvenementController;
 use App\Http\controllers\AcceuilController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
+use App\Http\ControllersAuth\RegisterController;
 
 Route::get('/', [AcceuilController::class, 'index'])->name('acceuil');
 
@@ -15,6 +15,7 @@ Route::resource('participants', ParticipantController::class)->except(['create']
 Route::get('/inscription', [ParticipantController::class, 'create']);
 Route::post('/inscription', [ParticipantController::class, 'store'])->name('participants.store');
 Route::get('/participants/create/{evenementId}', [ParticipantController::class, 'create'])->name('participants.create');
+Route::get('/participants/{id}/checkin', [ParticipantController::class, 'checkin'])->name('participants.checkin');
 
 Route::get('/evenements/{evenement}/participants', [ParticipantController::class, 'indexByEvenement'])->name('participants.byEvenement');
 Route::get('/evenements/{id}/show1', [EvenementController::class, 'show1'])->name('evenements.show1');
@@ -62,10 +63,22 @@ Route::get('/participants/export/pdf', [ParticipantController::class, 'exportPDF
 Route::get('/participants/export/excel', [ParticipantController::class, 'exportExcel'])->name('participants.export.excel');
 
 
+
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->name('logout');
 
     Route::get('/parametres', function () {
     return view('parametres');
 })->name('parametres')->middleware('auth'); // Le middleware 'auth' protège la page
+
+use Illuminate\Support\Facades\Auth;
+
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/'); // ou redirect('/login');
+})->name('logout');
+
+use App\Http\Controllers\UserController;
+
+Route::resource('users', UserController::class)->middleware('auth');
 

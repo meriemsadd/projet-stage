@@ -71,13 +71,13 @@ class ParticipantController
     return redirect('/')->with('success', 'Participant ajouté avec succès ! E-mail envoyé.');
 }
 
-    /**
-     * Display the specified resource.
-     */
+   
     public function show(string $id)
     {
         //
     }
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -90,9 +90,7 @@ class ParticipantController
 
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, string $id)
     {
     $participant = Participant::findOrFail($id);//on trouve le particpant de id x pour le modifiee
@@ -120,16 +118,27 @@ class ParticipantController
     return view('participants.index', compact('participants', 'evenement'));
 }
 
-    public function exportPDF()
-{
-    $participants = Participant::all();
-    $pdf = PDF::loadView('exports.participants', compact('paticipants'));
-    return $pdf->download('participants.pdf');
-}
+  public function exportPDF()
+    {
+        $participants = Participant::all();
+        $pdf = PDF::loadView('participants.pdf', compact('participants'));
+        return $pdf->download('participants.pdf');
+    }
 
     public function exportExcel()
+    {
+        return Excel::download(new ParticipantsExport, 'participants.xlsx');
+    }
+
+
+    
+// ParticipantController.php
+
+public function checkin($id)
 {
-    return Excel::download(new ParticipantsExport, 'participants.xlsx');
+    $participant = Participant::findOrFail($id);
+    // Tu peux ici marquer la présence, ou afficher une page
+    return view('participants.checkin', compact('participant'));
 }
 
 }

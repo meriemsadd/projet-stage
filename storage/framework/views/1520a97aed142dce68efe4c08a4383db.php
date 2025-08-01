@@ -1,8 +1,6 @@
-@extends('template.app')
+<?php $__env->startSection('title', 'Liste des événements'); ?>
 
-@section('title', 'Liste des événements')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap');
 
@@ -234,21 +232,22 @@
 <div style="width: 100vw; margin-left: calc(-50vw + 50%); padding: 10px 20px;">
     <div class="event-header">
         Liste des événements
-        <a href="{{ route('evenements.create') }}" class="btn shadow">
+        <a href="<?php echo e(route('evenements.create')); ?>" class="btn shadow">
             + Créer un nouvel événement
         </a>
     </div>
     <div class="container my-4">
-    <form class="d-flex flex-wrap gap-3 justify-content-center" action="{{ route('acceuil') }}" method="GET">
-        <input class="form-control w-25" type="search" placeholder="Rechercher un événement..." name="search" value="{{ request('search') }}" />
+    <form class="d-flex flex-wrap gap-3 justify-content-center" action="<?php echo e(route('acceuil')); ?>" method="GET">
+        <input class="form-control w-25" type="search" placeholder="Rechercher un événement..." name="search" value="<?php echo e(request('search')); ?>" />
         
         <select name="type" class="form-select w-auto">
             <option value="">Tous les types</option>
-            @foreach($types as $type)
-                <option value="{{ $type->id }}" {{ request('type') == $type->id ? 'selected' : '' }}>
-                    {{ $type->nom }}
+            <?php $__currentLoopData = $types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <option value="<?php echo e($type->id); ?>" <?php echo e(request('type') == $type->id ? 'selected' : ''); ?>>
+                    <?php echo e($type->nom); ?>
+
                 </option>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </select>
 
         <button class="btn btn-primary" type="submit">🔎 Rechercher</button>
@@ -256,15 +255,15 @@
 </div>
 
     <div class="d-flex justify-content-end mb-3 gap-3 flex-wrap">
-        <a href="{{ route('evenements.export.pdf') }}" class="btn btn-danger">Exporter en PDF</a>
-        <a href="{{ route('evenements.export.excel') }}" class="btn btn-success">Exporter en Excel</a>
+        <a href="<?php echo e(route('evenements.export.pdf')); ?>" class="btn btn-danger">Exporter en PDF</a>
+        <a href="<?php echo e(route('evenements.export.excel')); ?>" class="btn btn-success">Exporter en Excel</a>
     </div>
 
-    @if($evenements->isEmpty())
+    <?php if($evenements->isEmpty()): ?>
         <div class="alert alert-info text-center">
             Aucun événement disponible pour le moment.
         </div>
-    @else
+    <?php else: ?>
         <div class="table-container">
             <table class="table table-hover text-center align-middle mb-0">
                 <thead>
@@ -280,8 +279,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($evenements as $evenement)
-                        @php
+                    <?php $__currentLoopData = $evenements; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $evenement): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php
                             $now = \Carbon\Carbon::now();
                             $debut = \Carbon\Carbon::parse($evenement->date_debut);
                             $fin = \Carbon\Carbon::parse($evenement->date_fin);
@@ -296,34 +295,37 @@
                                 $status = 'En cours';
                                 $badgeClass = 'badge bg-warning';
                             }
-                        @endphp
+                        ?>
                         <tr>
-                            <td class="fw-semibold">{{ $evenement->id }}</td>
-                            <td class="fw-semibold text-truncate" style="max-width: 160px;" title="{{ $evenement->titre }}">{{ $evenement->titre }}</td>
-                            <td>{{ $evenement->lieu }}</td>
+                            <td class="fw-semibold"><?php echo e($evenement->id); ?></td>
+                            <td class="fw-semibold text-truncate" style="max-width: 160px;" title="<?php echo e($evenement->titre); ?>"><?php echo e($evenement->titre); ?></td>
+                            <td><?php echo e($evenement->lieu); ?></td>
                             <td style="white-space: normal;">
-                                {{ $debut->format('d/m/Y') }} à {{ $evenement->heure }}<br>
-                                jusqu’au {{ $fin->format('d/m/Y') }}
+                                <?php echo e($debut->format('d/m/Y')); ?> à <?php echo e($evenement->heure); ?><br>
+                                jusqu’au <?php echo e($fin->format('d/m/Y')); ?>
+
                             </td>
-                            <td class="text-truncate" style="max-width: 180px;" title="{{ $evenement->description }}">{{ Str::limit($evenement->description, 60) }}</td>
-                            <td>{{ $evenement->type?->nom ?? 'Non défini' }}</td>
+                            <td class="text-truncate" style="max-width: 180px;" title="<?php echo e($evenement->description); ?>"><?php echo e(Str::limit($evenement->description, 60)); ?></td>
+                            <td><?php echo e($evenement->type?->nom ?? 'Non défini'); ?></td>
                             <td>
-                                <span class="{{ $badgeClass }}">{{ $status }}</span>
+                                <span class="<?php echo e($badgeClass); ?>"><?php echo e($status); ?></span>
                             </td>
                             <td>
-                                <a href="{{ route('evenements.show1', $evenement->id) }}" class="btn btn-sm btn-info mb-1">Voir</a>
-                                <a href="{{ route('evenements.edit', $evenement->id) }}" class="btn btn-sm btn-warning mb-1">Modifier</a>
-                                <form action="{{ route('evenements.destroy', $evenement->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Confirmer la suppression ?')">
-                                    @csrf
-                                    @method('DELETE')
+                                <a href="<?php echo e(route('evenements.show1', $evenement->id)); ?>" class="btn btn-sm btn-info mb-1">Voir</a>
+                                <a href="<?php echo e(route('evenements.edit', $evenement->id)); ?>" class="btn btn-sm btn-warning mb-1">Modifier</a>
+                                <form action="<?php echo e(route('evenements.destroy', $evenement->id)); ?>" method="POST" class="d-inline" onsubmit="return confirm('Confirmer la suppression ?')">
+                                    <?php echo csrf_field(); ?>
+                                    <?php echo method_field('DELETE'); ?>
                                     <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
                                 </form>
                             </td>
                         </tr>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tbody>
             </table>
         </div>
-    @endif
+    <?php endif; ?>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('template.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\FATY\Desktop\projet-stage\resources\views/evenements/index.blade.php ENDPATH**/ ?>

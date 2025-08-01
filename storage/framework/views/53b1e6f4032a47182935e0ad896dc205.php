@@ -1,8 +1,6 @@
-@extends('template.app')
+<?php $__env->startSection('title', 'Modifier un événement'); ?>
 
-@section('title', 'Modifier un événement')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap');
 
@@ -186,81 +184,82 @@
 <nav class="navbar navbar-expand-lg px-4 mb-4">
     <a class="navbar-brand" href="#">Wilaya de la Région de l'Oriental</a>
     <div class="ms-auto d-flex gap-2">
-        <a href="{{ route('acceuil') }}" class="btn btn-outline-primary">← Accueil</a>
-        <a href="{{ route('login') }}" class="btn btn-outline-secondary">Se déconnecter</a>
+        <a href="<?php echo e(route('acceuil')); ?>" class="btn btn-outline-primary">← Accueil</a>
+        <a href="<?php echo e(route('login')); ?>" class="btn btn-outline-secondary">Se déconnecter</a>
     </div>
 </nav>
 
 <div class="container">
     <h2>Modifier un événement</h2>
 
-    {{-- Erreurs validation --}}
-    @if ($errors->any())
+    
+    <?php if($errors->any()): ?>
         <div class="alert alert-danger">
             <ul class="mb-0">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
+                <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <li><?php echo e($error); ?></li>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </ul>
         </div>
-    @endif
+    <?php endif; ?>
 
-    {{-- Formulaire --}}
-    <form action="{{ route('evenements.update', $Evenement->id) }}" method="POST" enctype="multipart/form-data" class="mt-4">
-        @csrf
-        @method('PUT')
+    
+    <form action="<?php echo e(route('evenements.update', $Evenement->id)); ?>" method="POST" enctype="multipart/form-data" class="mt-4">
+        <?php echo csrf_field(); ?>
+        <?php echo method_field('PUT'); ?>
 
         <div class="mb-3">
             <label for="titre" class="form-label">Titre</label>
             <input type="text" name="titre" class="form-control" id="titre"
-                   value="{{ old('titre', $Evenement->titre) }}" required>
+                   value="<?php echo e(old('titre', $Evenement->titre)); ?>" required>
         </div>
 
         <div class="mb-3">
             <label for="lieu" class="form-label">Lieu</label>
             <input type="text" name="lieu" class="form-control" id="lieu"
-                   value="{{ old('lieu', $Evenement->lieu) }}" required>
+                   value="<?php echo e(old('lieu', $Evenement->lieu)); ?>" required>
         </div>
 
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
             <input type="text" name="description" class="form-control" id="description"
-                   value="{{ old('description', $Evenement->description) }}" required>
+                   value="<?php echo e(old('description', $Evenement->description)); ?>" required>
         </div>
 
         <div class="mb-3">
             <label for="date_de_début" class="form-label">Date de début</label>
             <input type="date" name="date_de_début" class="form-control" id="date_de_début"
-                   value="{{ old('date_de_début', $Evenement->date_de_début) }}" required>
+                   value="<?php echo e(old('date_de_début', $Evenement->date_de_début)); ?>" required>
         </div>
 
         <div class="mb-3">
             <label for="date_de_fin" class="form-label">Date de fin</label>
             <input type="date" name="date_de_fin" class="form-control" id="date_de_fin"
-                   value="{{ old('date_de_fin', $Evenement->date_de_fin) }}" required>
+                   value="<?php echo e(old('date_de_fin', $Evenement->date_de_fin)); ?>" required>
         </div>
 
         <div class="mb-3">
             <label for="heure" class="form-label">Heure</label>
             <input type="time" name="heure" class="form-control" id="heure"
-                   value="{{ old('heure', $Evenement->heure) }}" required>
+                   value="<?php echo e(old('heure', $Evenement->heure)); ?>" required>
         </div>
 
         <div class="mb-3">
             <label for="type_events_id" class="form-label">Type d'événement</label>
             <select name="type_events_id" id="type_events_id" class="form-select" required>
                 <option value="">-- Choisir un type --</option>
-                @foreach ($types as $type)
-                    <option value="{{ $type->id }}" {{ old('type_events_id', $Evenement->type_events_id) == $type->id ? 'selected' : '' }}>
-                        {{ $type->nom }}
+                <?php $__currentLoopData = $types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <option value="<?php echo e($type->id); ?>" <?php echo e(old('type_events_id', $Evenement->type_events_id) == $type->id ? 'selected' : ''); ?>>
+                        <?php echo e($type->nom); ?>
+
                     </option>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </select>
         </div>
 
-        {{-- Upload image --}}
+        
         <div class="mb-3">
-            <label for="image" class="form-label">Image d l'événement (jpg, png, max 2MB)</label>
+            <label for="image" class="form-label">Image de l'événement (jpg, png, max 2MB)</label>
             <input 
                 type="file" 
                 name="image" 
@@ -269,32 +268,32 @@
                 accept="image/png, image/jpeg" 
                 onchange="previewImage(event)"
             >
-            {{-- Affiche l’image actuelle si elle existe --}}
-            @if ($Evenement->image)
-                <img id="preview-image" src="{{ asset('storage/' . $Evenement->image) }}" alt="Image actuelle" style="display: block;">
-            @else
+            
+            <?php if($Evenement->image): ?>
+                <img id="preview-image" src="<?php echo e(asset('storage/' . $Evenement->image)); ?>" alt="Image actuelle" style="display: block;">
+            <?php else: ?>
                 <img id="preview-image" src="#" alt="Aperçu image" style="display:none;">
-            @endif
+            <?php endif; ?>
         </div>
 
-        {{-- Événement certifié --}}
+        
         <div class="mb-3">
             <label class="form-label d-block">Événement certifié</label>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="certifie" id="certifie_oui" value="1" 
-                    {{ old('certifie', $Evenement->certifie) == 1 ? 'checked' : '' }} required>
+                    <?php echo e(old('certifie', $Evenement->certifie) == 1 ? 'checked' : ''); ?> required>
                 <label class="form-check-label" for="certifie_oui">Oui</label>
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="certifie" id="certifie_non" value="0" 
-                    {{ old('certifie', $Evenement->certifie) == 0 ? 'checked' : '' }} required>
+                    <?php echo e(old('certifie', $Evenement->certifie) == 0 ? 'checked' : ''); ?> required>
                 <label class="form-check-label" for="certifie_non">Non</label>
             </div>
         </div>
 
         <div class="d-flex gap-2 justify-content-center">
             <button type="submit" class="btn btn-success">Modifier</button>
-            <a href="{{ route('evenements.index') }}" class="btn btn-secondary">Annuler</a>
+            <a href="<?php echo e(route('evenements.index')); ?>" class="btn btn-secondary">Annuler</a>
         </div>
     </form>
 </div>
@@ -331,4 +330,6 @@
         }
     }
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\FATY\Desktop\projet-stage\resources\views/evenements/edit.blade.php ENDPATH**/ ?>
