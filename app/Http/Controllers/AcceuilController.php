@@ -11,7 +11,8 @@ class AcceuilController extends Controller
 {
    public function index()
 {
-    $query = Evenement::with('type'); // Commencer la requête
+    $query = Evenement::with(['type', 'user'])
+                    ->orderBy('date_de_début', 'desc');
 
     // Appliquer le filtre par type s’il est présent dans la requête
     if (request()->has('type') && request()->type != '') {

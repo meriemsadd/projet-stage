@@ -60,3 +60,12 @@ Route::get('/evenements/export/excel', [EvenementController::class, 'exportExcel
 // Participants - Export
 Route::get('/participants/export/pdf', [ParticipantController::class, 'exportPDF'])->name('participants.export.pdf');
 Route::get('/participants/export/excel', [ParticipantController::class, 'exportExcel'])->name('participants.export.excel');
+
+
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->name('logout');
+
+    Route::get('/parametres', function () {
+    return view('parametres');
+})->name('parametres')->middleware('auth'); // Le middleware 'auth' protège la page
+

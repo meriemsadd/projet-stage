@@ -1,305 +1,630 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8" />
-    <title>Accueil - Wilaya De L'Oriental</title>
+@extends('template.app')
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+@section('title', "Accueil - Wilaya De L'Oriental")
 
-    <style>
-        body {
-            /* Mis à jour avec le style radial-gradient et perspective 3D */
-            background: radial-gradient(circle at top left, #e0f7fa, #ffffff);
-            perspective: 1000px;
+@section('styles')
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+    :root {
+        --primary-color: #00796b;
+        --primary-dark: #004d40;
+        --primary-light: #b2dfdb;
+        --accent-color: #ff9800;
+        --text-dark: #263238;
+        --text-light: #eceff1;
+        --gradient-primary: linear-gradient(135deg, #00796b, #004d40);
+        --gradient-accent: linear-gradient(135deg, #ff9800, #f57c00);
+    }
 
-        /* Navbar principale */
-        .navbar {
-            background-color: #00796b;
-            padding: 0.75rem 1.5rem;
-        }
-        .navbar-brand {
-            font-weight: 700;
-            font-size: 1.25rem;
-            color: white !important;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .navbar-brand img {
-            height: 60px;
-            width: auto;
-        }
-        .nav-link {
-            color: #c8e6c9 !important;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-        .nav-link:hover,
-        .nav-link:focus {
-            color: #a5d6a7 !important;
-        }
-        .btn-outline-light {
-            color: white !important;
-            font-weight: 600;
-            border-color: white !important;
-        }
-        .btn-outline-light:hover {
-            background-color: white !important;
-            color: #00796b !important;
-        }
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f5f7fa;
+        color: var(--text-dark);
+        overflow-x: hidden;
+    }
 
-        /* Container principal */
-        .container-main {
-            flex-grow: 1;
-            padding: 3rem 1rem 5rem 1rem;
-            max-width: 1200px;
-            margin: auto;
-        }
+    .hero-section {
+        position: relative;
+        height: 80vh;
+        min-height: 600px;
+        background: var(--gradient-primary), 
+                    url('https://images.unsplash.com/photo-1581434681381-81b5b1a82f33?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center;
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        padding: 0 2rem;
+        overflow: hidden;
+    }
 
-        /* Titre principal */
-        .section-title {
-            text-align: center;
-            margin-bottom: 2.5rem;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #004d40;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-        }
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 1200px;
+        padding: 2rem;
+        background-color: rgba(0, 77, 64, 0.7);
+        border-radius: 20px;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        animation: fadeInUp 0.8s ease-out;
+    }
 
-        /* Cartes avec effets 3D, ombre améliorée et animation */
-        .event-card {
-            border-radius: 20px;
-            overflow: hidden;
-            background: white;
-            display: flex;
-            flex-direction: column;
-            transform-style: preserve-3d;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            width: 100%;
+    .hero-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
 
-            /* Animation d'apparition */
+    .hero-subtitle {
+        font-size: 1.5rem;
+        margin-bottom: 2.5rem;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.6;
+    }
+
+    .search-container {
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .search-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+    }
+
+    .search-input {
+        flex: 1;
+        min-width: 300px;
+        padding: 1rem 1.5rem;
+        border: none;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+        outline: none;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.25);
+        transform: translateY(-2px);
+    }
+
+    .search-select {
+        padding: 1rem;
+        border: none;
+        border-radius: 50px;
+        font-size: 1rem;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        appearance: none;
+        background-color: white;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        background-size: 1em;
+        padding-right: 2.5rem;
+    }
+
+    .search-btn {
+        padding: 1rem 2.5rem;
+        background: var(--gradient-accent);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 5px 20px rgba(255, 152, 0, 0.4);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .search-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(255, 152, 0, 0.5);
+        background: linear-gradient(135deg, #f57c00, #e65100);
+    }
+
+    .section-title {
+        text-align: center;
+        margin: 5rem 0 3rem;
+        position: relative;
+    }
+
+    .section-title h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.8rem;
+        font-weight: 700;
+        color: var(--primary-dark);
+        display: inline-block;
+        position: relative;
+    }
+
+    .section-title h2::after {
+        content: '';
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: var(--gradient-accent);
+        border-radius: 2px;
+    }
+
+    .events-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    .events-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 5rem;
+    }
+
+    .event-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        position: relative;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .event-card:nth-child(1) { animation-delay: 0.1s; }
+    .event-card:nth-child(2) { animation-delay: 0.2s; }
+    .event-card:nth-child(3) { animation-delay: 0.3s; }
+    .event-card:nth-child(4) { animation-delay: 0.4s; }
+    .event-card:nth-child(5) { animation-delay: 0.5s; }
+
+    .event-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .event-image-container {
+        height: 200px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .event-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .event-card:hover .event-image {
+        transform: scale(1.05);
+    }
+
+    .event-badge {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        padding: 0.5rem 1.2rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: white;
+        text-transform: uppercase;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 2;
+    }
+
+    .badge-upcoming {
+        background: var(--gradient-primary);
+    }
+
+    .badge-ongoing {
+        background: var(--gradient-accent);
+    }
+
+    .badge-past {
+        background: linear-gradient(135deg, #616161, #424242);
+    }
+
+    .event-content {
+        padding: 1.5rem;
+    }
+
+    .event-title {
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin-bottom: 0.8rem;
+        color: var(--primary-dark);
+        font-family: 'Playfair Display', serif;
+    }
+
+    .event-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.8rem;
+        color: #546e7a;
+        font-size: 0.9rem;
+    }
+
+    .event-meta i {
+        color: var(--primary-color);
+    }
+
+    .event-creator {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.8rem;
+        font-size: 0.85rem;
+        color: #607d8b;
+    }
+
+    .event-creator i {
+        color: var(--accent-color);
+    }
+
+    .event-description {
+        color: #607d8b;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .event-btn {
+        display: inline-block;
+        padding: 0.7rem 1.5rem;
+        background: var(--gradient-primary);
+        color: white;
+        border-radius: 50px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 121, 107, 0.3);
+    }
+
+    .event-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 121, 107, 0.4);
+        color: white;
+        background: linear-gradient(135deg, #00695c, #003d33);
+    }
+
+    .about-section {
+        background: var(--gradient-primary);
+        color: white;
+        padding: 5rem 2rem;
+        margin-top: 5rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .about-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+    }
+
+    .about-content h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+        display: inline-block;
+    }
+
+    .about-content h2::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: var(--accent-color);
+    }
+
+    .about-content p {
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+        font-size: 1.1rem;
+    }
+
+    .about-image {
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        transition: transform 0.5s ease;
+    }
+
+    .about-image:hover {
+        transform: scale(1.03);
+    }
+
+    .about-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .about-pattern {
+        position: absolute;
+        opacity: 0.05;
+        z-index: 1;
+    }
+
+    .pattern-1 {
+        top: -50px;
+        right: -50px;
+        width: 300px;
+        height: 300px;
+        background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E");
+    }
+
+    .pattern-2 {
+        bottom: -50px;
+        left: -50px;
+        width: 400px;
+        height: 400px;
+        background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E");
+    }
+
+    .no-events {
+        text-align: center;
+        grid-column: 1 / -1;
+        padding: 3rem;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .no-events i {
+        font-size: 3rem;
+        color: #b0bec5;
+        margin-bottom: 1.5rem;
+    }
+
+    .no-events h3 {
+        font-size: 1.8rem;
+        color: #546e7a;
+        margin-bottom: 1rem;
+    }
+
+    .no-events p {
+        color: #78909c;
+        font-size: 1.1rem;
+    }
+
+    @keyframes fadeInUp {
+        from {
             opacity: 0;
             transform: translateY(30px);
-            animation: fadeInUp 0.6s ease forwards;
         }
-        /* Décalage de l’animation pour chaque carte */
-        .event-card:nth-child(1) { animation-delay: 0.1s; }
-        .event-card:nth-child(2) { animation-delay: 0.2s; }
-        .event-card:nth-child(3) { animation-delay: 0.3s; }
-        .event-card:nth-child(4) { animation-delay: 0.4s; }
-        .event-card:nth-child(5) { animation-delay: 0.5s; }
-        /* Ajouter autant que nécessaire */
-
-        .event-card:hover {
-            transform: rotateY(5deg) scale(1.03);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        to {
+            opacity: 1;
+            transform: translateY(0);
         }
+    }
 
-        /* Animation clé */
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+    /* Responsive styles */
+    @media (max-width: 992px) {
+        .hero-title {
+            font-size: 2.8rem;
         }
-
-        /* Image et badge */
-        .event-image {
-            height: 180px;
-            width: 100%;
-            object-fit: cover;
-            position: relative;
-            border-bottom: 3px solid #00796b;
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
         }
-        .btn-outline-light {
-            white-space: nowrap;
+        
+        .about-container {
+            grid-template-columns: 1fr;
         }
-
-        .badge-position {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            padding: 0.5rem 0.9rem;
-            font-size: 0.9rem;
-            font-weight: 600;
-            border-radius: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            color: white;
-            text-transform: uppercase;
+        
+        .about-image {
+            order: -1;
         }
+    }
 
-        .badge-avenir { background-color: #4caf50; }    /* Vert */
-        .badge-encours { background-color: #ff9800; }  /* Orange */
-        .badge-passe { background-color: #f44336; }    /* Rouge */
-
-        .card-body {
-            flex-grow: 1;
-            padding: 1.3rem 1.5rem;
-            display: flex;
+    @media (max-width: 768px) {
+        .hero-section {
+            height: auto;
+            padding: 6rem 1rem;
+        }
+        
+        .hero-title {
+            font-size: 2.2rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+        }
+        
+        .search-form {
             flex-direction: column;
         }
-        .card-title {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: #00796b;
-            margin-bottom: 0.7rem;
-            text-shadow: 1px 1px #d0f0e0;
+        
+        .search-input, .search-select, .search-btn {
+            width: 100%;
         }
-        .card-text {
-            color: #444;
-            font-size: 0.95rem;
-            margin-bottom: 1.2rem;
-            flex-grow: 1;
+    }
+
+    @media (max-width: 576px) {
+        .events-grid {
+            grid-template-columns: 1fr;
         }
-
-        .btn-details {
-            align-self: flex-start;
-            background: linear-gradient(135deg, #26a69a, #004d40);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            border: none;
-            font-weight: 600;
-            padding: 0.45rem 1.3rem;
-            border-radius: 25px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            color: white;
+        
+        .hero-title {
+            font-size: 1.8rem;
         }
-        .btn-details:hover {
-            transform: translateY(-2px);
-            background: linear-gradient(135deg, #00796b, #00332e);
-            color: white;
+        
+        .section-title h2 {
+            font-size: 1.8rem;
         }
+    }
+</style>
+@endsection
 
-        footer.footer {
-            background-color: #004d40;
-            color: #e0f2f1;
-            text-align: center;
-            padding: 1.8rem 1rem;
-            font-weight: 500;
-            font-size: 0.95rem;
-            margin-top: auto;
-        }
-
-        /* Section à propos */
-        .about-section {
-            max-width: 800px;
-            margin: 4rem auto 3rem auto;
-            color: #004d40;
-            font-size: 1.05rem;
-            text-align: center;
-            padding: 0 1rem;
-            line-height: 1.6;
-        }
-
-        /* Responsive */
-        @media (max-width: 767px) {
-            .event-image {
-                height: 150px;
-            }
-            .section-title {
-                font-size: 2rem;
-            }
-        }
-    </style>
-</head>
-<body>
-
-   <!-- Navbar -->
-<nav class="navbar navbar-expand-lg">
-    <div class="container-fluid px-4">
-        <a class="navbar-brand d-flex flex-column align-items-start" href="{{ route('acceuil') }}">
-            <img src="{{ asset('images/R.png') }}" alt="Logo" />
-            <span style="font-size: 0.85rem; font-weight: 500;">
-                Wilaya de la région de l’Oriental<br>Préfecture Oujda Angad
-            </span>
-        </a>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
-            aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse justify-content-end" id="navMenu">
-            <div class="ms-auto">
-                <a href="{{ route('login') }}" class="btn btn-outline-light px-4">Se connecter</a>
+@section('content')
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Wilaya De L'Oriental</h1>
+            <p class="hero-subtitle">Découvrez les événements culturels, sociaux et économiques de notre région. Participez aux activités qui façonnent notre communauté.</p>
+            
+            <div class="search-container">
+                <form class="search-form" action="{{ route('acceuil') }}" method="GET">
+                    <input type="search" class="search-input" placeholder="Rechercher un événement..." name="search" value="{{ request('search') }}" />
+                    <select name="type" class="search-select">
+                        <option value="">Tous les types</option>
+                        @foreach($types as $type)
+                            <option value="{{ $type->id }}" {{ request('type') == $type->id ? 'selected' : '' }}>
+                                {{ $type->nom }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <button type="submit" class="search-btn">
+                        <i class="fas fa-search"></i> Rechercher
+                    </button>
+                </form>
             </div>
         </div>
-    </div>
-</nav>
+    </section>
 
-
-    <!-- Contenu principal -->
-    <main class="container-main">
-        <h1 class="section-title">Listes des événements</h1>
-        <div class="container my-4">
-    <form class="d-flex flex-wrap gap-3 justify-content-center" action="{{ route('acceuil') }}" method="GET">
-        <input class="form-control w-25" type="search" placeholder="Rechercher un événement..." name="search" value="{{ request('search') }}" />
+    <!-- Events Section -->
+    <section>
+        <div class="section-title">
+            <h2>Événements à venir</h2>
+        </div>
         
-        <select name="type" class="form-select w-auto">
-            <option value="">Tous les types</option>
-            @foreach($types as $type)
-                <option value="{{ $type->id }}" {{ request('type') == $type->id ? 'selected' : '' }}>
-                    {{ $type->nom }}
-                </option>
-            @endforeach
-        </select>
-
-        <button class="btn btn-primary" type="submit">🔎 Rechercher</button>
-    </form>
-</div>
-
-        <div class="row g-4 justify-content-center">
-            @forelse ($evenements as $event)
-                <div class="col-sm-6 col-md-4 col-lg-3 d-flex">
-                    <div class="card event-card position-relative w-100">
-                        <div class="position-relative">
-                            <img src="{{ $event->image_url ?? 'https://via.placeholder.com/400x180?text=Événement' }}" alt="Image de l'événement" class="event-image w-100" />
-                            <span class="badge badge-position {{ $event->badge }}">
-                                 {{ $event->status }}
+        <div class="events-container">
+            <div class="events-grid">
+                @forelse ($evenements as $event)
+                    <div class="event-card">
+                        <div class="event-image-container">
+                            @if($event->image)
+                                <img src="{{ asset('storage/' . $event->image) }}" alt="{{ $event->titre }}" class="event-image">
+                            @else
+                                <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="{{ $event->titre }}" class="event-image">
+                            @endif
+                            <span class="event-badge {{ $event->badge_class }}">
+                                {{ $event->status }}
                             </span>
                         </div>
-
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">{{ $event->titre }}</h5>
-                            <p class="card-text">
-                                📍 {{ $event->lieu }} <br>
-                                🕓 Du {{ \Carbon\Carbon::parse($event->date_de_début)->format('d/m/Y') }} à {{ \Carbon\Carbon::parse($event->heure)->format('H:i') }}
-                                au {{ \Carbon\Carbon::parse($event->date_de_fin)->format('d/m/Y') }}
+                        <div class="event-content">
+                            <h3 class="event-title">{{ $event->titre }}</h3>
+                            
+                            <div class="event-creator">
+                                <i class="fas fa-user"></i>
+                                <span>Créé par utilisateur #{{ $event->user_id }}</span>
+                            </div>
+                            
+                            <div class="event-meta">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>{{ $event->lieu }}</span>
+                            </div>
+                            <div class="event-meta">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>
+                                    {{ \Carbon\Carbon::parse($event->date_de_début)->format('d/m/Y') }} à {{ $event->heure }}
+                                </span>
+                            </div>
+                            <p class="event-description">
+                                {{ Str::limit($event->description, 120) }}
                             </p>
-                            <a href="{{ route('evenements.show', $event->id) }}" class="btn btn-details mt-auto">Voir détails</a>
+                            <a href="{{ route('evenements.show', $event->id) }}" class="event-btn">
+                                Voir détails <i class="fas fa-arrow-right"></i>
+                            </a>
                         </div>
                     </div>
-                </div>
-            @empty
-                <p class="text-center fs-5 text-muted">Aucun événement disponible pour le moment.</p>
-            @endforelse
+                @empty
+                    <div class="no-events">
+                        <i class="far fa-calendar-alt"></i>
+                        <h3>Aucun événement disponible</h3>
+                        <p>Il n'y a pas d'événements programmés pour le moment. Revenez plus tard pour découvrir nos prochains événements.</p>
+                    </div>
+                @endforelse
+            </div>
+            
+            <!-- Pagination - Seulement si $evenements est une instance de LengthAwarePaginator -->
+            @if(method_exists($evenements, 'links'))
+            <div class="d-flex justify-content-center mt-4">
+                {{ $evenements->links() }}
+            </div>
+            @endif
         </div>
+    </section>
 
-        <!-- Section À propos -->
-        <section class="about-section">
-            <h2>À propos de la Wilaya Oujda Oriental</h2>
-            <p>
-                La Wilaya Oujda Oriental est une administration publique engagée dans le développement local et
-                la gestion efficace des événements culturels, sociaux et économiques. Ce portail vous permet
-                de consulter les événements à venir, en cours et passés, et d’y participer facilement.
-            </p>
-        </section>
-    </main>
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="about-pattern pattern-1"></div>
+        <div class="about-pattern pattern-2"></div>
+        
+        <div class="about-container">
+            <div class="about-content">
+                <h2>À propos de la Wilaya Oujda Oriental</h2>
+                <p>
+                    La Wilaya Oujda Oriental est une administration publique engagée dans le développement local et
+                    la gestion efficace des événements culturels, sociaux et économiques. Notre mission est de
+                    promouvoir le développement régional et d'améliorer la qualité de vie des citoyens.
+                </p>
+                <p>
+                    Ce portail vous permet de consulter les événements à venir, en cours et passés, et d'y participer
+                    facilement. Nous nous efforçons de rendre l'information accessible à tous et de créer des opportunités
+                    pour chaque membre de notre communauté.
+                </p>
+            </div>
+            <div class="about-image">
+                <img src="{{ asset('images/wilaya.png') }}" alt="Wilaya Oujda Oriental">
+            </div>
+        </div>
+    </section>
+@endsection
 
-    <!-- Footer -->
-    <footer class="footer">
-        &copy; {{ now()->year }} Wilaya Oujda-Angad. Tous droits réservés. &nbsp;&nbsp; | &nbsp;&nbsp; 
-        <a href="#" class="text-light text-decoration-none">Mentions légales</a> &nbsp;&nbsp; | &nbsp;&nbsp; 
-        <a href="#" class="text-light text-decoration-none">Politique de confidentialité</a>
-    </footer>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+@section('scripts')
+<script>
+    // Animation trigger when scrolling
+    document.addEventListener('DOMContentLoaded', function() {
+        const animateOnScroll = function() {
+            const elements = document.querySelectorAll('.event-card');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementPosition < windowHeight - 100) {
+                    element.style.animationPlayState = 'running';
+                }
+            });
+        };
+        
+        // Run once on load
+        animateOnScroll();
+        
+        // Run on scroll
+        window.addEventListener('scroll', animateOnScroll);
+    });
+</script>
+@endsection

@@ -1,8 +1,6 @@
-@extends('template.app')
+<?php $__env->startSection('title', 'Réinitialiser le mot de passe'); ?>
 
-@section('title', 'Réinitialiser le mot de passe')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap');
 
@@ -116,20 +114,20 @@
     <div class="container">
         <h2>Réinitialisation du mot de passe</h2>
 
-        {{-- Affichage des erreurs --}}
-        @if ($errors->any())
+        
+        <?php if($errors->any()): ?>
             <div class="alert alert-danger">
                 <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>⚠️ {{ $error }}</li>
-                    @endforeach
+                    <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li>⚠️ <?php echo e($error); ?></li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </ul>
             </div>
-        @endif
+        <?php endif; ?>
 
-        {{-- Formulaire de réinitialisation --}}
-        <form action="{{ route('loginReset') }}" method="POST" class="mt-4">
-            @csrf
+        
+        <form action="<?php echo e(route('loginReset')); ?>" method="POST" class="mt-4">
+            <?php echo csrf_field(); ?>
 
             <div class="mb-3">
                 <label for="login" class="form-label">Nom d'utilisateur ou E-mail</label>
@@ -152,8 +150,10 @@
 
             <p class="mt-4 text-center">
                 <i>Vous avez déjà un compte ?</i><br>
-                <a href="{{ route('login') }}">Se connecter</a>
+                <a href="<?php echo e(route('login')); ?>">Se connecter</a>
             </p>
         </form>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('template.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\lenovo\projet-stage\resources\views/auth/loginReset.blade.php ENDPATH**/ ?>

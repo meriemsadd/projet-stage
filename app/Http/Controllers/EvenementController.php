@@ -40,7 +40,7 @@ class EvenementController extends Controller
          //compact=$data = ['evenements' => $evenements];return view('evenements.index', $data);
          //cad sift l view (evenement.index) wsift m3ah les donne evenements bach nst3mlohom fl view
     
-
+    
     
     public function create()
     {
