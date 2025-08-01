@@ -39,10 +39,9 @@
     </div>
 
     <div class="qr-code">
-        <?php echo QrCode::size(150)->generate(route('participants.checkin', $participant->id)); ?>
-
-        <p>Scannez ce QR code à l'entrée pour valider votre présence.</p>
-    </div>
+    <img src="data:image/png;base64, <?php echo base64_encode(QrCode::format('png')->size(150)->generate(route('participants.checkin', $participant->id))); ?>" alt="QR Code">
+    <p>Scannez ce QR code à l'entrée pour valider votre présence.</p>
+</div>
 
     <div class="footer">
         <p>© Organisation de l'événement - Wilaya de la région de l’Oriental</p>

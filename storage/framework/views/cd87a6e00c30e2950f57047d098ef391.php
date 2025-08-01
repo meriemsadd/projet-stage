@@ -82,6 +82,16 @@
         </div>
 
         
+        <div class="col">
+            <a href="<?php echo e(route('users.index')); ?>" class="text-decoration-none">
+                <div class="card card-dashboard h-100 shadow">
+                    <div class="card-body">
+                        <div class="card-icon">👥</div>
+                        <h5 class="card-title">Gestion des utilisateurs</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
         
 
         <div class="col">
