@@ -211,54 +211,48 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid px-4">
-            <a class="navbar-brand" href="{{ route('acceuil') }}">
-                <img src="{{ asset('images/R.png') }}" alt="Logo Wilaya Oujda" />
-                <span class="navbar-brand-text">
-                    Wilaya de la Région de l'Oriental<br>Préfecture Oujda Angad
-                </span>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
-                aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid px-4">
+        <a class="navbar-brand" href="{{ route('acceuil') }}">
+            <img src="{{ asset('images/R.png') }}" alt="Logo Wilaya Oujda" />
+            <span class="navbar-brand-text">
+                Wilaya de la Région de l'Oriental<br>Préfecture Oujda Angad
+            </span>
+        </a>
 
-            <div class="collapse navbar-collapse" id="navMenu">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    @if(request()->is('/'))
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
+            aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                @if(request()->is('/'))
                     <li class="nav-item">
-                        <a href="{{ route('login') }}" class="btn btn-login">
+                        <a href="{{ route('login') }}" class="btn btn-login ms-lg-3 mt-2 mt-lg-0">
                             <i class="fas fa-sign-in-alt me-2"></i>Se connecter
                         </a>
                     </li>
-                    @endif
-                </ul>
-            </div>
+                @endif
 
-          <div class="collapse navbar-collapse justify-content-end" id="navMenu">
-    <ul class="navbar-nav ms-auto">
-        @auth
-             <div class="d-flex flex-column align-items-center text-white me-3">
-        <div class="bg-success px-3 py-1 rounded mb-2" style="min-width: 150px; text-align: center;">
-            Bonjour, {{ Auth::user()->username }}
+                @auth
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                        <div class="d-flex flex-column align-items-center text-white me-3">
+                            <div class="bg-success px-3 py-1 rounded mb-2" style="min-width: 150px; text-align: center;">
+                                Bonjour, {{ Auth::user()->username }}
+                            </div>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="btn btn-outline-light px-4">Se déconnecter</button>
+                            </form>
+                        </div>
+                    </li>
+                @endauth
+            </ul>
         </div>
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="btn btn-outline-light px-4">Se déconnecter</button>
-        </form>
     </div>
-        @else
-            <li class="nav-item">
-                <a href="{{ route('login') }}" class="btn btn-outline-light me-2">Se connecter</a>
-            </li>
-        @endauth
-    </ul>
-</div>
+</nav>
 
-
-        </div>
-    </nav>
 
     <!-- Main Content -->
     <main class="container-main">
