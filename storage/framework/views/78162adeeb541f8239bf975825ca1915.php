@@ -27,23 +27,24 @@
     </style>
 </head>
 <body>
-    @php
+    <?php
     use SimpleSoftwareIO\QrCode\Facades\QrCode;
-    @endphp
+    ?>
 
     <h1>Invitation à l'événement</h1>
-    <p>Bonjour {{ $participant->prenom }} {{ $participant->nom }},</p>
+    <p>Bonjour <?php echo e($participant->prenom); ?> <?php echo e($participant->nom); ?>,</p>
 
     <p>Merci pour votre inscription à l'événement :</p>
-    <h2>{{ $participant->evenement->titre }}</h2>
+    <h2><?php echo e($participant->evenement->titre); ?></h2>
 
     <div class="details">
-        <p><strong>Lieu :</strong> {{ $participant->evenement->lieu }}</p>
-        <p><strong>Date :</strong> {{ \Carbon\Carbon::parse($participant->evenement->date_debut)->format('d/m/Y H:i') }}</p>
+        <p><strong>Lieu :</strong> <?php echo e($participant->evenement->lieu); ?></p>
+        <p><strong>Date :</strong> <?php echo e(\Carbon\Carbon::parse($participant->evenement->date_debut)->format('d/m/Y H:i')); ?></p>
     </div>
 
     <div class="qr-code">
-    {!! QrCode::size(150)->generate(route('participants.checkin', $participant->id)) !!}
+    <?php echo QrCode::size(150)->generate(route('participants.checkin', $participant->id)); ?>
+
 </div>
 
 
@@ -52,3 +53,4 @@
     </div>
 </body>
 </html>
+<?php /**PATH C:\Users\lenovo\projet-stage\resources\views/invitation.blade.php ENDPATH**/ ?>

@@ -146,40 +146,41 @@
     <div class="container">
         <h1><i class="fas fa-user-edit"></i> Modifier Participant</h1>
 
-        <form action="{{ route('participants.update', $participant->id) }}" method="POST">
-            @csrf
-            @method('PUT')
+        <form action="<?php echo e(route('participants.update', $participant->id)); ?>" method="POST">
+            <?php echo csrf_field(); ?>
+            <?php echo method_field('PUT'); ?>
 
             <div class="form-group">
                 <label for="nom"><i class="fas fa-id-card"></i> Nom :</label>
-                <input type="text" id="nom" name="nom" value="{{ $participant->nom }}" required>
+                <input type="text" id="nom" name="nom" value="<?php echo e($participant->nom); ?>" required>
             </div>
 
             <div class="form-group">
                 <label for="prenom"><i class="fas fa-id-card"></i> Prénom :</label>
-                <input type="text" id="prenom" name="prenom" value="{{ $participant->prenom }}" required>
+                <input type="text" id="prenom" name="prenom" value="<?php echo e($participant->prenom); ?>" required>
             </div>
             
             <div class="form-group">
                 <label for="email"><i class="fas fa-envelope"></i> Email :</label>
-                <input type="email" id="email" name="email" value="{{ $participant->email }}" required>
+                <input type="email" id="email" name="email" value="<?php echo e($participant->email); ?>" required>
             </div>
 
             <div class="form-group">
                 <label for="evenement_id"><i class="fas fa-calendar-alt"></i> Événement :</label>
                 <select id="evenement_id" name="evenement_id" required>
-                    @foreach($evenements as $e)
-                        <option value="{{ $e->id }}" {{ $participant->evenement_id == $e->id ? 'selected' : '' }}>
-                            {{ $e->titre }}
+                    <?php $__currentLoopData = $evenements; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $e): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($e->id); ?>" <?php echo e($participant->evenement_id == $e->id ? 'selected' : ''); ?>>
+                            <?php echo e($e->titre); ?>
+
                         </option>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
             </div>
 
             <button type="submit"><i class="fas fa-save"></i> Enregistrer</button>
         </form>
 
-        <a href="{{ url()->previous() }}" class="back-link"><i class="fas fa-arrow-left"></i> Retour</a>
+        <a href="<?php echo e(url()->previous()); ?>" class="back-link"><i class="fas fa-arrow-left"></i> Retour</a>
     </div>
 </body>
-</html>
+</html><?php /**PATH C:\Users\lenovo\projet-stage\resources\views/participants/edit.blade.php ENDPATH**/ ?>

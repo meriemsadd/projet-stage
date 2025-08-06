@@ -223,6 +223,7 @@
                 aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navMenu">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <?php if(request()->is('/')): ?>
@@ -234,6 +235,29 @@
                     <?php endif; ?>
                 </ul>
             </div>
+
+          <div class="collapse navbar-collapse justify-content-end" id="navMenu">
+    <ul class="navbar-nav ms-auto">
+        <?php if(auth()->guard()->check()): ?>
+             <div class="d-flex flex-column align-items-center text-white me-3">
+        <div class="bg-success px-3 py-1 rounded mb-2" style="min-width: 150px; text-align: center;">
+            Bonjour, <?php echo e(Auth::user()->username); ?>
+
+        </div>
+        <form method="POST" action="<?php echo e(route('logout')); ?>">
+            <?php echo csrf_field(); ?>
+            <button type="submit" class="btn btn-outline-light px-4">Se déconnecter</button>
+        </form>
+    </div>
+        <?php else: ?>
+            <li class="nav-item">
+                <a href="<?php echo e(route('login')); ?>" class="btn btn-outline-light me-2">Se connecter</a>
+            </li>
+        <?php endif; ?>
+    </ul>
+</div>
+
+
         </div>
     </nav>
 

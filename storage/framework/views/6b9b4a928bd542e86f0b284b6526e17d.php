@@ -259,7 +259,7 @@
 
         
         <div class="mb-3">
-            <label for="image" class="form-label">Image de l'événement (jpg, png, max 2MB)</label>
+            <label for="image" class="form-label">Image d l'événement (jpg, png, max 2MB)</label>
             <input 
                 type="file" 
                 name="image" 
@@ -332,4 +332,4 @@
 </script>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\lenovo\projet-stage\resources\views/evenements/edit.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('template.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\lenovo\projet-stage\resources\views/evenements/edit.blade.php ENDPATH**/ ?>

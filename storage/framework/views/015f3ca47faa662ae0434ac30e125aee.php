@@ -278,7 +278,91 @@
         </h2>
     </div>
 
+
     <div class="form-body">
+
+        a.btn-secondary {
+            padding: 0.55rem 2.4rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            background-color: #9e9e9e;
+            color: white !important;
+            transition: background-color 0.3s ease, transform 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(158, 158, 158, 0.6);
+        }
+        a.btn-secondary:hover {
+            background-color: #6e6e6e;
+            transform: translateY(-4px);
+            text-decoration: none;
+            box-shadow: 0 7px 20px rgba(110, 110, 110, 0.9);
+        }
+
+        nav.navbar {
+            background: linear-gradient(90deg, #00796b, #004d40) !important;
+            box-shadow: 0 6px 20px rgba(0, 77, 64, 0.35);
+        }
+        nav.navbar .navbar-brand {
+            color: white !important;
+            font-weight: 700;
+            font-size: 1.3rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        nav.navbar .btn-outline-primary {
+            color: #a5d6a7;
+            border-color: #a5d6a7;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-radius: 25px;
+        }
+        nav.navbar .btn-outline-primary:hover {
+            background-color: #a5d6a7;
+            color: #004d40;
+        }
+        nav.navbar .btn-outline-secondary {
+            color: #f0f0f0;
+            border-color: #f0f0f0;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-radius: 25px;
+        }
+        nav.navbar .btn-outline-secondary:hover {
+            background-color: #f0f0f0;
+            color: #004d40;
+        }
+
+        /* Preview image */
+        #preview-image {
+            display: block;
+            margin: 1rem auto 1.5rem auto;
+            max-width: 100%;
+            max-height: 250px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 77, 64, 0.3);
+            object-fit: contain;
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 2rem 1.5rem;
+                margin: 1rem 1rem 3rem;
+            }
+            h2 {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+
+
+
+    <div class="container">
+        <h2>Créer un nouvel événement</h2>
+
+        
+
         <?php if($errors->any()): ?>
             <div class="alert alert-danger">
                 <ul>
@@ -434,4 +518,4 @@ unset($__errorArgs, $__bag); ?>
     });
 </script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\lenovo\projet-stage\resources\views/evenements/create.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('template.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\lenovo\projet-stage\resources\views/evenements/create.blade.php ENDPATH**/ ?>

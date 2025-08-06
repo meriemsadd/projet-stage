@@ -58,10 +58,10 @@
 
     .dashboard-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(5, 1fr);
         gap: 25px;
         padding: 20px;
-        max-width: 1400px;
+        max-width: 1600px;
         margin: 0 auto;
     }
 
@@ -166,7 +166,14 @@
     }
 
     /* Responsive adjustments */
-    @media (max-width: 1200px) {
+    @media (max-width: 1400px) {
+        .dashboard-grid {
+            grid-template-columns: repeat(3, 1fr);
+            max-width: 1200px;
+        }
+    }
+
+    @media (max-width: 992px) {
         .dashboard-grid {
             grid-template-columns: repeat(2, 1fr);
             max-width: 800px;
@@ -232,7 +239,7 @@
                         <i class="fas fa-calendar-plus"></i>
                     </div>
                     <h3 class="card-title">Ajouter un événement</h3>
-                    <p class="card-desc">Créer et publier un nouvel événement pour le calendrier</p>
+                    <p class="card-desc">Créer et publier un nouvel événement</p>
                 </div>
             </div>
         </a>
@@ -245,7 +252,7 @@
                         <i class="fas fa-calendar-alt"></i>
                     </div>
                     <h3 class="card-title">Liste des événements</h3>
-                    <p class="card-desc">Gérer et modifier les événements existants</p>
+                    <p class="card-desc">Gérer les événements existants</p>
                 </div>
             </div>
         </a>
@@ -258,7 +265,20 @@
                         <i class="fas fa-chart-bar"></i>
                     </div>
                     <h3 class="card-title">Statistiques</h3>
-                    <p class="card-desc">Analytiques et données sur les événements</p>
+                    <p class="card-desc">Analytiques des événements</p>
+                </div>
+            </div>
+        </a>
+
+        <!-- Carte Gestion utilisateurs -->
+        <a href="<?php echo e(route('users.index')); ?>" class="dashboard-link">
+            <div class="card card-dashboard">
+                <div class="card-body">
+                    <div class="card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="card-title">Utilisateurs</h3>
+                    <p class="card-desc">Gérer les comptes utilisateurs</p>
                 </div>
             </div>
         </a>
@@ -271,7 +291,7 @@
                         <i class="fas fa-cog"></i>
                     </div>
                     <h3 class="card-title">Paramètres</h3>
-                    <p class="card-desc">Configurer les préférences de l'application</p>
+                    <p class="card-desc">Configurer l'application</p>
                 </div>
             </div>
         </a>
