@@ -219,7 +219,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 <div class="invitation-card">
     <!-- Header -->
     <div class="header">
-        <img src="<?php echo e(asset('images/R.png')); ?>" alt="Logo Wilaya" style="width: 100px; height: auto;">
+        <img src="<?php echo e(asset('images/R.png')); ?>" alt="Logo Wilaya" class="logo">
         <h1>INVITATION</h1>
         <p class="subtitle">Événement Exclusif</p>
     </div>

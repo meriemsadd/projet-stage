@@ -84,3 +84,7 @@ Route::resource('users', UserController::class)->middleware('auth');
 
 // Route pour scanner le QR code le jour J
 Route::get('/checkin/{id}', [ParticipantController::class, 'checkin'])->name('participants.checkin');
+
+
+//Route pour valider la présence
+Route::get('/presence/{id}', [ParticipantController::class, 'validerPresence'])->name('presence.valider');

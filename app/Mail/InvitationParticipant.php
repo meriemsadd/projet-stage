@@ -26,7 +26,8 @@ class InvitationParticipant extends Mailable
     public function build()
     {
         // Données à encoder dans le QR code
-        $data = route('participants.checkin', $this->participant->id);
+        $data = "http://192.168.1.7:8000/presence/{$this->participant->id}";
+
 
         // Générer le QR code en PNG en mémoire
         $qrContent = QrCode::format('png')->size(180)->generate($data);

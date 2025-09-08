@@ -143,4 +143,19 @@ public function checkin($id)
     return view('participants.checkin-confirm', compact('participant'));
 }
 
+public function validerPresence($id)
+{
+    $participant = Participant::findOrFail($id);
+
+    if ($participant->presence) {
+        return view('presence.result')->with('message', '⚠️ Ce participant est déjà validé.');
+    }
+
+    $participant->presence = true;
+    $participant->save();
+
+    return view('presence.result')->with('message', '✅ Présence validée avec succès !');
+}
+
+
 }
