@@ -1,91 +1,74 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\controllers\ParticipantController;
-use App\Http\controllers\EvenementController;
-use App\Http\controllers\AcceuilController;
+use App\Http\Controllers\ParticipantController;
+use App\Http\Controllers\EvenementController;
+use App\Http\Controllers\AcceuilController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\ControllersAuth\RegisterController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\StatistiqueController;
+use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 
+// Page d'accueil
 Route::get('/', [AcceuilController::class, 'index'])->name('acceuil');
 
+// Ressources
 Route::resource('evenements', EvenementController::class);
 Route::resource('participants', ParticipantController::class)->except(['create']);
 
+// Inscriptions participants
 Route::get('/inscription', [ParticipantController::class, 'create']);
 Route::post('/inscription', [ParticipantController::class, 'store'])->name('participants.store');
 Route::get('/participants/create/{evenementId}', [ParticipantController::class, 'create'])->name('participants.create');
-Route::get('/participants/{id}/checkin', [ParticipantController::class, 'checkin'])->name('participants.checkin');
 
+// Check-in participants
+Route::get('/participants/{id}/checkin', [ParticipantController::class, 'checkin'])->name('participants.checkin');
+Route::get('/presence/{id}', [ParticipantController::class, 'validerPresence'])->name('presence.valider');
+
+// Participants par événement
 Route::get('/evenements/{evenement}/participants', [ParticipantController::class, 'indexByEvenement'])->name('participants.byEvenement');
+
+// Evenement show alternative
 Route::get('/evenements/{id}/show1', [EvenementController::class, 'show1'])->name('evenements.show1');
 
+// Export
+Route::get('/evenements/export/pdf', [EvenementController::class, 'exportPDF'])->name('evenements.export.pdf');
+Route::get('/evenements/export/excel', [EvenementController::class, 'exportExcel'])->name('evenements.export.excel');
+
+Route::get('/participants/export/pdf', [ParticipantController::class, 'exportPDF'])->name('participants.export.pdf');
+Route::get('/participants/export/excel', [ParticipantController::class, 'exportExcel'])->name('participants.export.excel');
+
+// Auth routes
 Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::post('/loginReset', [LoginController::class, 'reset'])->name('loginReset');
-Route::get('/loginReset', [LoginController::class, 'showResetForm'])->name('loginReset.form');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
+Route::get('/loginReset', [LoginController::class, 'showResetForm'])->name('loginReset.form');
+Route::post('/loginReset', [LoginController::class, 'reset'])->name('loginReset');
 
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'store'])->name('register.submit');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-
-//route de statistique
+// Dashboard
 Route::middleware('auth')->group(function () {
-    Route::get('/statistiques', function () {
-        return view('statistiques.index');  // Cette vue doit exister (voir plus bas)
-    })->name('statistiques');
+
+    Route::view('/dashboard', 'dashboard')->name('dashboard');
+
+    // Statistiques
+    Route::get('/statistiques', [StatistiqueController::class, 'index'])->name('statistiques');
+
+    // Rapport
+    Route::view('/rapport', 'rapport.index')->name('rapport.index');
+
+    // Paramètres
+Route::get('/parametres', [SettingsController::class, 'index'])->name('parametres');
+Route::post('/parametres', [SettingsController::class, 'update'])->name('parametres.update');
+    // Users
+    Route::resource('users', UserController::class);
+
+    // Déconnexion
+    Route::post('/logout', function () {
+        Auth::logout();
+        return redirect('/');
+    })->name('logout');
 });
-
-// Statistiques
-
-Route::middleware('auth')->group(function () {
-    Route::get('/statistiques', [StatistiqueController::class, 'index'])
-        ->name('statistiques');
-});
-
-// Rapport
-Route::middleware('auth')->group(function () {
-    Route::get('/rapport', function () {
-        return view('rapport.index');  // Crée aussi cette vue
-    })->name('rapport.index');
-});
-
-// Événements - Export
-Route::get('/evenements/export/pdf', [EvenementController::class, 'exportPDF'])->name('evenements.export.pdf');
-Route::get('/evenements/export/excel', [EvenementController::class, 'exportExcel'])->name('evenements.export.excel');
-
-// Participants - Export
-Route::get('/participants/export/pdf', [ParticipantController::class, 'exportPDF'])->name('participants.export.pdf');
-Route::get('/participants/export/excel', [ParticipantController::class, 'exportExcel'])->name('participants.export.excel');
-
-
-
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
-    ->name('logout');
-
-    Route::get('/parametres', function () {
-    return view('parametres');
-})->name('parametres')->middleware('auth'); // Le middleware 'auth' protège la page
-
-use Illuminate\Support\Facades\Auth;
-
-Route::post('/logout', function () {
-    Auth::logout();
-    return redirect('/'); // ou redirect('/login');
-})->name('logout');
-
-use App\Http\Controllers\UserController;
-
-Route::resource('users', UserController::class)->middleware('auth');
-
-// Route pour scanner le QR code le jour J
-Route::get('/checkin/{id}', [ParticipantController::class, 'checkin'])->name('participants.checkin');
-
-
-//Route pour valider la présence
-Route::get('/presence/{id}', [ParticipantController::class, 'validerPresence'])->name('presence.valider');

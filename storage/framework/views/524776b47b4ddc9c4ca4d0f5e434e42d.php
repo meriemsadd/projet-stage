@@ -66,7 +66,7 @@
             line-height: 1.2;
         }
 
-        .btn-login {
+        .btn-login, .btn-logout {
             color: white !important;
             font-weight: 600;
             border-radius: 50px;
@@ -77,14 +77,16 @@
             overflow: hidden;
             background: var(--gradient-accent);
             border: none;
+            display: inline-flex;
+            align-items: center;
         }
 
-        .btn-login:hover {
+        .btn-login:hover, .btn-logout:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(255, 152, 0, 0.3);
         }
 
-        .btn-login::before {
+        .btn-login::before, .btn-logout::before {
             content: '';
             position: absolute;
             top: 0;
@@ -95,7 +97,7 @@
             transition: 0.5s;
         }
 
-        .btn-login:hover::before {
+        .btn-login:hover::before, .btn-logout:hover::before {
             left: 100%;
         }
 
@@ -211,49 +213,47 @@
 </head>
 <body>
     <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container-fluid px-4">
-        <a class="navbar-brand" href="<?php echo e(route('acceuil')); ?>">
-            <img src="<?php echo e(asset('images/R.png')); ?>" alt="Logo Wilaya Oujda" />
-            <span class="navbar-brand-text">
-                Wilaya de la Région de l'Oriental<br>Préfecture Oujda Angad
-            </span>
-        </a>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand" href="<?php echo e(route('acceuil')); ?>">
+                <img src="<?php echo e(asset('images/R.png')); ?>" alt="Logo Wilaya Oujda" />
+                <span class="navbar-brand-text">
+                    Wilaya de la Région de l'Oriental<br>Préfecture Oujda Angad
+                </span>
+            </a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
-            aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
+                aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse" id="navMenu">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-                <?php if(request()->is('/')): ?>
-                    <li class="nav-item">
-                        <a href="<?php echo e(route('login')); ?>" class="btn btn-login ms-lg-3 mt-2 mt-lg-0">
-                            <i class="fas fa-sign-in-alt me-2"></i>Se connecter
-                        </a>
-                    </li>
-                <?php endif; ?>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                    <?php if(request()->is('/')): ?>
+                        <li class="nav-item">
+                            <a href="<?php echo e(route('login')); ?>" class="btn btn-login ms-lg-3 mt-2 mt-lg-0">
+                                <i class="fas fa-sign-in-alt me-2"></i>Se connecter
+                            </a>
+                        </li>
+                    <?php endif; ?>
 
-                <?php if(auth()->guard()->check()): ?>
-                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
-                        <div class="d-flex flex-column align-items-center text-white me-3">
-                            <div class="bg-success px-3 py-1 rounded mb-2" style="min-width: 150px; text-align: center;">
-                                Bonjour, <?php echo e(Auth::user()->username); ?>
-
-                            </div>
-                            <form method="POST" action="<?php echo e(route('logout')); ?>">
-                                <?php echo csrf_field(); ?>
-                                <button type="submit" class="btn btn-outline-light px-4">Se déconnecter</button>
-                            </form>
-                        </div>
-                    </li>
-                <?php endif; ?>
-            </ul>
+                    
+                    <?php if(auth()->guard()->check()): ?>
+                        <?php if(request()->routeIs('dashboard')): ?>
+                            <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                                <form method="POST" action="<?php echo e(route('logout')); ?>">
+                                    <?php echo csrf_field(); ?>
+                                    <button type="submit" class="btn btn-logout">
+                                        <i class="fas fa-sign-out-alt me-2"></i>Se déconnecter
+                                    </button>
+                                </form>
+                            </li>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
-
+    </nav>
 
     <!-- Main Content -->
     <main class="container-main">
@@ -279,4 +279,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <?php echo $__env->yieldContent('scripts'); ?>
 </body>
-</html><?php /**PATH C:\Users\lenovo\Documents\projet-stage\resources\views/template/app.blade.php ENDPATH**/ ?>
+</html>
+<?php /**PATH C:\Users\lenovo\Documents\projet-stage\resources\views/template/app.blade.php ENDPATH**/ ?>

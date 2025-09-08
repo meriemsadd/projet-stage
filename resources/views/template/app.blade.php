@@ -66,7 +66,7 @@
             line-height: 1.2;
         }
 
-        .btn-login {
+        .btn-login, .btn-logout {
             color: white !important;
             font-weight: 600;
             border-radius: 50px;
@@ -77,14 +77,16 @@
             overflow: hidden;
             background: var(--gradient-accent);
             border: none;
+            display: inline-flex;
+            align-items: center;
         }
 
-        .btn-login:hover {
+        .btn-login:hover, .btn-logout:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(255, 152, 0, 0.3);
         }
 
-        .btn-login::before {
+        .btn-login::before, .btn-logout::before {
             content: '';
             position: absolute;
             top: 0;
@@ -95,7 +97,7 @@
             transition: 0.5s;
         }
 
-        .btn-login:hover::before {
+        .btn-login:hover::before, .btn-logout:hover::before {
             left: 100%;
         }
 
@@ -211,48 +213,47 @@
 </head>
 <body>
     <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container-fluid px-4">
-        <a class="navbar-brand" href="{{ route('acceuil') }}">
-            <img src="{{ asset('images/R.png') }}" alt="Logo Wilaya Oujda" />
-            <span class="navbar-brand-text">
-                Wilaya de la Région de l'Oriental<br>Préfecture Oujda Angad
-            </span>
-        </a>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand" href="{{ route('acceuil') }}">
+                <img src="{{ asset('images/R.png') }}" alt="Logo Wilaya Oujda" />
+                <span class="navbar-brand-text">
+                    Wilaya de la Région de l'Oriental<br>Préfecture Oujda Angad
+                </span>
+            </a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
-            aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
+                aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse" id="navMenu">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-                @if(request()->is('/'))
-                    <li class="nav-item">
-                        <a href="{{ route('login') }}" class="btn btn-login ms-lg-3 mt-2 mt-lg-0">
-                            <i class="fas fa-sign-in-alt me-2"></i>Se connecter
-                        </a>
-                    </li>
-                @endif
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                    @if(request()->is('/'))
+                        <li class="nav-item">
+                            <a href="{{ route('login') }}" class="btn btn-login ms-lg-3 mt-2 mt-lg-0">
+                                <i class="fas fa-sign-in-alt me-2"></i>Se connecter
+                            </a>
+                        </li>
+                    @endif
 
-                @auth
-                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
-                        <div class="d-flex flex-column align-items-center text-white me-3">
-                            <div class="bg-success px-3 py-1 rounded mb-2" style="min-width: 150px; text-align: center;">
-                                Bonjour, {{ Auth::user()->username }}
-                            </div>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit" class="btn btn-outline-light px-4">Se déconnecter</button>
-                            </form>
-                        </div>
-                    </li>
-                @endauth
-            </ul>
+                    {{-- Bouton déconnexion uniquement sur dashboard --}}
+                    @auth
+                        @if(request()->routeIs('dashboard'))
+                            <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="btn btn-logout">
+                                        <i class="fas fa-sign-out-alt me-2"></i>Se déconnecter
+                                    </button>
+                                </form>
+                            </li>
+                        @endif
+                    @endauth
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
-
+    </nav>
 
     <!-- Main Content -->
     <main class="container-main">

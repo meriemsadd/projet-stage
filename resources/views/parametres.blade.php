@@ -30,6 +30,7 @@
     .settings-header {
         display: flex;
         align-items: center;
+        justify-content: space-between; /* <-- ajouté pour aligner le bouton à droite */
         margin-bottom: 40px;
         padding-bottom: 15px;
         border-bottom: 2px solid var(--primary-light);
@@ -129,6 +130,7 @@
         display: inline-flex;
         align-items: center;
         box-shadow: 0 4px 10px rgba(0, 121, 107, 0.2);
+        text-decoration: none;
     }
 
     .btn-save:hover {
@@ -146,7 +148,6 @@
         gap: 25px;
     }
 
-    /* Toggle switch amélioré */
     .switch-container {
         display: flex;
         align-items: center;
@@ -199,7 +200,6 @@
         transform: translateX(26px);
     }
 
-    /* Section notifications */
     .notification-item {
         display: flex;
         justify-content: space-between;
@@ -229,7 +229,6 @@
         font-size: 0.9rem;
     }
 
-    /* Tooltip pour le nom de l'application */
     .disabled-tooltip {
         position: relative;
         display: inline-block;
@@ -259,7 +258,6 @@
         opacity: 1;
     }
 
-    /* Responsive */
     @media (max-width: 768px) {
         .settings-title {
             font-size: 1.8rem;
@@ -292,6 +290,9 @@
         <h1 class="settings-title">
             <i class="fas fa-cog"></i>Paramètres
         </h1>
+        <a href="{{ route('dashboard') }}" class="btn-save">
+            <i class="fas fa-home"></i> Retour au Dashboard
+        </a>
     </div>
 
     <div class="settings-grid">

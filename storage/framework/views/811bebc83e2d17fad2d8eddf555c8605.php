@@ -74,20 +74,27 @@ body {
     max-height: 400px;
 }
 
-/* Bouton Retour Dashboard */
+/* Bouton Retour Dashboard stylé comme dans Paramètres */
 .return-btn {
     position: absolute;
     top: 0;
     right: 0;
-    background: #4CAF50;
+    background: linear-gradient(135deg, #00695c, #004d40);
     color: #fff;
     padding: 0.5rem 1rem;
     border-radius: 8px;
     text-decoration: none;
     font-weight: 500;
-    transition: 0.2s;
+    display: inline-flex;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 121, 107, 0.2);
+    transition: all 0.3s ease;
 }
-.return-btn:hover { background: #45a049; }
+.return-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 121, 107, 0.3);
+}
+.return-btn i { margin-right: 6px; }
 </style>
 <?php $__env->stopSection(); ?>
 
@@ -96,7 +103,7 @@ body {
     <header class="stats-header">
         <h1 class="stats-title"><i class="fas fa-chart-line"></i> Tableau de Statistiques</h1>
         <p class="stats-subtitle">Visualisez les données clés et les tendances de votre application en temps réel.</p>
-        <a href="<?php echo e(route('dashboard')); ?>" class="return-btn">← Retour au Dashboard</a>
+        <a href="<?php echo e(route('dashboard')); ?>" class="return-btn"><i class="fas fa-home"></i> Retour au Dashboard</a>
     </header>
 
     <div class="stats-grid">
