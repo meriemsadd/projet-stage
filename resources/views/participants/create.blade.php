@@ -150,6 +150,17 @@
         padding-left: 1.2rem;
     }
 
+    .success-msg {
+        background-color: #d1fae5;
+        color: #065f46;
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+        margin-bottom: 1.8rem;
+        text-align: center;
+        font-weight: 600;
+        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
+    }
+
     @media (max-width: 768px) {
         .form-container {
             padding: 25px;
@@ -178,6 +189,13 @@
             Événement : {{ $evenement->titre }}
         </div>
     </div>
+
+    {{-- Message de succès --}}
+    @if(session('success'))
+        <div class="success-msg">
+            {{ session('success') }}
+        </div>
+    @endif
 
     @if ($errors->any())
         <div class="errors">

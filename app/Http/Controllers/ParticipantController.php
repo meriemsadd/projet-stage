@@ -48,28 +48,34 @@ class ParticipantController
      */
     public function store(Request $request)
 {
-    // 1. Sauvegarder le participant dans la base de données
-    $participant = Participant::create($request->all());//on stoke dans objet pour le reutiliser
-      // 🔽 Ajoute ce bloc pour gérer la signature
+    // 1. Validation (optionnelle mais recommandée)
+    $request->validate([
+        'prenom' => 'required|string|max:255',
+        'nom' => 'required|string|max:255',
+        'email' => 'required|email',
+        'evenement_id' => 'required|exists:evenements,id',
+    ]);
+
+    // 2. Sauvegarder le participant
+    $participant = Participant::create($request->all());
+
+    // 3. Gestion de la signature si présente
     if ($request->has('signature')) {
-        $signatureData = $request->input('signature');
+        $signatureData = explode(',', $request->input('signature'))[1];
         $signatureName = 'signature_' . time() . '.png';
         $signaturePath = public_path('signatures/' . $signatureName);
-
-        // Enlever le header "data:image/png;base64,"
-        $signatureData = explode(',', $signatureData)[1];
         file_put_contents($signaturePath, base64_decode($signatureData));
-
         $participant->signature = 'signatures/' . $signatureName;
-        $participant->save(); // On sauvegarde après avoir mis la signature
+        $participant->save();
     }
 
-    // 2. Envoyer l'e-mail
-    Mail::to($participant->email)->send(new InvitationParticipant($participant));//email baséé sur ce participant
+    // 4. Envoyer l'e-mail
+    Mail::to($participant->email)->send(new InvitationParticipant($participant));
 
-    // 3. Rediriger avec message de succès
-    return redirect('/')->with('success', 'Participant ajouté avec succès ! E-mail envoyé.');
+    // 5. Redirection avec message flash de confirmation
+    return redirect()->back()->with('success', '✅ Inscription réussie ! Vérifie ton e-mail pour confirmation.');
 }
+
 
    
     public function show(string $id)
