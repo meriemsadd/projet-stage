@@ -6,6 +6,7 @@ use App\Http\controllers\EvenementController;
 use App\Http\controllers\AcceuilController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\ControllersAuth\RegisterController;
+use App\Http\Controllers\StatistiqueController;
 
 Route::get('/', [AcceuilController::class, 'index'])->name('acceuil');
 
@@ -41,10 +42,10 @@ Route::middleware('auth')->group(function () {
 });
 
 // Statistiques
+
 Route::middleware('auth')->group(function () {
-    Route::get('/statistiques', function () {
-        return view('statistiques.index');  // Cette vue doit exister
-    })->name('statistiques');
+    Route::get('/statistiques', [StatistiqueController::class, 'index'])
+        ->name('statistiques');
 });
 
 // Rapport

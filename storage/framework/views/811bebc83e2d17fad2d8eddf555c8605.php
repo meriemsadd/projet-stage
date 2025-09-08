@@ -1,8 +1,6 @@
-@extends('template.app')
+<?php $__env->startSection('title', 'Statistiques'); ?>
 
-@section('title', 'Statistiques')
-
-@section('styles')
+<?php $__env->startSection('styles'); ?>
 <style>
 body {
     font-family: 'Poppins', sans-serif;
@@ -91,39 +89,39 @@ body {
 }
 .return-btn:hover { background: #45a049; }
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="stats-container">
     <header class="stats-header">
         <h1 class="stats-title"><i class="fas fa-chart-line"></i> Tableau de Statistiques</h1>
         <p class="stats-subtitle">Visualisez les données clés et les tendances de votre application en temps réel.</p>
-        <a href="{{ route('dashboard') }}" class="return-btn">← Retour au Dashboard</a>
+        <a href="<?php echo e(route('dashboard')); ?>" class="return-btn">← Retour au Dashboard</a>
     </header>
 
     <div class="stats-grid">
         <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
-            <div class="stat-value">{{ $totalEvents }}</div>
+            <div class="stat-value"><?php echo e($totalEvents); ?></div>
             <div class="stat-label">Événements créés</div>
         </div>
         <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-users"></i></div>
-            <div class="stat-value">{{ $totalParticipants }}</div>
+            <div class="stat-value"><?php echo e($totalParticipants); ?></div>
             <div class="stat-label">Participants actifs</div>
         </div>
         <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
-            <div class="stat-value">{{ $tauxParticipation }}%</div>
+            <div class="stat-value"><?php echo e($tauxParticipation); ?>%</div>
             <div class="stat-label">Taux de participation</div>
         </div>
         <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-chart-pie"></i></div>
-            @php
+            <?php
                 $maxParticipants = $participantsByMonth->max() ?? 1;
                 $avgIncrease = $maxParticipants / max($participantsByMonth->count(), 1);
-            @endphp
-            <div class="stat-value">{{ round($avgIncrease, 1) }}x</div>
+            ?>
+            <div class="stat-value"><?php echo e(round($avgIncrease, 1)); ?>x</div>
             <div class="stat-label">Augmentation mensuelle</div>
         </div>
     </div>
@@ -158,10 +156,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const barChart = new Chart(barCtx, {
         type: 'bar',
         data: {
-            labels: {!! json_encode(range(1,12)) !!}.map(m => new Date(0, m-1).toLocaleString('fr-FR', { month: 'short' })),
+            labels: <?php echo json_encode(range(1,12)); ?>.map(m => new Date(0, m-1).toLocaleString('fr-FR', { month: 'short' })),
             datasets: [{
                 label: 'Participants',
-                data: {!! json_encode($participantsByMonth->values()) !!},
+                data: <?php echo json_encode($participantsByMonth->values()); ?>,
                 backgroundColor: '#4CAF50'
             }]
         },
@@ -177,9 +175,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const pieChart = new Chart(pieCtx, {
         type: 'pie',
         data: {
-            labels: {!! json_encode($eventsByType->keys()) !!},
+            labels: <?php echo json_encode($eventsByType->keys()); ?>,
             datasets: [{
-                data: {!! json_encode($eventsByType->values()) !!},
+                data: <?php echo json_encode($eventsByType->values()); ?>,
                 backgroundColor: ['#4CAF50','#2196F3','#FFC107','#FF5722','#9C27B0','#00BCD4']
             }]
         },
@@ -187,4 +185,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('template.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\lenovo\Documents\projet-stage\resources\views/statistiques/index.blade.php ENDPATH**/ ?>

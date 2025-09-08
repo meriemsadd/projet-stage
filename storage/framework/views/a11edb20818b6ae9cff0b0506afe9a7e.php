@@ -1,8 +1,6 @@
-@extends('template.app')
+<?php $__env->startSection('title', 'Créer un événement'); ?>
 
-@section('title', 'Créer un événement')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap');
 
@@ -289,29 +287,37 @@
     <div class="container">
         <h2>Créer un nouvel événement</h2>
 
-        {{-- Erreurs validation --}}
+        
 
-        @if ($errors->any())
+        <?php if($errors->any()): ?>
             <div class="alert alert-danger">
                 <ul>
-                    @foreach ($errors->all() as $error)
-                        <li><i class="fas fa-exclamation-circle"></i> {{ $error }}</li>
-                    @endforeach
+                    <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li><i class="fas fa-exclamation-circle"></i> <?php echo e($error); ?></li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </ul>
             </div>
-        @endif
+        <?php endif; ?>
 
-        <form action="{{ route('evenements.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+        <form action="<?php echo e(route('evenements.store')); ?>" method="POST" enctype="multipart/form-data">
+            <?php echo csrf_field(); ?>
 
             <div class="form-group">
                 <label for="titre" class="form-label">Titre de l'événement</label>
                 <input type="text" name="titre" id="titre" class="form-control" placeholder="Ex: Forum de l'emploi" required>
-                @error('titre')
+                <?php $__errorArgs = ['titre'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                     <span class="error-message">
-                        <i class="fas fa-exclamation-circle"></i> {{ $message }}
+                        <i class="fas fa-exclamation-circle"></i> <?php echo e($message); ?>
+
                     </span>
-                @enderror
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
             <div class="form-group">
@@ -348,9 +354,9 @@
                 <label for="type_events_id" class="form-label">Type d'événement</label>
                 <select name="type_events_id" id="type_events_id" class="form-select" required>
                     <option value="">-- Sélectionnez un type --</option>
-                    @foreach ($types as $type)
-                        <option value="{{ $type->id }}">{{ $type->nom }}</option>
-                    @endforeach
+                    <?php $__currentLoopData = $types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($type->id); ?>"><?php echo e($type->nom); ?></option>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
             </div>
 
@@ -383,7 +389,7 @@
                 <button type="submit" class="btn-submit">
                     <i class="fas fa-check-circle"></i> Créer l'événement
                 </button>
-                <a href="{{ route('evenements.index') }}" class="btn-cancel">
+                <a href="<?php echo e(route('evenements.index')); ?>" class="btn-cancel">
                     <i class="fas fa-times"></i> Annuler
                 </a>
             </div>
@@ -437,4 +443,5 @@
         });
     });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('template.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\lenovo\Documents\projet-stage\resources\views/evenements/create.blade.php ENDPATH**/ ?>
