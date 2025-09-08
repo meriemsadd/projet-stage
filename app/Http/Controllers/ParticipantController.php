@@ -132,13 +132,15 @@ class ParticipantController
 
 
     
-// ParticipantController.php
-
 public function checkin($id)
 {
     $participant = Participant::findOrFail($id);
-    // Tu peux ici marquer la présence, ou afficher une page
-    return view('participants.checkin', compact('participant'));
+
+    // Marquer le participant comme présent
+    $participant->update(['present' => true]); // Assure-toi que tu as une colonne 'present' dans la table participants
+
+    // Afficher une page de confirmation
+    return view('participants.checkin-confirm', compact('participant'));
 }
 
 }

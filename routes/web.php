@@ -82,3 +82,5 @@ use App\Http\Controllers\UserController;
 
 Route::resource('users', UserController::class)->middleware('auth');
 
+// Route pour scanner le QR code le jour J
+Route::get('/checkin/{id}', [ParticipantController::class, 'checkin'])->name('participants.checkin');

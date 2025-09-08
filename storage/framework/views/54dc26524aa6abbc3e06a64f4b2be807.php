@@ -208,9 +208,9 @@ body {
 <div class="decor-circle medium"></div>
 <div class="decor-circle large"></div>
 
-@php
+<?php
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-@endphp
+?>
 
 <div class="invitation-card">
     <!-- Header -->
@@ -221,17 +221,18 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
     <!-- Contenu -->
     <div class="content">
-        <p class="greeting">Cher(e) {{ $participant->prenom }} {{ $participant->nom }},</p>
+        <p class="greeting">Cher(e) <?php echo e($participant->prenom); ?> <?php echo e($participant->nom); ?>,</p>
         <p>Nous sommes ravis de vous compter parmi nos invités pour cet événement exceptionnel.</p>
 
-        <h2 class="event-title">{{ $participant->evenement->titre }}</h2>
+        <h2 class="event-title"><?php echo e($participant->evenement->titre); ?></h2>
 
         <div class="details">
             <div class="detail-item">
                 <div class="icon">📍</div>
                 <div>
                     <strong>Lieu</strong><br>
-                    {{ $participant->evenement->lieu }}
+                    <?php echo e($participant->evenement->lieu); ?>
+
                 </div>
             </div>
 
@@ -239,15 +240,17 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
                 <div class="icon">📅</div>
                 <div>
                     <strong>Date & Heure</strong><br>
-                    {{ \Carbon\Carbon::parse($participant->evenement->date_debut)->format('d/m/Y \\à H:i') }}
+                    <?php echo e(\Carbon\Carbon::parse($participant->evenement->date_debut)->format('d/m/Y \\à H:i')); ?>
+
                 </div>
             </div>
         </div>
 
     <div class="qr-section">
         <div class="qr-container">
-          {{-- Génération dynamique du QR code pour ce participant --}}
-          {!! QrCode::size(180)->generate(route('participants.checkin', $participant->id)) !!}
+          
+          <?php echo QrCode::size(180)->generate(route('participants.checkin', $participant->id)); ?>
+
         </div>
         <p class="qr-note">Présentez ce code QR à l'entrée pour valider votre participation</p>
     </div>
@@ -263,3 +266,4 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 </body>
 </html>
+<?php /**PATH C:\Users\lenovo\Documents\projet-stage\resources\views/invitation.blade.php ENDPATH**/ ?>
