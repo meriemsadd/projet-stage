@@ -28,7 +28,6 @@ body {
     animation: float 6s ease-in-out infinite alternate;
     z-index: 0;
 }
-
 .decor-circle.small { width: 80px; height: 80px; top: 50px; left: 20px; }
 .decor-circle.medium { width: 120px; height: 120px; bottom: 100px; right: 40px; }
 .decor-circle.large { width: 200px; height: 200px; top: 200px; right: -50px; }
@@ -56,7 +55,7 @@ body {
 /* Header animé */
 .header {
     width: 100%;
-    padding: 40px 25px;
+    padding: 30px 25px 40px;
     text-align: center;
     color: #fff;
     position: relative;
@@ -71,8 +70,18 @@ body {
     100% {background-position: 0% 50%;}
 }
 
+.header img.logo {
+    width: 80px;
+    height: auto;
+    margin-bottom: 12px;
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.25));
+    border-radius: 50%;
+    background: white;
+    padding: 6px;
+}
+
 .header h1 {
-    font-size: 2.8rem;
+    font-size: 2.6rem;
     font-weight: 900;
     letter-spacing: 1px;
     text-shadow: 0 2px 6px rgba(0,0,0,0.2);
@@ -157,10 +166,7 @@ body {
     box-shadow: 0 6px 20px rgba(41, 98, 255, 0.15);
     transition: transform 0.3s ease;
 }
-
-.qr-section:hover {
-    transform: translateY(-4px);
-}
+.qr-section:hover { transform: translateY(-4px); }
 
 .qr-container {
     display: inline-block;
@@ -170,7 +176,6 @@ body {
     box-shadow: 0 6px 15px rgba(41, 98, 255, 0.15);
     margin-bottom: 15px;
 }
-
 .qr-note {
     font-size: 0.95rem;
     color: #4a5568;
@@ -186,7 +191,6 @@ body {
     text-align: center;
     font-size: 0.85rem;
 }
-
 .organization {
     font-weight: 600;
     color: #1A237E;
@@ -215,6 +219,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 <div class="invitation-card">
     <!-- Header -->
     <div class="header">
+        <img src="<?php echo e(asset('images/R.png')); ?>" alt="Logo Wilaya" style="width: 100px; height: auto;">
         <h1>INVITATION</h1>
         <p class="subtitle">Événement Exclusif</p>
     </div>
@@ -246,15 +251,12 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
             </div>
         </div>
 
-    <div class="qr-section">
-        <div class="qr-container">
-          
-          <?php echo QrCode::size(180)->generate(route('participants.checkin', $participant->id)); ?>
-
+        <div class="qr-section">
+            <div class="qr-container">
+                 <img src="data:image/png;base64,<?php echo e($qrBase64); ?>" alt="QR Code Invitation">
+            </div>
+            <p class="qr-note">Présentez ce code QR à l'entrée pour valider votre participation</p>
         </div>
-        <p class="qr-note">Présentez ce code QR à l'entrée pour valider votre participation</p>
-    </div>
-
     </div>
 
     <!-- Footer -->
